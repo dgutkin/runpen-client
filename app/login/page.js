@@ -1,10 +1,10 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { firebaseApp } from '../firebase/firebase';
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import { firebaseApp } from '@/app/firebase/firebase';
 
 export default function Login() {
 
@@ -13,6 +13,8 @@ export default function Login() {
 
     const [authError, setAuthError] = useState(false);
     const [authErrorMessage, setAuthErrorMessage] = useState("");
+
+    const [signedIn, setSignIn] = useState(false);
 
     const router = useRouter();
 
@@ -25,7 +27,7 @@ export default function Login() {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                router.push("/user");
+                router.push(`/user/${user.uid}`);
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -35,6 +37,19 @@ export default function Login() {
             });
 
     }
+    
+    useEffect(() => {
+
+        const auth = getAuth(firebaseApp);
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setSignIn(true);
+            } else {
+                setSignIn(false);
+            }
+        });
+
+    });
 
     return (
         
@@ -45,7 +60,9 @@ export default function Login() {
                 <div className="bg-white p-8 border border-gray-200 rounded-lg shadow-md">
 
                     <h2 className="text-2xl font-semibold mb-6">Login</h2>
-
+                    
+                    {!signedIn ? 
+                        
                     <form>
 
                         <div className="mb-4 mt-6">
@@ -69,6 +86,12 @@ export default function Login() {
                         }
 
                     </form>
+
+                    :
+
+                    <p>You're already logged in.</p>
+
+                    }
 
                 </div>
 

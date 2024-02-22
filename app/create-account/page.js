@@ -1,9 +1,9 @@
 'use client'
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { firebaseApp } from '../firebase/firebase';
 
 export default function CreateAccount() {
@@ -14,6 +14,8 @@ export default function CreateAccount() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const [signedIn, setSignIn] = useState(false);
 
     const router = useRouter();
 
@@ -27,6 +29,7 @@ export default function CreateAccount() {
         await createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 user = userCredential.user;
+                console.log(user);
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -37,7 +40,7 @@ export default function CreateAccount() {
         
         if (user) {
 
-            const data = {"name": name, "email": email, "password": password};
+            const data = {"name": name, "email": email, "password": password, "uid": user.uid};
         
             const options = {
                 method: "POST",
@@ -53,7 +56,7 @@ export default function CreateAccount() {
                 .then((response) => {
                     console.log(response);
                     if (response.status == 201){
-                        router.push('/user');
+                        router.push(`/user/${user.uid}`);
                     } else {
                         setSignInError(true);
                         setSignInErrorMessage(response.text());
@@ -68,6 +71,19 @@ export default function CreateAccount() {
         
     }
 
+    useEffect(() => {
+
+        const auth = getAuth(firebaseApp);
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setSignIn(true);
+            } else {
+                setSignIn(false);
+            }
+        });
+
+    });
+
     return (
         
         <div className="container mx-8 max-w-md mt-8">
@@ -75,7 +91,8 @@ export default function CreateAccount() {
             <div className="bg-white p-8 rounded-lg shadow-md border border-gray-200">
 
                 <h2 className="text-2xl font-semibold mb-6">Create Account</h2>
-    
+
+                {!signedIn ? 
                 <div>
 
                     <div className="mb-4">
@@ -104,6 +121,12 @@ export default function CreateAccount() {
                     }
 
                 </div>
+
+                :
+
+                <p>Please logout to create another account.</p>
+
+                }
 
             </div>
 

@@ -15,10 +15,8 @@ export default function Nav() {
   
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      
       const uid = user.uid;
       setSignIn(true);
-      // ...
     }
   });
 
@@ -40,7 +38,6 @@ export default function Nav() {
             {
               signedIn && (
                   <div>
-                      <button className="bg-white text-md text-black mx-2 p-1 rounded-md">Profile</button>
                       <button className="bg-white text-md text-black p-1 rounded-md" onClick={handleLogout}>Logout</button>
                   </div>
               )
