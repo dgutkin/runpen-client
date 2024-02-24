@@ -3,7 +3,8 @@ import { Inter } from 'next/font/google'
 
 import './styles/globals.css'
 import Nav from './components/nav';
-import initFirebase from './firebase/firebase';
+import Footer from './components/footer';
+import AuthProvider from './context/auth-provider';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,15 +14,15 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
-
   return (
     <html lang="en" className="h-full">
       <head><title>runPen</title></head>
       <body className={inter.className}>
-        
-          <Nav/>
-          {children}
-        
+          <AuthProvider>
+            <Nav/>
+            {children}
+            <Footer/>
+          </AuthProvider>
       </body>
     </html>
   );

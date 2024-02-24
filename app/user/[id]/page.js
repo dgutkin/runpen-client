@@ -1,28 +1,23 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { firebaseApp } from '@/app/firebase/firebase';
+
+import { useAuth } from '../../context/auth-provider';
 
 export default function User() {
   
-  const [signedIn, setSignIn] = useState(false);
   const [uid, setUid] = useState("");
   const [name, setName] = useState("");
   const [journals, setJournals] = useState([]);
   const [showAddJournal, setShowAddJournal] = useState(false);
 
-  const auth = getAuth(firebaseApp);
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setSignIn(true);
-      setUid(user.uid);
-      fetchUserName(user.uid);
-      // fetch list of journals
-    } else {
-      setSignIn(false);
-    }
-  });
+  const { currentUser } = useAuth();
+
+  useEffect(() => {
+
+    if (currentUser) fetchUserName(currentUser.uid);
+
+  }, [])
 
   async function fetchUserName(uid) {
     console.log(uid);
@@ -66,7 +61,7 @@ export default function User() {
 
     <div>
 
-      {signedIn ?
+      {currentUser ?
 
         <div className="container mx-8 max-w-4xl mt-8 flex flex-col">
         <div className="mb-8 px-8">

@@ -1,35 +1,36 @@
 'use client'
 
 import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase/firebase-config';
 
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
-import { firebaseApp } from '../firebase/firebase';
+import { useAuth } from '../context/auth-provider';
+import Loader from '../components/loader';
 
 export default function CreateAccount() {
 
     const [signInError, setSignInError] = useState(false);
     const [signInErrorMessage, setSignInErrorMessage] = useState("");
-
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    const [signedIn, setSignIn] = useState(false);
-
+    const { currentUser } = useAuth();
     const router = useRouter();
 
     async function handleCreateAccount(e) {
 
         e.preventDefault();
 
-        const auth = getAuth(firebaseApp);
-        let user;
+        setLoading(true);
 
         await createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                user = userCredential.user;
-                console.log(user);
+                const user = userCredential.user;
+                if (user) addUsertoDB(user);
+                setLoading(false);
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -38,61 +39,52 @@ export default function CreateAccount() {
                 setSignInErrorMessage(errorMessage);
             });
         
-        if (user) {
-
-            const data = {"name": name, "email": email, "password": password, "uid": user.uid};
-        
-            const options = {
-                method: "POST",
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
-            }
-            const url = process.env.SERVER_URL || "http://127.0.0.1:8080/add-user";
-                
-            await fetch(url, options)
-                .then((response) => {
-                    console.log(response);
-                    if (response.status == 201){
-                        router.push(`/user/${user.uid}`);
-                    } else {
-                        setSignInError(true);
-                        setSignInErrorMessage(response.text());
-                    }
-                })
-                .catch((error) => {
-                    setSignInError(true);
-                    setSignInErrorMessage(error);
-                });
-
-        }
-        
     }
 
-    useEffect(() => {
+    async function addUsertoDB(user) {
 
-        const auth = getAuth(firebaseApp);
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setSignIn(true);
-            } else {
-                setSignIn(false);
-            }
-        });
+        const data = {"name": name, "email": email, "password": password, "uid": user.uid};
+        
+        const options = {
+            method: "POST",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }
+        const url = process.env.SERVER_URL || "http://127.0.0.1:8080/add-user";
+            
+        await fetch(url, options)
+            .then((response) => {
+                console.log(response);
+                if (response.status == 201){
+                    router.push(`/user/${user.uid}`);
+                } else {
+                    setSignInError(true);
+                    setSignInErrorMessage(response.text());
+                }
+            })
+            .catch((error) => {
+                setSignInError(true);
+                setSignInErrorMessage(error);
+            });
 
-    });
+    }
 
     return (
         
         <div className="container mx-8 max-w-md mt-8">
 
+            {loading?
+            <Loader/>
+            :
+
             <div className="bg-white p-8 rounded-lg shadow-md border border-gray-200">
 
                 <h2 className="text-2xl font-semibold mb-6">Create Account</h2>
 
-                {!signedIn ? 
+                {!currentUser ? 
                 <div>
 
                     <div className="mb-4">
@@ -129,6 +121,8 @@ export default function CreateAccount() {
                 }
 
             </div>
+
+            }
 
         </div>
 

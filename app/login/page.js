@@ -1,33 +1,35 @@
 'use client'
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/app/firebase/firebase-config';
 
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
-import { firebaseApp } from '@/app/firebase/firebase';
+import { useAuth } from '../context/auth-provider';
+import Loader from '../components/loader';
 
 export default function Login() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
     const [authError, setAuthError] = useState(false);
     const [authErrorMessage, setAuthErrorMessage] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    const [signedIn, setSignIn] = useState(false);
-
+    const { currentUser } = useAuth();
     const router = useRouter();
 
     async function handleLogin(e) {
 
         e.preventDefault();
 
-        const auth = getAuth(firebaseApp);
+        setLoading(true);
         
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
                 router.push(`/user/${user.uid}`);
+                setLoading(false);
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -37,19 +39,6 @@ export default function Login() {
             });
 
     }
-    
-    useEffect(() => {
-
-        const auth = getAuth(firebaseApp);
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setSignIn(true);
-            } else {
-                setSignIn(false);
-            }
-        });
-
-    });
 
     return (
         
@@ -57,11 +46,15 @@ export default function Login() {
         
             <div className="container mx-8 max-w-md mt-8">
 
+                {loading?
+                <Loader/>
+                :
+
                 <div className="bg-white p-8 border border-gray-200 rounded-lg shadow-md">
 
                     <h2 className="text-2xl font-semibold mb-6">Login</h2>
                     
-                    {!signedIn ? 
+                    {!currentUser ? 
                         
                     <form>
 
@@ -94,6 +87,7 @@ export default function Login() {
                     }
 
                 </div>
+                }
 
             </div>
 
