@@ -1,9 +1,6 @@
 'use client'
 
 import Link from 'next/link';
-import { useEffect } from 'react';
-
-import initFirebase from './firebase/firebase-config';
 
 export default function Home() {
 
