@@ -43,16 +43,25 @@ export default function CreateAccount() {
 
     async function addUsertoDB(user) {
 
-        const data = {"name": name, "email": email, "password": password, "uid": user.uid};
+        const token = await user.getIdToken();
+        
+        const data = {
+            "name": name, 
+            "email": email, 
+            "password": password, 
+            "uid": user.uid
+        };
         
         const options = {
             method: "POST",
             mode: "cors",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
             },
             body: JSON.stringify(data)
         }
+
         const url = process.env.SERVER_URL || "http://127.0.0.1:8080/add-user";
             
         await fetch(url, options)

@@ -15,21 +15,23 @@ export default function User() {
 
   useEffect(() => {
 
-    if (currentUser) fetchUserName(currentUser.uid);
+    if (currentUser) fetchUserName(currentUser);
 
   }, [])
 
-  async function fetchUserName(uid) {
-    console.log(uid);
+  async function fetchUserName(user) {
+    console.log(user.uid);
+    const token = await user.getIdToken();
     // fetch the name
     const options = {
       method: "GET",
       mode: "cors",
       headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
       }
     }
-    const url = (process.env.SERVER_URL || "http://127.0.0.1:8080/user-name") + `?uid=${uid}`;
+    const url = (process.env.SERVER_URL || "http://127.0.0.1:8080/user-name") + `?uid=${user.uid}`;
     
     await fetch(url, options)
       .then((response) => {
