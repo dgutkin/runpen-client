@@ -57,10 +57,6 @@ function AddJournalForm({addJournal, setShowAddJournal}) {
 
 }
 
-function deleteJournalConfirm() {
-
-}
-
 export default function User() {
   
   const [userName, setUserName] = useState("");
@@ -73,13 +69,13 @@ export default function User() {
   useEffect(() => {
 
     if (currentUser) {
-      fetchUserName();
+      getUserName();
       getJournalList();
     }
 
   }, [])
 
-  async function fetchUserName() {
+  async function getUserName() {
     
     const token = await currentUser.getIdToken();
     const options = {
@@ -211,7 +207,7 @@ export default function User() {
 
     return (
       <div>
-          <div className="container mx-8 max-w-4xl mt-8 flex flex-col">
+          <div className="container mx-8 mt-8 flex flex-col">
 
           <div className="mb-8 px-8">
             <h2 className="text-2xl font-semibold mb-4">Welcome {userName}!</h2>
@@ -220,7 +216,6 @@ export default function User() {
           <div className="my-2 px-8">
             <div className="flex flex-row">
               <h2 className="text-2xl font-semibold mb-4 mr-6">Journals</h2>
-              
             </div>
             
             <div className="mt-16 flex flex-row flex-wrap justify-start">
@@ -231,7 +226,12 @@ export default function User() {
             }
             </div>
             
-            <button className="bg-dark-green text-white text-md w-[15%] px-2 py-1 rounded-md ml-4 mt-16 hover:bg-yinmn-blue" onClick={() => setShowAddJournal(true)}>Add Journal</button>
+            <button 
+              className="bg-dark-green text-white text-md w-[15%] px-2 py-1 rounded-md ml-4 mt-16 hover:bg-yinmn-blue" 
+              onClick={() => setShowAddJournal(true)}
+            >
+              Add Journal
+            </button>
           </div>
           
           </div>
