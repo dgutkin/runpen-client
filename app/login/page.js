@@ -29,7 +29,6 @@ export default function Login() {
             .then((userCredential) => {
                 const user = userCredential.user;
                 router.push(`/user/${user.uid}`);
-                setLoading(false);
             })
             .catch((error) => {
                 const errorCode = error.code;
