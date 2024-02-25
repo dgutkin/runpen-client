@@ -41,7 +41,7 @@ export default function Nav() {
             {
               currentUser && (
                   <div>
-                      <button className="bg-white text-md text-black p-1 rounded-md" onClick={handleLogout}>Logout</button>
+                      <button className="bg-white text-md text-black py-1 px-3 rounded-md" onClick={handleLogout}>Logout</button>
                   </div>
               )
             }
