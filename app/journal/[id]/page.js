@@ -315,12 +315,21 @@ export default function Journal() {
                   {
                     entries.map((item) => {
                       return (
-                        <li key={item.entryId} className="p-4 bg-gray-100 flex flex-row justify-between rounded-md my-1">
-                          <div className="text-md text-black">{new Date(item.entryDate).toLocaleDateString('en-us', {month:'short', day:'numeric', year:'numeric'})}</div>
-                          <div>
-                            <button className="bg-dark-green rounded-md text-white px-2 mx-2" onClick={() => editEntry(item.entryId)}>Write</button>
-                            <button className="bg-dark-green rounded-md text-white px-2" onClick={() => deleteEntry(item.entryId)}>Delete</button>
-                          </div>
+                        <li key={item.entryId} className="p-4 bg-gray-100 rounded-md my-1 relative group flex flex-row">
+                          <button 
+                            className="w-full transition-opacity duration-300 ease-in-out opacity-100 group-hover:opacity-100" 
+                            onClick={() => editEntry(item.entryId)}
+                          >
+                            <div className="text-md text-black text-start">
+                              {new Date(item.entryDate).toLocaleDateString('en-us', {month:'short', day:'numeric', year:'numeric'})}
+                            </div>
+                          </button>
+                          <button 
+                            className="bg-dark-green rounded-md text-white px-2 z-10 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100" 
+                            onClick={() => deleteEntry(item.entryId)}
+                          >
+                            Delete
+                          </button>
                         </li>
                       );
                     })
