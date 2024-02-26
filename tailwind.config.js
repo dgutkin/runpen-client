@@ -13,7 +13,7 @@ module.exports = {
         "yinmn-blue": "#36558f"
       },
       animation: {
-        wiggle: "wiggle 1s linear 1s infinite"
+        wiggle: "wiggle 1s linear infinite"
       },
       keyframes: {
         wiggle: {
