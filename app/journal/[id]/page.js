@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-// import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
 import { useAuth } from '../../context/auth-provider';
@@ -159,14 +158,14 @@ export default function Journal() {
           "Authorization": `Bearer ${token}`
       }
     }
-    const url = baseUrl + "/journal-name" + `?journalId=${journalId}`;
+    const url = baseUrl + "/get-journal" + `?journalId=${journalId}`;
     
     await fetch(url, options)
       .then((response) => {
-          return response.text();
+          return response.json();
       })
       .then((result) => {
-        setJournalName(result);
+        setJournalName(result.journalName);
       })
       .catch((error) => {
           // error fetching
@@ -284,8 +283,9 @@ export default function Journal() {
 
         <div className="container mx-8 mt-8 flex flex-col">
 
-          <div className="mb-8 px-8">
+          <div className="flex flex-row justify-between mb-8 px-4">
             <h2 className="text-2xl font-semibold mb-4">{journalName}</h2>
+            <button className="bg-gray-600 text-white rounded-md p-2" onClick={() => router.push(`/user/${currentUser.uid}`)}>Back to Home</button>
           </div>
     
           <div className="my-2 px-8">
@@ -316,9 +316,9 @@ export default function Journal() {
                     entries.map((item) => {
                       return (
                         <li key={item.entryId} className="p-4 bg-gray-100 flex flex-row justify-between rounded-md my-1">
-                          <div className="text-md text-black">{item.entryDate}</div>
+                          <div className="text-md text-black">{new Date(item.entryDate).toLocaleDateString('en-us', {month:'short', day:'numeric', year:'numeric'})}</div>
                           <div>
-                            <button className="bg-dark-green rounded-md text-white px-2 mx-2" onClick={() => editEntry(item.entryId)}>Edit</button>
+                            <button className="bg-dark-green rounded-md text-white px-2 mx-2" onClick={() => editEntry(item.entryId)}>Write</button>
                             <button className="bg-dark-green rounded-md text-white px-2" onClick={() => deleteEntry(item.entryId)}>Delete</button>
                           </div>
                         </li>
