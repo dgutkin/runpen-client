@@ -8,6 +8,7 @@ import { useAuth } from '../../context/auth-provider';
 import JournalCard from './JournalCard';
 import JournalForm from './JournalForm';
 import DeleteConfirm from '../../components/DeleteConfirm';
+import Loader from '../../components/Loader';
 
 export default function User() {
   
@@ -16,6 +17,7 @@ export default function User() {
   const [showAddJournal, setShowAddJournal] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [journalInFocus, setJournalInFocus] = useState("");
+  const [loading, setLoading] = useState("");
 
   const { currentUser } = useAuth();
   const router = useRouter();
@@ -146,6 +148,7 @@ export default function User() {
   }
 
   function editJournal(journalId) {
+    setLoading(true);
     router.push(`/journal/${journalId}`);
   }
 
@@ -160,6 +163,10 @@ export default function User() {
   if (!currentUser) {
     return (
       <p className="py-4 px-36">Access denied.</p>
+    );
+  } else if (loading) { 
+    return (
+      <p className="py-4 px-36">Loading...</p>
     );
   } else {
     return (
@@ -188,6 +195,7 @@ export default function User() {
                     data={item} editJournal={editJournal} 
                     setJournalInFocus={setJournalInFocus} 
                     setShowDeleteConfirm={setShowDeleteConfirm}
+                    setLoading={setLoading}
                     />;
                 })
               }

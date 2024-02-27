@@ -15,7 +15,6 @@ export function JournalCard({data, editJournal, setJournalInFocus, setShowDelete
         onClick={() => editJournal(data.journalId)}
       >
         <h3 className="text-md font-bold text-start">{data.journalName}</h3>
-
         <p className="text-sm text-start my-2">Created: {data.createdDate}</p>
       </button>
     </div>
