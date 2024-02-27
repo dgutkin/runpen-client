@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
 import { useAuth } from '../../context/auth-provider';
-import PostForm from '../../components/PostForm';
+import PostForm from './PostForm';
 import '../../styles/globals.css'
 
 export default function Entry() {
@@ -54,21 +54,20 @@ export default function Entry() {
         const url = baseUrl + "/get-entry" + `?entryId=${entryId}`;
         
         await fetch(url, options)
-        .then((response) => {
-            return response.json();
-        })
-        .then((result) => {
-            const entryDateAsDate = new Date(result.entryDate);
-            const formattedDate = (entryDateAsDate).toLocaleString('en-us', {month: 'short', day: 'numeric', year: 'numeric'});
-            setEntryDate(formattedDate);
-            setEntryMood(result.emotion);
-            setEntryEffort(result.effort);
-            setJournalId(result.journalId);
-        })
-        .catch((error) => {
-            // error fetching
-            console.log(error);
-        });
+            .then((response) => {
+                return response.json();
+            })
+            .then((result) => {
+                const entryDateAsDate = new Date(result.entryDate);
+                const formattedDate = (entryDateAsDate).toLocaleString('en-us', {month: 'short', day: 'numeric', year: 'numeric'});
+                setEntryDate(formattedDate);
+                setEntryMood(result.emotion);
+                setEntryEffort(result.effort);
+                setJournalId(result.journalId);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
 
     }
 
@@ -86,16 +85,15 @@ export default function Entry() {
         const url = baseUrl + "/get-journal" + `?journalId=${journalId}`;
         
         await fetch(url, options)
-        .then((response) => {
-            return response.json();
-        })
-        .then((result) => {
-            setJournalName(result.journalName);
-        })
-        .catch((error) => {
-            // error fetching
-            console.log(error);
-        });
+            .then((response) => {
+                return response.json();
+            })
+            .then((result) => {
+                setJournalName(result.journalName);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
 
     }
 
@@ -113,15 +111,15 @@ export default function Entry() {
         const url = baseUrl + "/get-posts" + `?entryId=${entryId}`;
 
         await fetch(url, options)
-        .then((response) => {
-            return response.json();
-        })
-        .then((result) => {
-            setPosts(result);
-        })
-        .catch((error) => {
-            // no entries
-        });
+            .then((response) => {
+                return response.json();
+            })
+            .then((result) => {
+                setPosts(result);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
 
     }
 
@@ -144,7 +142,7 @@ export default function Entry() {
                 return response.text();
             })
             .catch((error) => {
-                // add entry error
+                console.log(error);
             });
 
     }
@@ -168,7 +166,7 @@ export default function Entry() {
                 return response.text();
             })
             .catch((error) => {
-                // update post error
+                console.log(error);
             });
 
     }
@@ -187,12 +185,12 @@ export default function Entry() {
         const url = baseUrl + "/delete-post" + `?postId=${postId}`;
 
         await fetch(url, options)
-        .then((response) => {
-            return response.text();
-        })
-        .catch((error) => {
-            // error deleting journal
-        });
+            .then((response) => {
+                return response.text();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
 
     }
 
