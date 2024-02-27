@@ -20,7 +20,7 @@ export default function Nav() {
   }
 
   return (
-      <nav className="bg-dark-green p-4">
+      <nav className="bg-dark-green py-4 px-36">
           <div className="flex flex-row justify-between mx-4">
             <div className="text-lg text-white font-bold">
               <p>rP</p>
@@ -29,7 +29,13 @@ export default function Nav() {
             {currentUser && (
                 <div>
                   <button 
-                    className="bg-white text-md text-black py-1 px-3 rounded-md hover:bg-gray-200" 
+                    className="bg-white text-md text-black py-1 px-3 mx-2 rounded-md hover:bg-gray-200" 
+                    onClick={() => router.push(`/user/${currentUser.uid}`)}
+                  >
+                    Home
+                  </button>
+                  <button 
+                    className="bg-white text-md text-black py-1 px-3 mx-2 rounded-md hover:bg-gray-200" 
                     onClick={handleLogout}
                   >
                     Logout
