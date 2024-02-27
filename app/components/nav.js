@@ -29,7 +29,7 @@ export default function Nav() {
             {currentUser && (
                 <div>
                   <button 
-                    className="bg-white text-md text-black py-1 px-3 rounded-md" 
+                    className="bg-white text-md text-black py-1 px-3 rounded-md hover:bg-gray-200" 
                     onClick={handleLogout}
                   >
                     Logout
