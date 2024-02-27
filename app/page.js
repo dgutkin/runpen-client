@@ -18,7 +18,7 @@ export default function Home() {
 
     return (
   
-      <div className="flex flex-col">
+      <div className="flex flex-col px-36">
 
         <div className="bg-white p-6 pl-12 mt-24">
           <div className="container">

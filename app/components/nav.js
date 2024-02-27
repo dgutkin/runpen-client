@@ -23,7 +23,8 @@ export default function Nav() {
       <nav className="bg-dark-green py-4 px-36">
           <div className="flex flex-row justify-between mx-4">
             <div className="text-lg text-white font-bold">
-              <p>rP</p>
+              {/* <p>rP</p> */}
+              <button onClick={() => router.push("/")}>rP</button>
             </div>
 
             {currentUser && (

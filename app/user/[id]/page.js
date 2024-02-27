@@ -159,7 +159,7 @@ export default function User() {
   
   if (!currentUser) {
     return (
-      <p className="m-4">Access denied.</p>
+      <p className="py-4 px-36">Access denied.</p>
     );
   } else {
     return (

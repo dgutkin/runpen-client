@@ -41,9 +41,9 @@ export default function Login() {
 
     return (
         
-        <div className="flex">
+        <div className="px-36">
         
-            <div className="container mx-8 max-w-md mt-8">
+            <div className="mx-8 mt-8 w-1/2">
 
                 {loading?
                 <Loader/>

@@ -162,7 +162,7 @@ export default function Journal() {
   if (!currentUser) {
 
     return (
-      <p className="m-4">Access denied.</p>
+      <p className="py-4 px-36">Access denied.</p>
     );
 
   } else {
