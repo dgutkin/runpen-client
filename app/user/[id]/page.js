@@ -164,7 +164,7 @@ export default function User() {
   } else {
     return (
       <div>
-          <div className="flex flex-col">
+          <div className="flex flex-col px-36">
             <div className="my-8 mx-8">
               <h2 className="text-2xl font-semibold mb-4">Welcome {userName}!</h2>
             </div>
@@ -176,7 +176,7 @@ export default function User() {
                   className="bg-dark-green text-white text-md w-[10%] px-2 py-1 rounded-md ml-6 hover:bg-yinmn-blue" 
                   onClick={() => setShowAddJournal(true)}
                 >
-                  + Add Journal
+                  Add Journal
                 </button>
               </div>
               

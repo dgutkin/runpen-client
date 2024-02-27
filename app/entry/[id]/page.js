@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBook } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faX } from '@fortawesome/free-solid-svg-icons';
 
 import { useAuth } from '../../context/auth-provider';
 import PostForm from './PostForm';
@@ -229,7 +229,7 @@ export default function Entry() {
     } else {
 
         return (
-            <div>
+            <div className="px-36">
                 <div className="flex flex-row justify-between">
                     <div>
                         <h1 className="text-2xl font-bold ml-8 mt-8">{entryDate}</h1>
@@ -241,7 +241,7 @@ export default function Entry() {
                             className="text-gray-500 rounded-md mt-8 mr-12 hover:scale-125"
                             onClick={() => router.push(`/journal/${journalId}`)}
                         >
-                            <FontAwesomeIcon icon={faBook} size="xl"/>
+                            <FontAwesomeIcon icon={faX} size="2xl"/>
                         </button>
                         
                     }
