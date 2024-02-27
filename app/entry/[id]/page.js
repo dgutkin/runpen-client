@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBook } from '@fortawesome/free-solid-svg-icons'
 
 import { useAuth } from '../../context/auth-provider';
 import PostForm from './PostForm';
-import '../../styles/globals.css'
+import PostCard from './PostCard';
 
 export default function Entry() {
 
@@ -236,9 +238,12 @@ export default function Entry() {
                     
                     {journalId &&
                         <button 
-                            className="bg-gray-600 text-white rounded-md m-8 p-2 h-1/2"
+                            className="text-gray-500 rounded-md mt-8 mr-12 hover:scale-125"
                             onClick={() => router.push(`/journal/${journalId}`)}
-                        >Back to Journal</button>
+                        >
+                            <FontAwesomeIcon icon={faBook} size="xl"/>
+                        </button>
+                        
                     }
                 </div>
                 <div className="flex flex-col p-8">
@@ -248,7 +253,7 @@ export default function Entry() {
                     <div className="flex flex-row justify-between">
                         <h3 className="text-xl text-gray-500 font-bold mt-4">Posts</h3>
                         <button 
-                            className="bg-dark-green text-white p-2 mx-4 rounded-md h-1/2"
+                            className="bg-dark-green text-white p-2 mx-4 rounded-md h-1/2 hover:bg-yinmn-blue"
                             onClick={() => {setShowPostForm(true); setPostData({})}}
                         >
                             Add Post
@@ -258,15 +263,7 @@ export default function Entry() {
                         {
                             posts.map((item) => {
                                 return (
-                                    <li 
-                                        key={item.postId} 
-                                        className="mb-4 mx-1 bg-white p-4 rounded-md shadow border w-[24%] h-36 hover:animate-wiggle"
-                                    >
-                                        <button className="h-full w-full flex flex-col" onClick={() => {setShowPostForm(true); setPostData(item)}}>
-                                            <h2 className="text-lg font-semibold mb-2">{item.postTitle}</h2>
-                                            <p className="text-start text-wrap">{item.postText.slice(0, 50)}{item.postText.length > 50? "..." : ""}</p>
-                                        </button>
-                                    </li>
+                                    <PostCard key={item.postId} data={item} setShowPostForm={setShowPostForm} setPostData={setPostData}/>
                                 );
                             })
                         }
