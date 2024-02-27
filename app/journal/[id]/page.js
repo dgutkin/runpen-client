@@ -281,9 +281,9 @@ export default function Journal() {
 
     return (
 
-        <div className="container mx-8 mt-8 flex flex-col">
+        <div className="flex flex-col">
 
-          <div className="flex flex-row justify-between mb-8 px-4">
+          <div className="flex flex-row justify-between my-8 mx-2 px-4">
             <h2 className="text-2xl font-semibold mb-4">{journalName}</h2>
             <button className="bg-gray-600 text-white rounded-md p-2" onClick={() => router.push(`/user/${currentUser.uid}`)}>Back to Home</button>
           </div>
@@ -315,9 +315,9 @@ export default function Journal() {
                   {
                     entries.map((item) => {
                       return (
-                        <li key={item.entryId} className="p-4 bg-gray-100 rounded-md my-1 relative group flex flex-row">
+                        <li key={item.entryId} className="bg-gray-100 rounded-md my-1 relative group flex flex-row">
                           <button 
-                            className="w-full transition-opacity duration-300 ease-in-out opacity-100 group-hover:opacity-100" 
+                            className="w-full p-4 transition-opacity duration-300 ease-in-out opacity-100 group-hover:opacity-100" 
                             onClick={() => editEntry(item.entryId)}
                           >
                             <div className="text-md text-black text-start">

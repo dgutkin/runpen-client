@@ -244,13 +244,13 @@ export default function Entry() {
                     }
                 </div>
                 <div className="flex flex-col p-8">
-                    <h3 className="text-xl text-gray-500 font-bold mb-4">Vibe</h3>
+                    <h3 className="text-xl text-gray-500 font-bold mb-4">Summary</h3>
                     <p className="my-2 px-2">You're feeling {entryMood} and you put in {entryEffort} levels of effort. Great job!</p>
                     <p className="my-2 px-2 italic">Today's Quote: Insert AI-generated quote here.</p>
                     <div className="flex flex-row justify-between">
                         <h3 className="text-xl text-gray-500 font-bold mt-4">Posts</h3>
                         <button 
-                            className="bg-dark-green text-white p-2 rounded-md h-1/2"
+                            className="bg-dark-green text-white p-2 mx-4 rounded-md h-1/2"
                             onClick={() => {setShowPostForm(true); setPostData({})}}
                         >
                             Add Post
