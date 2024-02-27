@@ -1,5 +1,8 @@
 'use client'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+
 function EntryCard({data, editEntry, setEntryInFocus, setShowDeleteConfirm}) {
 
     function openDeleteConfirm() {
@@ -19,10 +22,10 @@ function EntryCard({data, editEntry, setEntryInFocus, setShowDeleteConfirm}) {
                 </div>
             </button>
             <button 
-                className="bg-dark-green rounded-md text-white px-2 z-10 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100" 
+                className="rounded-md text-gray-500 mx-4 z-10 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100" 
                 onClick={openDeleteConfirm}
             >
-            Delete
+                <FontAwesomeIcon icon={faTrash}/>
             </button>
         </div>
     );
