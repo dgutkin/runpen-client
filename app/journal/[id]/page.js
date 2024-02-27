@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGear } from '@fortawesome/free-solid-svg-icons';
 
 import { useAuth } from '../../context/auth-provider';
 import Calendar from '../../components/calendar.js';
@@ -167,11 +169,16 @@ export default function Journal() {
 
     return (
 
-        <div className="flex flex-col">
+        <div className="flex flex-col px-36">
 
           <div className="flex flex-row justify-between my-8 mx-2 px-4">
             <h2 className="text-2xl font-semibold mb-4">{journalName}</h2>
-            <button className="bg-gray-600 text-white rounded-md p-2" onClick={() => router.push(`/user/${currentUser.uid}`)}>Back to Home</button>
+            <button 
+              className="bg-white text-gray-500 rounded-md hover:scale-125 mx-4 mb-4"
+              // onClick={openJournalForm}
+            >
+              <FontAwesomeIcon icon={faGear} size="2xl"/>
+            </button>
           </div>
     
           <div className="my-2 px-8">
