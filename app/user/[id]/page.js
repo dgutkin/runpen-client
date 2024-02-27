@@ -2,32 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { useAuth } from '../../context/auth-provider';
-
-export function Journal({data, deleteJournal}) {
-
-  return (
-
-    <div className="w-[30%] p-4 mx-1 my-2 rounded-xl border shadow-md flex flex-col">
-      <h3 className="text-md">{data.journalName}</h3>
-      <p className="text-sm my-2">Created: {data.createdDate}</p>
-      <div className="flex flex-row">
-      <Link 
-        className="w-1/3 p-2 mx-1 text-md text-center text-white bg-dark-green rounded-xl" 
-        href={`/journal/${data.journalId}`}
-      >Write</Link>
-      <button 
-        className="w-1/3 p-2 mx-1 text-md text-center text-white bg-dark-green rounded-xl" 
-        onClick={() => deleteJournal(data.journalId)}
-      >Delete</button>
-      </div>
-    </div>
-
-  );
-
-}
+import JournalCard from '../../components/JournalCard';
 
 function AddJournalForm({addJournal, setShowAddJournal}) {
 
@@ -64,8 +42,10 @@ export default function User() {
   const [showAddJournal, setShowAddJournal] = useState(false);
 
   const { currentUser } = useAuth();
-  const baseUrl = process.env.SERVER_URL || "http://127.0.0.1:8080";
+  const router = useRouter();
 
+  const baseUrl = process.env.SERVER_URL || "http://127.0.0.1:8080";
+  
   useEffect(() => {
 
     if (currentUser) {
@@ -190,6 +170,12 @@ export default function User() {
 
   }
 
+  function editJournal(journalId) {
+
+    router.push(`/journal/${journalId}`);
+
+  }
+
   function deleteJournal(journalId) {
 
     deleteJournalfromDB(journalId);
@@ -207,31 +193,32 @@ export default function User() {
 
     return (
       <div>
-          <div className="container mx-8 mt-8 flex flex-col">
+          <div className="flex flex-col">
 
-          <div className="mb-8 px-8">
+          <div className="my-8 mx-8">
             <h2 className="text-2xl font-semibold mb-4">Welcome {userName}!</h2>
           </div>
       
-          <div className="my-2 px-8">
-            <div className="flex flex-row">
-              <h2 className="text-2xl font-semibold mb-4 mr-6">Journals</h2>
+          <div className="my-2 mx-8">
+            <div className="flex flex-row justify-between">
+              <h2 className="text-2xl font-semibold mb-4 mr-6 text-gray-600">Journals</h2>
+              <button 
+                className="bg-dark-green text-white text-md w-[10%] px-2 py-1 rounded-md ml-6 hover:bg-yinmn-blue" 
+                onClick={() => setShowAddJournal(true)}
+              >
+                + Add Journal
+              </button>
             </div>
             
             <div className="mt-16 flex flex-row flex-wrap justify-start">
             {
               journals.map((item) => {
-                return <Journal key={item.journalId} data={item} deleteJournal={deleteJournal}/>;
+                return <JournalCard key={item.journalId} data={item} editJournal={editJournal} deleteJournal={deleteJournal}/>;
               })
             }
             </div>
             
-            <button 
-              className="bg-dark-green text-white text-md w-[15%] px-2 py-1 rounded-md ml-4 mt-16 hover:bg-yinmn-blue" 
-              onClick={() => setShowAddJournal(true)}
-            >
-              Add Journal
-            </button>
+            
           </div>
           
           </div>
