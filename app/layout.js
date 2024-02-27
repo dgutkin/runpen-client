@@ -2,8 +2,8 @@
 import { Inter } from 'next/font/google'
 
 import './styles/globals.css'
-import Nav from './components/nav';
-import Footer from './components/footer';
+import Nav from './components/Nav';
+import Footer from './components/Footer';
 import AuthProvider from './context/auth-provider';
 
 const inter = Inter({ subsets: ['latin'] })
@@ -17,10 +17,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full">
       <head><title>runPen</title></head>
+
       <body className={inter.className}>
           <AuthProvider>
             <Nav/>
+
             {children}
+
             <Footer/>
           </AuthProvider>
       </body>

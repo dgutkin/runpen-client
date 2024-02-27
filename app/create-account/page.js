@@ -6,7 +6,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase/firebase-config';
 
 import { useAuth } from '../context/auth-provider';
-import Loader from '../components/loader';
+import Loader from '../components/Loader';
 
 export default function CreateAccount() {
 
