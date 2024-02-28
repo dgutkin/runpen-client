@@ -22,6 +22,7 @@ export default function Journal() {
   const [showJournalDeleteConfirm, setShowJournalDeleteConfirm] = useState(false);
   const [entryInFocus, setEntryInFocus] = useState("");
   const [showJournalForm, setShowJournalForm] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const pathname = usePathname();
   const router = useRouter();
@@ -175,6 +176,7 @@ export default function Journal() {
   }
 
   function editEntry(entryId) {
+    setLoading(true);
     router.push(`/entry/${entryId}`);
   }
 
@@ -198,6 +200,12 @@ export default function Journal() {
       <p className="py-4 px-36">Access denied.</p>
     );
 
+  } else if (loading) {
+
+    return (
+      <p className="py-4 px-36">Loading...</p>
+    );
+  
   } else {
 
     return (
