@@ -238,10 +238,10 @@ export default function Entry() {
                     
                     {journalId &&
                         <button 
-                            className="text-gray-500 rounded-md mt-8 mr-12 hover:scale-125"
+                            className="text-gray-400 rounded-md mt-8 mr-12 hover:scale-125"
                             onClick={() => router.push(`/journal/${journalId}`)}
                         >
-                            <FontAwesomeIcon icon={faX} size="2xl"/>
+                            <FontAwesomeIcon icon={faX} size="xl"/>
                         </button>
                         
                     }
