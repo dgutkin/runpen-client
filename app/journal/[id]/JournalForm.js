@@ -4,17 +4,22 @@ import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
-function JournalForm({journalName, setShowJournalForm, setShowJournalDeleteConfirm}) {
+function JournalForm({journalName, setShowJournalForm, setShowJournalDeleteConfirm, updateJournalNameToDB}) {
 
     const [journalTitle, setJournalTitle] = useState("");
 
     useEffect(() => {
         setJournalTitle(journalName);
-    });
+    }, []);
 
     function openDeleteConfirm() {
         setShowJournalForm(false);
         setShowJournalDeleteConfirm(true);
+    }
+
+    function updateJournalTitle() {
+        setShowJournalForm(false);
+        updateJournalNameToDB(journalTitle);
     }
 
     return (
@@ -39,8 +44,18 @@ function JournalForm({journalName, setShowJournalForm, setShowJournalDeleteConfi
                     onInput={(e) => setJournalTitle(e.target.value)}
                     value={journalTitle || ""}
                 />
-                <button className="bg-dark-green text-white my-4 rounded-md w-1/4 p-2">Update</button>
-                <button className="bg-red-600 text-white rounded-md p-2 mt-8 w-1/4" onClick={openDeleteConfirm}>Delete Journal</button>
+                <button 
+                    className="bg-dark-green text-white my-4 rounded-md w-1/4 p-2"
+                    onClick={updateJournalTitle}
+                >
+                    Update
+                </button>
+                <button 
+                    className="bg-red-600 text-white rounded-md p-2 mt-8 w-1/4" 
+                    onClick={openDeleteConfirm}
+                >
+                    Delete Journal
+                </button>
             </div>
         </div>
     );

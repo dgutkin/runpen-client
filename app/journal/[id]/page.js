@@ -14,7 +14,7 @@ import JournalForm from './JournalForm';
 
 export default function Journal() {
 
-  const [journalName, setJournalName] = useState("");  
+  const [journal, setJournal] = useState("");  
   const [entries, setEntries] = useState([]);  
   const [calendarView, setCalendarView] = useState(false);
   const [showAddEntry, setShowAddEntry] = useState(false);
@@ -29,18 +29,18 @@ export default function Journal() {
 
   const journalId = pathname.split("/")[2];
   const { currentUser } = useAuth();
-  const baseUrl = process.env.SERVER_URL || "http://127.0.0.1:8080";
+  const serverUrl = process.env.SERVER_URL || "http://127.0.0.1:8080";
 
   useEffect(() => {
 
     if (currentUser) {
-      getJournalName();
+      getJournal();
       getEntryList();
     }
 
   }, [])
 
-  async function getJournalName() {
+  async function getJournal() {
     
     const token = await currentUser.getIdToken();
 
@@ -53,14 +53,14 @@ export default function Journal() {
       }
     }
 
-    const url = baseUrl + "/get-journal" + `?journalId=${journalId}`;
+    const url = serverUrl + "/get-journal" + `?journalId=${journalId}`;
     
     await fetch(url, options)
       .then((response) => {
           return response.json();
       })
       .then((result) => {
-        setJournalName(result.journalName);
+        setJournal(result);
       })
       .catch((error) => {
           console.log(error);
@@ -79,7 +79,7 @@ export default function Journal() {
         "Authorization": `Bearer ${token}`
       }
     }
-    const url = baseUrl + "/get-entries" + `?journalId=${journalId}`;
+    const url = serverUrl + "/get-entries" + `?journalId=${journalId}`;
 
     await fetch(url, options)
       .then((response) => {
@@ -106,7 +106,7 @@ export default function Journal() {
       },
       body: JSON.stringify(data)
     }
-    const url = baseUrl + "/add-entry";
+    const url = serverUrl + "/add-entry";
 
     await fetch(url, options)
       .then((response) => {
@@ -129,7 +129,7 @@ export default function Journal() {
         "Authorization": `Bearer ${token}`
       }
     }
-    const url = baseUrl + "/delete-entry" + `?entryId=${entryId}`;
+    const url = serverUrl + "/delete-entry" + `?entryId=${entryId}`;
 
     await fetch(url, options)
       .then((response) => {
@@ -152,14 +152,40 @@ export default function Journal() {
         "Authorization": `Bearer ${token}`
       }
     }
-    const journalUrl = baseUrl + "/delete-journal" + `?journalId=${journalId}`;
-    await fetch(journalUrl, options)
+    const url = serverUrl + "/delete-journal" + `?journalId=${journalId}`;
+    await fetch(url, options)
       .then((response) => {
         return response.text();
       })
       .catch((error) => {
         console.log(error);
       });
+
+  }
+
+  async function updateJournalNameToDB(journalName) {
+    
+    const token = await currentUser.getIdToken();
+    const data = {...journal, journalName: journalName};
+    const options = {
+      method: "PUT",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify(data)
+    }
+    const url = serverUrl + "/update-journal";
+    await fetch(url, options)
+      .then((response) => {
+        return response.text();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    
+    getJournal();
 
   }
 
@@ -214,7 +240,7 @@ export default function Journal() {
         <div className="flex flex-col px-36">
 
           <div className="flex flex-row justify-between my-10 mx-2 px-4">
-            <h2 className="text-2xl font-semibold">{journalName}</h2>
+            <h2 className="text-2xl font-semibold">{journal.journalName}</h2>
             <button 
               className="bg-white text-gray-500 rounded-md hover:scale-125 mx-4"
               onClick={() => setShowJournalForm(true)}
@@ -282,7 +308,7 @@ export default function Journal() {
           }
 
           {showJournalForm &&
-            <JournalForm journalName={journalName} setShowJournalForm={setShowJournalForm} setShowJournalDeleteConfirm={setShowJournalDeleteConfirm}/>
+            <JournalForm journalName={journal.journalName} setShowJournalForm={setShowJournalForm} setShowJournalDeleteConfirm={setShowJournalDeleteConfirm} updateJournalNameToDB={updateJournalNameToDB}/>
           }
       </div>
 
