@@ -191,6 +191,7 @@ export default function Journal() {
   function deleteJournal() {
     setShowJournalDeleteConfirm(false);
     deleteJournalFromDB(journalId);
+    setLoading(true);
     router.push(`/user/${currentUser.uid}`);
   }
 

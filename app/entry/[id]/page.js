@@ -26,6 +26,7 @@ export default function Entry() {
     const [posts, setPosts] = useState([]);
     const [showPostForm, setShowPostForm] = useState(false);
     const [postData, setPostData] = useState({});
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
 
@@ -220,10 +221,21 @@ export default function Entry() {
 
     }
 
+    function closeEntry() {
+        setLoading(true);
+        router.push(`/journal/${journalId}`);
+    }
+
     if (!currentUser) {
 
         return (
             <p className="py-4 px-36">Access denied.</p>
+        );
+
+    } else if (loading) {
+        
+        return (
+            <p className="py-4 px-36">Loading...</p>
         );
 
     } else {
@@ -239,7 +251,7 @@ export default function Entry() {
                     {journalId &&
                         <button 
                             className="text-gray-400 rounded-md mt-8 mr-12 hover:scale-125"
-                            onClick={() => router.push(`/journal/${journalId}`)}
+                            onClick={closeEntry}
                         >
                             <FontAwesomeIcon icon={faX} size="xl"/>
                         </button>
