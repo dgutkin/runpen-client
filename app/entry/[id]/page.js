@@ -5,14 +5,19 @@ import { usePathname, useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
-import { useAuth } from '../../context/auth-provider';
+import { useAuth } from '@/app/context/auth-provider';
+import AccessDenied from '@/app/components/AccessDenied';
+import Loader from '@/app/components/Loader';
+import { getJournalFromDB } from '@/app/api/journal-api';
+import { getEntryFromDB } from '@/app/api/entry-api';
+import { addPostToDB, deletePostFromDB, getPostsFromDB, updatePostToDB } from '@/app/api/post-api';
+
 import PostForm from './PostForm';
 import PostCard from './PostCard';
 
 export default function Entry() {
 
     const { currentUser } = useAuth();
-    const baseUrl = process.env.SERVER_URL || "http://127.0.0.1:8080";
 
     const pathname = usePathname();
     const entryId = pathname.split("/")[2];
@@ -21,11 +26,14 @@ export default function Entry() {
     const [entryDate, setEntryDate] = useState("");
     const [entryMood, setEntryMood] = useState("");
     const [entryEffort, setEntryEffort] = useState("");
+
     const [journalId, setJournalId] = useState("");
     const [journalName, setJournalName] = useState("");
+
     const [posts, setPosts] = useState([]);
     const [showPostForm, setShowPostForm] = useState(false);
     const [postData, setPostData] = useState({});
+
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -43,182 +51,49 @@ export default function Entry() {
 
     }, [journalId])
 
-    async function getEntryData() {
-
-        const token = await currentUser.getIdToken();
-        const options = {
-            method: "GET",
-            mode: "cors",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        }
-        const url = baseUrl + "/get-entry" + `?entryId=${entryId}`;
-        
-        await fetch(url, options)
-            .then((response) => {
-                return response.json();
-            })
-            .then((result) => {
-                const entryDateAsDate = new Date(result.entryDate);
-                const formattedDate = (entryDateAsDate).toLocaleString('en-us', {month: 'short', day: 'numeric', year: 'numeric'});
-                setEntryDate(formattedDate);
-                setEntryMood(result.emotion);
-                setEntryEffort(result.effort);
-                setJournalId(result.journalId);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-
+    function getEntryData() {
+        getEntryFromDB(currentUser, entryId).then((result) => {
+            const entryDateAsDate = new Date(result.entryDate);
+            const formattedDate = (entryDateAsDate).toLocaleString('en-us', {month: 'short', day: 'numeric', year: 'numeric'});
+            setEntryDate(formattedDate);
+            setEntryMood(result.emotion);
+            setEntryEffort(result.effort);
+            setJournalId(result.journalId);
+        });
+    }
+    
+    function getJournalName() {
+        getJournalFromDB(currentUser, journalId).then((result) => {
+            setJournalName(result.journalName);
+        });
     }
 
-    async function getJournalName() {
-
-        const token = await currentUser.getIdToken();
-        const options = {
-            method: "GET",
-            mode: "cors",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        }
-        const url = baseUrl + "/get-journal" + `?journalId=${journalId}`;
-        
-        await fetch(url, options)
-            .then((response) => {
-                return response.json();
-            })
-            .then((result) => {
-                setJournalName(result.journalName);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-
+    function getPostList() {
+        getPostsFromDB(currentUser, entryId).then((result) => {
+            setPosts(result);
+        });
     }
-
-    async function getPostList() {
-
-        const token = await currentUser.getIdToken();
-        const options = {
-        method: "GET",
-        mode: "cors",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-        }
-        }
-        const url = baseUrl + "/get-posts" + `?entryId=${entryId}`;
-
-        await fetch(url, options)
-            .then((response) => {
-                return response.json();
-            })
-            .then((result) => {
-                setPosts(result);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-
-    }
-
-    async function addPostToDB(data) {
-
-        const token = await currentUser.getIdToken();
-        const options = {
-            method: "POST",
-            mode: "cors",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify(data)
-        }
-        const url = baseUrl + "/add-post";
-
-        await fetch(url, options)
-            .then((response) => {
-                return response.text();
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-
-    }
-
-    async function updatePostToDB(data) {
-        
-        const token = await currentUser.getIdToken();
-        const options = {
-            method: "PUT",
-            mode: "cors",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify(data)
-        }
-        const url = baseUrl + "/update-post";
-
-        await fetch(url, options)
-            .then((response) => {
-                return response.text();
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-
-    }
-
-    async function deletePostFromDB(postId) {
-
-        const token = await currentUser.getIdToken();
-        const options = {
-        method: "DELETE",
-        mode: "cors",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-        }
-        }
-        const url = baseUrl + "/delete-post" + `?postId=${postId}`;
-
-        await fetch(url, options)
-            .then((response) => {
-                return response.text();
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-
-    }
+    
 
     function addPost(formData) {
-
         setShowPostForm(false);
-        addPostToDB(formData);
-        getPostList();
-
+        addPostToDB(currentUser, formData).then(() => {
+            getPostList();
+        });
     }
 
     function updatePost(formData) {
-
         setShowPostForm(false);
-        updatePostToDB(formData);
-        getPostList();
-
+        updatePostToDB(currentUser, formData).then(() => {
+            getPostList();
+        });
     }
 
     function deletePost(postId) {
-
         setShowPostForm(false);
-        deletePostFromDB(postId);
-        getPostList();
-
+        deletePostFromDB(currentUser, postId).then(() => {
+            getPostList();
+        });
     }
 
     function closeEntry() {
@@ -228,15 +103,11 @@ export default function Entry() {
 
     if (!currentUser) {
 
-        return (
-            <p className="py-4 px-36">Access denied.</p>
-        );
+        return <AccessDenied/>;
 
     } else if (loading) {
         
-        return (
-            <p className="py-4 px-36">Loading...</p>
-        );
+        return <Loader/>;
 
     } else {
 
@@ -275,14 +146,26 @@ export default function Entry() {
                         {
                             posts.map((item) => {
                                 return (
-                                    <PostCard key={item.postId} data={item} setShowPostForm={setShowPostForm} setPostData={setPostData}/>
+                                    <PostCard 
+                                        key={item.postId} 
+                                        data={item} 
+                                        setShowPostForm={setShowPostForm} 
+                                        setPostData={setPostData}
+                                    />
                                 );
                             })
                         }
                     </ul>
                 </div>
                 {showPostForm && 
-                    <PostForm addPost={addPost} updatePost={updatePost} deletePost={deletePost} setShowPostForm={setShowPostForm} entryId={entryId} postData={postData}/>
+                    <PostForm 
+                        addPost={addPost} 
+                        updatePost={updatePost}
+                        deletePost={deletePost} 
+                        setShowPostForm={setShowPostForm} 
+                        entryId={entryId} 
+                        postData={postData}
+                    />
                 }
             </div>
         );
