@@ -5,203 +5,115 @@ import { usePathname, useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 
-import { useAuth } from '../../context/auth-provider';
-import Calendar from '../../components/calendar.js';
-import EntryForm from './EntryForm';
-import DeleteConfirm from '../../components/DeleteConfirm';
-import EntryCard from './EntryCard';
+import { useAuth } from '@/app/context/auth-provider';
+import AccessDenied from '@/app/components/AccessDenied';
+import Loader from '@/app/components/Loader';
+import DeleteConfirm from '@/app/components/DeleteConfirm';
+import Calendar from '@/app/components/Calendar';
+import { getJournalFromDB, deleteJournalFromDB, updateJournalToDB } from '@/app/api/journal-api';
+import { getGoalsFromDB, addGoalToDB, deleteGoalFromDB, updateGoalToDB } from '@/app/api/goal-api';
+import { addEntryToDB, getEntriesFromDB } from '@/app/api/entry-api';
+
 import JournalForm from './JournalForm';
+import EntryForm from './EntryForm';
+import EntryCard from './EntryCard';
+import GoalForm from './GoalForm';
+import GoalCard from './GoalCard';
 
 export default function Journal() {
 
-  const [journal, setJournal] = useState("");  
+  const [journal, setJournal] = useState({}); 
+  const [showJournalDeleteConfirm, setShowJournalDeleteConfirm] = useState(false);
+  const [showJournalForm, setShowJournalForm] = useState(false);
+
   const [entries, setEntries] = useState([]);  
-  const [calendarView, setCalendarView] = useState(false);
   const [showAddEntry, setShowAddEntry] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [showJournalDeleteConfirm, setShowJournalDeleteConfirm] = useState(false);
   const [entryInFocus, setEntryInFocus] = useState("");
-  const [showJournalForm, setShowJournalForm] = useState(false);
+  
   const [loading, setLoading] = useState(false);
+  const [calendarView, setCalendarView] = useState(false);
+
+  const [showGoalForm, setShowGoalForm] = useState(false);
+  const [goals, setGoals] = useState([]);
+  const [goalInFocus, setGoalInFocus] = useState({});
 
   const pathname = usePathname();
   const router = useRouter();
 
   const journalId = pathname.split("/")[2];
   const { currentUser } = useAuth();
-  const serverUrl = process.env.SERVER_URL || "http://127.0.0.1:8080";
 
   useEffect(() => {
 
     if (currentUser) {
       getJournal();
+      getGoalList();
       getEntryList();
     }
 
   }, [])
 
-  async function getJournal() {
-    
-    const token = await currentUser.getIdToken();
-
-    const options = {
-      method: "GET",
-      mode: "cors",
-      headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-      }
-    }
-
-    const url = serverUrl + "/get-journal" + `?journalId=${journalId}`;
-    
-    await fetch(url, options)
-      .then((response) => {
-          return response.json();
-      })
-      .then((result) => {
-        setJournal(result);
-      })
-      .catch((error) => {
-          console.log(error);
-      });
-
+  function getJournal() {
+    getJournalFromDB(currentUser, journalId).then((result) => {
+      setJournal(result);
+    });
   }
 
   async function getEntryList() {
-
-    const token = await currentUser.getIdToken();
-    const options = {
-      method: "GET",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      }
-    }
-    const url = serverUrl + "/get-entries" + `?journalId=${journalId}`;
-
-    await fetch(url, options)
-      .then((response) => {
-        return response.json();
-      })
-      .then((result) => {
-        setEntries(result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
+    getEntriesFromDB(currentUser, journalId).then((result) => {
+      setEntries(result);
+    });
   }
 
-  async function addEntryToDB(data) {
-
-    const token = await currentUser.getIdToken();
-    const options = {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify(data)
-    }
-    const url = serverUrl + "/add-entry";
-
-    await fetch(url, options)
-      .then((response) => {
-        return response.text();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
+  function updateJournalName(journalName) {
+    updateJournalToDB(currentUser, journalName, journal).then(() => {
+      getJournal();
+    });
   }
 
-  async function deleteEntryFromDB(entryId) {
-
-    const token = await currentUser.getIdToken();
-    const options = {
-      method: "DELETE",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      }
-    }
-    const url = serverUrl + "/delete-entry" + `?entryId=${entryId}`;
-
-    await fetch(url, options)
-      .then((response) => {
-        return response.text();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
+  function deleteJournal() {
+    setShowJournalDeleteConfirm(false);
+    deleteJournalFromDB(currentUser, journalId).then(() => {
+      setLoading(true);
+      router.push(`/user/${currentUser.uid}`);
+    });
   }
 
-  async function deleteJournalFromDB(journalId) {
-
-    const token = await currentUser.getIdToken();
-    const options = {
-      method: "DELETE",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      }
-    }
-    const url = serverUrl + "/delete-journal" + `?journalId=${journalId}`;
-    await fetch(url, options)
-      .then((response) => {
-        return response.text();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
+  function getGoalList() {
+    getGoalsFromDB(currentUser, journalId).then((result) => {
+      setGoals(result);
+    });
   }
 
-  async function updateJournalNameToDB(journalName) {
-    
-    const token = await currentUser.getIdToken();
-    const data = {...journal, journalName: journalName};
-    const options = {
-      method: "PUT",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify(data)
-    }
-    const url = serverUrl + "/update-journal";
-    await fetch(url, options)
-      .then((response) => {
-        return response.text();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    
-    getJournal();
-
+  function addGoal(goalData) {
+    setShowGoalForm(false);
+    addGoalToDB(currentUser, goalData).then(() => {
+      getGoalList();
+    });
   }
 
-  function switchView() {
-      setCalendarView(!calendarView);
+  function updateGoal(goalData) {
+    setShowGoalForm(false);
+    updateGoalToDB(currentUser, goalData).then(() => {
+      getGoalList();
+    });
+  }
+
+  function deleteGoal(goalId) {
+    deleteGoalFromDB(currentUser, goalId).then(() => {
+      getGoalList();
+    });
   }
 
   function addEntry(formData) {
-
     setShowAddEntry(false);
-    addEntryToDB(formData);
-    getEntryList();
-
+    addEntryToDB(currentUser, formData).then(() => {
+      getEntryList();
+    });
   }
 
-  function editEntry(entryId) {
+  function openEntry(entryId) {
     setLoading(true);
     router.push(`/entry/${entryId}`);
   }
@@ -209,29 +121,23 @@ export default function Journal() {
   function deleteEntry() {
     if (entryInFocus) {
       setShowDeleteConfirm(false);
-      deleteEntryFromDB(entryInFocus);
-      getEntryList();
+      deleteEntryFromDB(currentUser, entryInFocus).then(() => {
+        getEntryList();
+      });
     }
   }
 
-  function deleteJournal() {
-    setShowJournalDeleteConfirm(false);
-    deleteJournalFromDB(journalId);
-    setLoading(true);
-    router.push(`/user/${currentUser.uid}`);
+  function switchView() {
+    setCalendarView(!calendarView);
   }
 
   if (!currentUser) {
 
-    return (
-      <p className="py-4 px-36">Access denied.</p>
-    );
+    return <AccessDenied/>;
 
   } else if (loading) {
 
-    return (
-      <p className="py-4 px-36">Loading...</p>
-    );
+    return <Loader/>;
   
   } else {
 
@@ -239,7 +145,7 @@ export default function Journal() {
 
         <div className="flex flex-col px-36">
 
-          <div className="flex flex-row justify-between my-10 mx-2 px-4">
+          <div className="flex flex-row justify-between my-10 px-4">
             <h2 className="text-2xl font-semibold">{journal.journalName}</h2>
             <button 
               className="bg-white text-gray-500 rounded-md hover:scale-125 mx-4"
@@ -251,7 +157,25 @@ export default function Journal() {
     
           <div className="my-2 px-8">
             <div className="flex flex-row justify-between">
-              <h2 className="text-2xl font-semibold mb-4 mr-6 text-gray-600">Entries</h2>
+              <h2 className="text-2xl font-semibold text-gray-600">Goals</h2>
+              <button 
+                  className="bg-dark-green text-white px-4 py-2 rounded-md hover:bg-yinmn-blue"
+                  onClick={() => {setShowGoalForm(true); setGoalInFocus({})}}
+                >
+                  Add Goal
+                </button>
+            </div>
+            <div className="flex flex-row mt-8">
+              {goals.map((item) => {
+                return <GoalCard key={item.goalId} data={item} setShowGoalForm={setShowGoalForm} setGoalInFocus={setGoalInFocus} deleteGoal={deleteGoal}/>
+              })
+              }
+            </div>
+        </div>
+          
+        <div className="my-8 px-8">
+          <div className="flex flex-row justify-between">
+              <h2 className="text-2xl font-semibold mb-4 text-gray-600">Entries</h2>
 
               <div>
                 <button 
@@ -269,47 +193,70 @@ export default function Journal() {
               </div>
 
             </div>
-              
-              <br/>
-              {
-              (!calendarView) ? 
-              <div className="flex flex-col mt-16 w-full">
-                  {
-                    entries.map((item) => {
-                      return (
-                        <EntryCard 
-                          key={item.entryId} 
-                          data={item} 
-                          editEntry={editEntry} 
-                          setEntryInFocus={setEntryInFocus} 
-                          setShowDeleteConfirm={setShowDeleteConfirm}
-                        />
-                      );
-                    })
-                  }
-              </div>
-              
-              :
-                  <Calendar/>
+            <div className="py-16">
+              {!calendarView ? 
+                <div className="flex flex-col w-full">
+                    {
+                      entries.map((item) => {
+                        return (
+                          <EntryCard 
+                            key={item.entryId} 
+                            data={item} 
+                            editEntry={openEntry} 
+                            setEntryInFocus={setEntryInFocus} 
+                            setShowDeleteConfirm={setShowDeleteConfirm}
+                          />
+                        );
+                      })
+                    }
+                </div>
+                :
+                <Calendar entries={entries}/>
               }
-            
+            </div>
           </div>
           
-          {showAddEntry &&
-            <EntryForm addEntry={addEntry} setShowAddEntry={setShowAddEntry} journalId={journalId} />
-          }
-
-          {showDeleteConfirm &&
-            <DeleteConfirm deleteAction={deleteEntry} setShowDeleteConfirm={setShowDeleteConfirm}/>
+          {showJournalForm &&
+            <JournalForm 
+              journalName={journal.journalName} 
+              setShowJournalForm={setShowJournalForm} 
+              setShowJournalDeleteConfirm={setShowJournalDeleteConfirm} 
+              updateJournalName={updateJournalName}
+            />
           }
 
           {showJournalDeleteConfirm &&
-            <DeleteConfirm deleteAction={deleteJournal} setShowDeleteConfirm={setShowJournalDeleteConfirm}/>
+            <DeleteConfirm 
+              deleteAction={deleteJournal} 
+              setShowDeleteConfirm={setShowJournalDeleteConfirm}
+            />
           }
 
-          {showJournalForm &&
-            <JournalForm journalName={journal.journalName} setShowJournalForm={setShowJournalForm} setShowJournalDeleteConfirm={setShowJournalDeleteConfirm} updateJournalNameToDB={updateJournalNameToDB}/>
+          {showGoalForm &&
+            <GoalForm 
+              addGoal={addGoal} 
+              updateGoal={updateGoal} 
+              setShowGoalForm={setShowGoalForm} 
+              journalId={journalId} 
+              goalInFocus={goalInFocus}
+            />
           }
+
+          {showAddEntry &&
+            <EntryForm 
+              addEntry={addEntry} 
+              setShowAddEntry={setShowAddEntry} 
+              journalId={journalId} 
+            />
+          }
+
+          {showDeleteConfirm &&
+            <DeleteConfirm 
+              deleteAction={deleteEntry} 
+              setShowDeleteConfirm={setShowDeleteConfirm}
+            />
+          }
+          
       </div>
 
     );
