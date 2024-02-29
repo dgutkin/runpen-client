@@ -17,8 +17,6 @@ export default function User() {
   const [userName, setUserName] = useState("");
   const [journals, setJournals] = useState([]);
   const [showAddJournal, setShowAddJournal] = useState(false);
-  // const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  // const [journalIdInFocus, setJournalIdInFocus] = useState("");
   const [loading, setLoading] = useState("");
 
   const { currentUser } = useAuth();
@@ -54,15 +52,6 @@ export default function User() {
     setLoading(true);
     router.push(`/journal/${journalId}`);
   }
-
-  // function deleteJournal() {
-  //   if (journalIdInFocus) {
-  //     setShowDeleteConfirm(false);
-  //     deleteJournalFromDB(currentUser, journalIdInFocus).then(() => {
-  //       getJournalList();
-  //     });
-  //   }
-  // }
   
   if (!currentUser) {
 
