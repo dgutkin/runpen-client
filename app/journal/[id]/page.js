@@ -30,6 +30,7 @@ export default function Journal() {
   const [showAddEntry, setShowAddEntry] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [entryInFocus, setEntryInFocus] = useState("");
+  const [newEntryDate, setNewEntryDate] = useState();
   
   const [loading, setLoading] = useState(false);
   const [calendarView, setCalendarView] = useState(false);
@@ -196,8 +197,7 @@ export default function Journal() {
             <div className="py-16">
               {!calendarView ? 
                 <div className="flex flex-col w-full">
-                    {
-                      entries.map((item) => {
+                    {entries.map((item) => {
                         return (
                           <EntryCard 
                             key={item.entryId} 
@@ -214,6 +214,8 @@ export default function Journal() {
                 <Calendar 
                   entries={entries}
                   setShowAddEntry={setShowAddEntry}
+                  setNewEntryDate={setNewEntryDate}
+                  openEntry={openEntry}
                 />
               }
             </div>
@@ -247,7 +249,8 @@ export default function Journal() {
 
           {showAddEntry &&
             <AddEntryForm 
-              addEntry={addEntry} 
+              newEntryDate={newEntryDate}
+              addEntry={addEntry}
               setShowAddEntry={setShowAddEntry} 
               journalId={journalId} 
             />

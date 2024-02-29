@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-function Calendar({ entries, setShowAddEntry }) {
+function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
 
     const todayMonth = new Date().getMonth() + 1;
     const todayYear = new Date().getFullYear();
@@ -32,7 +32,7 @@ function Calendar({ entries, setShowAddEntry }) {
     const [month, setMonth] = useState(todayMonth);
     const [year, setYear] = useState(todayYear);
     const [days, setDays] = useState([]);
-    const [entriesInMonth, setEntriesInMonth] = useState();
+    const [daysWithEntries, setDaysWithEntries] = useState({});
 
     const firstCardOfMonth = useRef();
 
@@ -42,8 +42,9 @@ function Calendar({ entries, setShowAddEntry }) {
 
     useEffect(() => {
         setFirstCardOfMonthOffset();
-    }, [days])
-
+        determineExistingEntries();
+    }, [days, entries])
+    
     useEffect(() => {
         setDays(calcDays(month));
     }, [month]);
@@ -53,6 +54,24 @@ function Calendar({ entries, setShowAddEntry }) {
             let firstDayOfMonth = new Date(year, month-1).getDay();
             firstCardOfMonth.current.style.gridColumnStart = firstDayOfMonth;
         }
+    }
+
+    function determineExistingEntries() {
+        const entriesInMonth = entries.filter((item) => {
+            return (
+                (new Date(item.entryDate).getMonth() == (month-1)) &&
+                    (new Date(item.entryDate).getFullYear() == year)
+            );
+        });
+        
+        const entriesInMonthDays = entriesInMonth.reduce((a,v) => {
+            const dayKey = new Date(v.entryDate).getDate();
+            return (
+                {...a, [dayKey]: v}
+            );
+        }, {});
+        
+        setDaysWithEntries(entriesInMonthDays);
     }
 
     function calcDays(month) {
@@ -77,6 +96,17 @@ function Calendar({ entries, setShowAddEntry }) {
         } else {
             setMonth(month - 1)
         }
+    }
+
+    function selectEntry(day) {
+        
+        if (daysWithEntries[day]) {
+            openEntry(daysWithEntries[day].entryId)
+        } else {
+            setNewEntryDate(new Date(year, month-1, day));
+            setShowAddEntry(true);
+        }
+
     }
 
     return (
@@ -106,23 +136,29 @@ function Calendar({ entries, setShowAddEntry }) {
                 {days.map((day) => {
                     if (day == 1) {
                         return (
-                            <div key={day} className={"border border-gray-200 rounded-md"} ref={firstCardOfMonth}>
+                            <div key={day} className={"border border-gray-200 rounded-md h-24 hover:animate-wiggle"} ref={firstCardOfMonth}>
                                 <button
-                                    className="w-full h-full p-4"
-                                    onClick={() => setShowAddEntry(true)}
+                                    className="w-full h-full p-4 flex flex-col"
+                                    onClick={() => selectEntry(day)}
                                 >
-                                    <p className="text-sm text-start font-semibold mb-8">{`${day}`}</p>
+                                    <p className="text-sm text-start font-semibold mb-2">{day}</p>
+                                    {(day in daysWithEntries) &&
+                                        <p className="text-sm text-start">{daysWithEntries[day].entryLabel}</p>
+                                    }
                                 </button>
                             </div>  
                         );
                     } else {
                         return (
-                            <div key={day} className="border border-gray-200 rounded-md">
+                            <div key={day} className="border border-gray-200 rounded-md h-24 hover:animate-wiggle">
                                 <button
-                                    className="w-full h-full p-4"
-                                    onClick={() => setShowAddEntry(true)}
+                                    className="w-full h-full p-4 flex flex-col"
+                                    onClick={() => selectEntry(day)}
                                 >
-                                    <p className="text-sm text-start font-semibold mb-8">{`${day}`}</p>
+                                    <p className="text-sm text-start font-semibold mb-2">{day}</p>
+                                    {(day in daysWithEntries) &&
+                                        <p className="text-sm text-start">{daysWithEntries[day].entryLabel}</p>
+                                    }
                                 </button>
                             </div>
                         );
