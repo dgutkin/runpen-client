@@ -10,15 +10,15 @@ function EntryForm({ entryIn, updateEntry, setShowEntryForm, setShowEntryDeleteC
     const [entryEffort, setEntryEffort] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
-    const highEffort = useRef();
+    const hardEffort = useRef();
     const goodEffort = useRef();
     const lightEffort = useRef();
 
     useEffect(() => {
         setEntryLabel(entryIn.entryLabel);
         setEntryEffort(entryIn.entryEffort);
-        if (entryIn.entryEffort == "High") {
-            highEffort.current.focus();
+        if (entryIn.entryEffort == "Hard") {
+            hardEffort.current.focus();
         } else if (entryIn.entryEffort == "Good") {
             goodEffort.current.focus();
         } else {
@@ -59,13 +59,14 @@ function EntryForm({ entryIn, updateEntry, setShowEntryForm, setShowEntryDeleteC
 
         <div className="fixed inset-0 flex items-center justify-center">
             <div className="fixed inset-0 bg-black opacity-50"></div>
-            <div className="bg-white overflow-y-auto w-[35%] h-[40%] shadow-2xl border border-gray rounded-md p-4 m-10 z-10">
+            <div className="bg-white overflow-y-auto w-[35%] min-w-fit h-[40%] min-h-fit shadow-2xl border border-gray rounded-md p-4 m-10 z-10">
                 <form className="flex flex-col">
                     
                     <div className="flex flex-row justify-between">
                         <h2 className="text-xl font-semibold px-2">Entry</h2>
                         <button 
                             className="text-gray-500"
+                            type="button"
                             onClick={() => setShowEntryForm(false)}
                         >
                             <FontAwesomeIcon icon={faX} size="lg"/>
@@ -90,7 +91,7 @@ function EntryForm({ entryIn, updateEntry, setShowEntryForm, setShowEntryDeleteC
                         <button 
                             className="text-black bg-gray-200 focus:bg-dark-green focus:text-white mx-1 p-2 rounded-md" 
                             type="button"
-                            ref={highEffort}
+                            ref={hardEffort}
                             onClick={() => setEntryEffort("Hard")}
                         >
                             Hard
