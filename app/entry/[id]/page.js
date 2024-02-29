@@ -121,12 +121,11 @@ export default function Entry() {
                     
                     {journalId &&
                         <button 
-                            className="text-gray-400 rounded-md mt-8 mr-12 hover:scale-125"
+                            className="text-gray-400 rounded-md mr-12 hover:scale-125"
                             onClick={closeEntry}
                         >
                             <FontAwesomeIcon icon={faX} size="xl"/>
                         </button>
-                        
                     }
                 </div>
                 <div className="flex flex-col p-8">
