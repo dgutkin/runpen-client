@@ -1,6 +1,8 @@
 
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faX } from '@fortawesome/free-solid-svg-icons';
 
 function PostForm({addPost, updatePost, deletePost, setShowPostForm, entryId, postData}) {
 
@@ -73,11 +75,17 @@ function PostForm({addPost, updatePost, deletePost, setShowPostForm, entryId, po
     return (
       <div className="fixed inset-0 flex items-center justify-center">
         <div className="fixed inset-0 bg-black opacity-50"></div>
-        <div className="bg-white overflow-y-auto w-[70%] h-[60%] shadow-2xl border border-gray rounded-md p-4 m-10 z-10">
+        <div className="bg-white overflow-y-auto w-[70%] h-[65%] shadow-2xl border border-gray rounded-md p-4 m-10 z-10">
           <div className="flex flex-col">
             <div className="flex flex-row justify-between">
               <h2 className="text-xl font-semibold">Post</h2>
-              <button className="bg-red-500 text-white p-2 rounded-md" onClick={removePost}>Delete</button>
+              <button 
+                className="text-gray-600"
+                type="button"
+                onClick={cancelPost}
+              >
+                <FontAwesomeIcon icon={faX} size="xl"/>
+              </button>
             </div>
             <div className="my-6 mx-6">
                 <input 
@@ -105,7 +113,13 @@ function PostForm({addPost, updatePost, deletePost, setShowPostForm, entryId, po
                 <p className="text-xs text-gray-200 mx-1">Word count limit is 200.</p>
             </div>
   
-            <div className="flex flex-row my-3 mx-6">
+            <div className="flex flex-row my-3 mx-6 justify-between">
+                <button 
+                  className="bg-red-500 text-white p-2 rounded-md w-[25%]" 
+                  onClick={removePost}
+                >
+                  Delete Post
+                </button>
                 <button
                   className="bg-dark-green text-white w-[25%] px-4 py-2 mx-2 rounded-md hover:bg-yinmn-blue" 
                   type="button"
@@ -113,13 +127,13 @@ function PostForm({addPost, updatePost, deletePost, setShowPostForm, entryId, po
                 >
                 {Object.keys(postData).length ? "Update" : "Post"}
                 </button>
-                <button 
+                {/* <button 
                   className="bg-dark-green text-white w-[25%] px-4 py-2 mx-2 rounded-md hover:bg-yinmn-blue" 
                   type="button"
                   onClick={cancelPost}
                 >
                 Cancel
-                </button>
+                </button> */}
             </div>
             <p className="my-2 mx-6 text-sm text-red-600">{errorMessage}</p>
           </div>
