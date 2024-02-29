@@ -12,7 +12,7 @@ import DeleteConfirm from '@/app/components/DeleteConfirm';
 import Calendar from '@/app/components/Calendar';
 import { getJournalFromDB, deleteJournalFromDB, updateJournalToDB } from '@/app/api/journal-api';
 import { getGoalsFromDB, addGoalToDB, deleteGoalFromDB, updateGoalToDB } from '@/app/api/goal-api';
-import { addEntryToDB, getEntriesFromDB } from '@/app/api/entry-api';
+import { addEntryToDB, getEntriesFromDB, deleteEntryFromDB } from '@/app/api/entry-api';
 
 import JournalForm from './JournalForm';
 import EntryForm from './EntryForm';
