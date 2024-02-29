@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
-function JournalForm({journalName, setShowJournalForm, setShowJournalDeleteConfirm, updateJournalNameToDB}) {
+function JournalForm({journalName, setShowJournalForm, setShowJournalDeleteConfirm, updateJournalName}) {
 
     const [journalTitle, setJournalTitle] = useState("");
 
@@ -19,7 +19,7 @@ function JournalForm({journalName, setShowJournalForm, setShowJournalDeleteConfi
 
     function updateJournalTitle() {
         setShowJournalForm(false);
-        updateJournalNameToDB(journalTitle);
+        updateJournalName(journalTitle);
     }
 
     return (
@@ -51,7 +51,7 @@ function JournalForm({journalName, setShowJournalForm, setShowJournalDeleteConfi
                     Update
                 </button>
                 <button 
-                    className="bg-red-600 text-white rounded-md p-2 mt-8 w-1/4" 
+                    className="bg-red-600 text-white rounded-md p-2 mt-8 w-1/3" 
                     onClick={openDeleteConfirm}
                 >
                     Delete Journal
