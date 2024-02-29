@@ -40,7 +40,7 @@ function PostForm({addPost, updatePost, deletePost, setShowPostForm, entryId, po
       const data = {
         postTitle: postTitle,
         postText: postText,
-        postId: update? postData.postId : uuidv4(),
+        postId: update? postData.postId : "P-" + uuidv4(),
         entryId: entryId
       }
 

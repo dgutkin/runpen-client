@@ -70,7 +70,7 @@ async function addJournalToDB(currentUser, journalName) {
     const data = {
       journalName: journalName,
       createdDate: new Date().toLocaleDateString('en-us', {year: "numeric", month: "short", day: "numeric"}),
-      journalId: uuidv4(),
+      journalId: "J-" + uuidv4(),
       uid: currentUser.uid
     }
 

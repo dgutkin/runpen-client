@@ -30,7 +30,7 @@ function GoalForm({ addGoal, updateGoal, setShowGoalForm, journalId, goalInFocus
   
       const data = {
         goalText: goalText,
-        goalId: update? goalInFocus.goalId : uuidv4(),
+        goalId: update? goalInFocus.goalId : "G-" + uuidv4(),
         journalId: journalId
       }
 
