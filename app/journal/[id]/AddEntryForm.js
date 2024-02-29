@@ -3,11 +3,11 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-function EntryForm({addEntry, setShowAddEntry, journalId}) {
+function AddEntryForm({addEntry, setShowAddEntry, journalId}) {
 
     const [entryDate, setEntryDate] = useState("");
-    const [emotion, setEmotion] = useState("");
-    const [effort, setEffort] = useState(3);
+    const [entryLabel, setEntryLabel] = useState("");
+    const [entryEffort, setEntryEffort] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
   
     function submitEntry() {
@@ -17,18 +17,22 @@ function EntryForm({addEntry, setShowAddEntry, journalId}) {
       if (entryDate === "" || Date.parse(entryDate) > new Date()) {
         setErrorMessage("Entry date is invalid.");
         return;
-      } else if (emotion === "") {
+      } else if (entryLabel.length > 50) {
+        setErrorMessage("Label exceeds character limit.");
+        return;
+      } else if (entryEffort == "" || entryLabel == "") {
         setErrorMessage("Form isn't complete.");
         return;
       }
   
       const data = {
         entryDate: entryDate,
-        emotion: emotion,
-        effort: effort,
-        entryId: uuidv4(),
+        entryLabel: entryLabel,
+        entryEffort: entryEffort,
+        entryId: "E-" + uuidv4(),
         journalId: journalId
       }
+      
       addEntry(data);
   
     }
@@ -38,61 +42,58 @@ function EntryForm({addEntry, setShowAddEntry, journalId}) {
         <div className="fixed inset-0 bg-black opacity-50"></div>
         <div className="bg-white overflow-y-auto w-[45%] h-[55%] shadow-2xl border border-gray rounded-md p-4 m-10 z-10">
           <form className="flex flex-col">
-            <h2 className="text-xl font-semibold">New Entry</h2>
+            <h2 className="text-xl font-semibold px-2">Add Entry</h2>
             <div className="my-6 mx-6">
               <label 
                 htmlFor="date" 
                 className="text-md mb-2 mr-14"
               >
-                What's the date for the entry?
+                Date
               </label>
               <input 
                 type="date" 
                 id="date" 
                 name="date" 
-                className="w-[40%] bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="w-[40%] bg-gray-100 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 onInput={(e) => setEntryDate(e.target.value)}
               />
             </div>
+
+            <div className="m-6">
+              <label htmlFor="label" className="text-md mb-2 mr-12">Label</label>
+              <input
+                type="text"
+                id="label"
+                name="label"
+                className="p-2 border rounded-md w-1/2"
+                onInput={(e) => setEntryLabel(e.target.value)}
+              />
+              <p className="text-sm text-gray-200 ml-24">Character limit of 50.</p>
+            </div>
   
             <div className="my-6 mx-6">
-              <label className="text-md mr-16">How did the day go overall?</label>
+              <label className="text-md mr-10">Intensity</label>
               <button 
                 className="text-black bg-gray-200 focus:bg-dark-green focus:text-white mx-1 p-2 rounded-md" 
                 type="button"
-                onClick={() => setEmotion("Great")}
+                onClick={() => setEntryEffort("Hard")}
               >
-                Great
+                Hard
               </button>
               <button 
                 className="text-black bg-gray-200 focus:bg-dark-green focus:text-white mx-1 p-2 rounded-md" 
                 type="button" 
-                onClick={() => setEmotion("So-so")}
+                onClick={() => setEntryEffort("Good")}
               >
-                So-so
+                Good
               </button>
               <button 
                 className="text-black bg-gray-200 focus:bg-dark-green focus:text-white mx-1 p-2 rounded-md" 
                 type="button" 
-                onClick={() => setEmotion("Not so good")}
+                onClick={() => setEntryEffort("Light")}
               >
-                Not so good
+                Light
               </button>
-            </div>
-  
-            <div className="my-6 mx-6 flex items-center">
-              <label htmlFor="effort" className="mr-10">How much effort did you put in?</label>
-              <input 
-                type="range" 
-                id="effort" 
-                name="rating" 
-                min="1" 
-                max="5" 
-                step="1" 
-                className="slider appearance-none bg-gray-200 h-1 w-32 rounded-lg" 
-                onInput={(e) => setEffort(e.target.value)}
-              />
-              <output htmlFor="effort" className="ml-2 text-gray-700">{effort}</output>
             </div>
   
             <div className="flex flex-row my-6 mx-6">
@@ -119,5 +120,5 @@ function EntryForm({addEntry, setShowAddEntry, journalId}) {
     );
   }
 
-  export default EntryForm;
+  export default AddEntryForm;
   

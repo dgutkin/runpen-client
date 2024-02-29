@@ -15,7 +15,7 @@ import { getGoalsFromDB, addGoalToDB, deleteGoalFromDB, updateGoalToDB } from '@
 import { addEntryToDB, getEntriesFromDB, deleteEntryFromDB } from '@/app/api/entry-api';
 
 import JournalForm from './JournalForm';
-import EntryForm from './EntryForm';
+import AddEntryForm from './AddEntryForm';
 import EntryCard from './EntryCard';
 import GoalForm from './GoalForm';
 import GoalCard from './GoalCard';
@@ -243,7 +243,7 @@ export default function Journal() {
           }
 
           {showAddEntry &&
-            <EntryForm 
+            <AddEntryForm 
               addEntry={addEntry} 
               setShowAddEntry={setShowAddEntry} 
               journalId={journalId} 
