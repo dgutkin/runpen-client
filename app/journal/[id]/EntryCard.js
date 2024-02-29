@@ -17,7 +17,8 @@ function EntryCard({data, editEntry, setEntryInFocus, setShowDeleteConfirm}) {
                 className="w-full p-4 transition-opacity duration-300 ease-in-out opacity-100 group-hover:opacity-100" 
                 onClick={() => editEntry(data.entryId)}
             >
-                <div className="text-md text-black text-start">
+                <div className="flex flex-row gap-4">
+                    <p className="text-md font-semibold w-36 text-start">{data.entryLabel}</p>
                     {new Date(data.entryDate).toLocaleDateString('en-us', {month:'short', day:'numeric', year:'numeric'})}
                 </div>
             </button>
