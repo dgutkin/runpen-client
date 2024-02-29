@@ -9,7 +9,6 @@ import { useAuth } from '@/app/context/auth-provider';
 import AccessDenied from '@/app/components/AccessDenied';
 import Loader from '@/app/components/Loader';
 import DeleteConfirm from '@/app/components/DeleteConfirm';
-import Calendar from '@/app/components/Calendar';
 import { getJournalFromDB, deleteJournalFromDB, updateJournalToDB } from '@/app/api/journal-api';
 import { getGoalsFromDB, addGoalToDB, deleteGoalFromDB, updateGoalToDB } from '@/app/api/goal-api';
 import { addEntryToDB, getEntriesFromDB, deleteEntryFromDB } from '@/app/api/entry-api';
@@ -19,6 +18,7 @@ import AddEntryForm from './AddEntryForm';
 import EntryCard from './EntryCard';
 import GoalForm from './GoalForm';
 import GoalCard from './GoalCard';
+import Calendar from './Calendar';
 
 export default function Journal() {
 

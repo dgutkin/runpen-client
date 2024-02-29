@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-export default function Calendar({ entries, setShowAddEntry }) {
+function Calendar({ entries, setShowAddEntry }) {
 
     const todayMonth = new Date().getMonth() + 1;
     const todayYear = new Date().getFullYear();
@@ -134,3 +134,5 @@ export default function Calendar({ entries, setShowAddEntry }) {
     );
 
 }
+
+export default Calendar;
