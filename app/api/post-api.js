@@ -72,7 +72,7 @@ async function deletePostFromDB(currentUser, postId) {
       }
     }
 
-    const url = serverUrl + "/delete-entry" + `?postId=${postId}`;
+    const url = serverUrl + "/delete-post" + `?postId=${postId}`;
 
     const response = await fetch(url, options)
       .then((response) => {
