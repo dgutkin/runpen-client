@@ -1,11 +1,6 @@
 'use client'
 
-export function JournalCard({data, editJournal, setJournalInFocus, setShowDeleteConfirm}) {
-
-  function openDeleteConfirm() {
-    setJournalInFocus(data.journalId);
-    setShowDeleteConfirm(true);
-  }
+export function JournalCard({ data, openJournal }) {
 
   return (
 
@@ -13,7 +8,7 @@ export function JournalCard({data, editJournal, setJournalInFocus, setShowDelete
       
       <button 
         className="w-full h-full p-4 flex flex-col" 
-        onClick={() => editJournal(data.journalId)}
+        onClick={() => openJournal(data.journalId)}
       >
         <h3 className="text-md font-bold text-start">{data.journalName}</h3>
         <p className="text-sm text-start my-2">Created: {data.createdDate}</p> 
