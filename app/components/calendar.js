@@ -1,10 +1,10 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-export default function Calendar({ entries }) {
+export default function Calendar({ entries, setShowAddEntry }) {
 
     const todayMonth = new Date().getMonth() + 1;
     const todayYear = new Date().getFullYear();
@@ -32,13 +32,28 @@ export default function Calendar({ entries }) {
     const [month, setMonth] = useState(todayMonth);
     const [year, setYear] = useState(todayYear);
     const [days, setDays] = useState([]);
-    const [firstDayOfMonth, setFirstDayOfMonth] = useState();
     const [entriesInMonth, setEntriesInMonth] = useState();
+
+    const firstCardOfMonth = useRef();
 
     useEffect(() => {
         setDays(calcDays(month));
-        setFirstDayOfMonth(new Date(year, month-1).getDay());
+    }, []);
+
+    useEffect(() => {
+        setFirstCardOfMonthOffset();
+    }, [days])
+
+    useEffect(() => {
+        setDays(calcDays(month));
     }, [month]);
+
+    function setFirstCardOfMonthOffset() {
+        if (firstCardOfMonth.current) {
+            let firstDayOfMonth = new Date(year, month-1).getDay();
+            firstCardOfMonth.current.style.gridColumnStart = firstDayOfMonth;
+        }
+    }
 
     function calcDays(month) {
         return Array.from(
@@ -90,53 +105,25 @@ export default function Calendar({ entries }) {
                 })}
                 {days.map((day) => {
                     if (day == 1) {
-                        if (firstDayOfMonth == 1) {
-                            return (
-                                <div key={day} className={"p-4 border border-gray-200 rounded-md col-start-1"}>
-                                    <p className="text-sm font-bold mb-8">{`${day}`}</p>
-                                </div>  
-                            );
-                        } else if (firstDayOfMonth == 2) {
-                            return (
-                                <div key={day} className={"p-4 border border-gray-200 rounded-md col-start-2"}>
-                                    <p className="text-sm font-bold mb-8">{`${day}`}</p>
-                                </div>  
-                            );
-                        } else if (firstDayOfMonth == 3) {
-                            return (
-                                <div key={day} className={"p-4 border border-gray-200 rounded-md col-start-3"}>
-                                    <p className="text-sm font-bold mb-8">{`${day}`}</p>
-                                </div>  
-                            );
-                        } else if (firstDayOfMonth == 4) {
-                            return (
-                                <div key={day} className={"p-4 border border-gray-200 rounded-md col-start-4"}>
-                                    <p className="text-sm font-bold mb-8">{`${day}`}</p>
-                                </div>  
-                            );
-                        } else if (firstDayOfMonth == 5) {
-                            return (
-                                <div key={day} className={"p-4 border border-gray-200 rounded-md col-start-5"}>
-                                    <p className="text-sm font-bold mb-8">{`${day}`}</p>
-                                </div>  
-                            );
-                        } else if (firstDayOfMonth == 6) {
-                            return (
-                                <div key={day} className={"p-4 border border-gray-200 rounded-md col-start-6"}>
-                                    <p className="text-sm font-bold mb-8">{`${day}`}</p>
-                                </div>  
-                            );
-                        } else {
-                            return (
-                                <div key={day} className={"p-4 border border-gray-200 rounded-md col-start-7"}>
-                                    <p className="text-sm font-bold mb-8">{`${day}`}</p>
-                                </div>  
-                            );
-                        }
+                        return (
+                            <div key={day} className={"border border-gray-200 rounded-md"} ref={firstCardOfMonth}>
+                                <button
+                                    className="w-full h-full p-4"
+                                    onClick={() => setShowAddEntry(true)}
+                                >
+                                    <p className="text-sm text-start font-semibold mb-8">{`${day}`}</p>
+                                </button>
+                            </div>  
+                        );
                     } else {
                         return (
-                            <div key={day} className="p-4 border border-gray-200 rounded-md">
-                                <p className="text-sm font-bold mb-8">{`${day}`}</p>
+                            <div key={day} className="border border-gray-200 rounded-md">
+                                <button
+                                    className="w-full h-full p-4"
+                                    onClick={() => setShowAddEntry(true)}
+                                >
+                                    <p className="text-sm text-start font-semibold mb-8">{`${day}`}</p>
+                                </button>
                             </div>
                         );
                     }

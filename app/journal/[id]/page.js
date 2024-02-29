@@ -211,7 +211,10 @@ export default function Journal() {
                     }
                 </div>
                 :
-                <Calendar entries={entries}/>
+                <Calendar 
+                  entries={entries}
+                  setShowAddEntry={setShowAddEntry}
+                />
               }
             </div>
           </div>
