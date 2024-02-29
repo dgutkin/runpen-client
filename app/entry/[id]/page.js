@@ -3,15 +3,18 @@
 import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faX } from '@fortawesome/free-solid-svg-icons';
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faPencil } from '@fortawesome/free-solid-svg-icons';
 
 import { useAuth } from '@/app/context/auth-provider';
 import AccessDenied from '@/app/components/AccessDenied';
 import Loader from '@/app/components/Loader';
+import DeleteConfirm from '@/app/components/DeleteConfirm';
 import { getJournalFromDB } from '@/app/api/journal-api';
-import { getEntryFromDB } from '@/app/api/entry-api';
+import { deleteEntryFromDB, getEntryFromDB, updateEntryToDB } from '@/app/api/entry-api';
 import { addPostToDB, deletePostFromDB, getPostsFromDB, updatePostToDB } from '@/app/api/post-api';
 
+import EntryForm from './EntryForm';
 import PostForm from './PostForm';
 import PostCard from './PostCard';
 
@@ -23,9 +26,10 @@ export default function Entry() {
     const entryId = pathname.split("/")[2];
     const router = useRouter();
 
-    const [entryDate, setEntryDate] = useState("");
-    const [entryMood, setEntryMood] = useState("");
-    const [entryEffort, setEntryEffort] = useState("");
+    const [entryDateFormatted, setEntryDateFormatted] = useState("");
+    const [entry, setEntry] = useState("");
+    const [showEntryForm, setShowEntryForm] = useState(false);
+    const [showEntryDeleteConfirm, setShowEntryDeleteConfirm] = useState(false);
 
     const [journalId, setJournalId] = useState("");
     const [journalName, setJournalName] = useState("");
@@ -51,20 +55,32 @@ export default function Entry() {
 
     }, [journalId])
 
+    function getJournalName() {
+        getJournalFromDB(currentUser, journalId).then((result) => {
+            setJournalName(result.journalName);
+        });
+    }
+
     function getEntryData() {
         getEntryFromDB(currentUser, entryId).then((result) => {
             const entryDateAsDate = new Date(result.entryDate);
             const formattedDate = (entryDateAsDate).toLocaleString('en-us', {month: 'short', day: 'numeric', year: 'numeric'});
-            setEntryDate(formattedDate);
-            setEntryMood(result.emotion);
-            setEntryEffort(result.effort);
+            setEntryDateFormatted(formattedDate);
+            setEntry(result);
             setJournalId(result.journalId);
         });
     }
-    
-    function getJournalName() {
-        getJournalFromDB(currentUser, journalId).then((result) => {
-            setJournalName(result.journalName);
+
+    function updateEntry(formData) {
+        setShowEntryForm(false);
+        updateEntryToDB(currentUser, formData).then(() => {
+            getEntryData();
+        });
+    }
+
+    function deleteEntry() {
+        deleteEntryFromDB(currentUser, entryId).then(() => {
+            closeEntry();
         });
     }
 
@@ -115,25 +131,42 @@ export default function Entry() {
             <div className="px-36">
                 <div className="flex flex-row justify-between">
                     <div>
-                        <h1 className="text-2xl font-bold ml-8 mt-8">{entryDate}</h1>
-                        <h3 className="text-xl text-gray-600 font-bold ml-8 mt-2">{journalName}</h3>
+                        <h3 className="text-xl font-semibold ml-8 mt-8">{entryDateFormatted}</h3>
+                        <h3 className="text-xl text-gray-600 font-semibold ml-8 mt-2">{journalName}</h3>
                     </div>
-                    
                     {journalId &&
-                        <button 
-                            className="text-gray-400 rounded-md mr-12 hover:scale-125"
-                            onClick={closeEntry}
-                        >
-                            <FontAwesomeIcon icon={faX} size="xl"/>
-                        </button>
+                        <div className="flex flex-row">
+                            <button 
+                                className="text-gray-500 rounded-md mr-6 hover:scale-125"
+                                onClick={() => setShowEntryForm(true)}
+                            >
+                                <FontAwesomeIcon icon={faPencil} size="2xl"/>
+                            </button>
+                            <button 
+                                className="text-gray-500 rounded-md mr-12 hover:scale-125"
+                                onClick={closeEntry}
+                            >
+                                <FontAwesomeIcon icon={faRightFromBracket} size="2xl"/>
+                            </button> 
+                        </div>
                     }
                 </div>
                 <div className="flex flex-col p-8">
-                    <h3 className="text-xl text-gray-500 font-bold mb-4">Summary</h3>
-                    <p className="my-2 px-2">You're feeling {entryMood} and you put in {entryEffort} levels of effort. Great job!</p>
-                    <p className="my-2 px-2 italic">Today's Quote: Insert AI-generated quote here.</p>
+                    <h2 className="text-2xl text-black font-bold mb-4">{entry.entryLabel}</h2>
                     <div className="flex flex-row justify-between">
-                        <h3 className="text-xl text-gray-500 font-bold mt-4">Posts</h3>
+                        <p className="my-2 px-2 italic">Today's Quote: Insert AI-generated quote here.</p>
+                        {(entry.entryEffort == "Hard") &&
+                            <p className="my-2 mx-4 p-2 px-4 bg-red-600 text-white">{entry.entryEffort} Intensity</p>
+                        }
+                        {(entry.entryEffort == "Good") && 
+                            <p className="my-2 mx-4 p-2 px-4 bg-green-600 text-white">{entry.entryEffort} Intensity</p>
+                        }
+                        {(entry.entryEffort == "Light") && 
+                            <p className="my-2 mx-4 p-2 px-4 bg-gray-600 text-white">{entry.entryEffort} Intensity</p>
+                        }
+                    </div>
+                    <div className="flex flex-row justify-between mt-12">
+                        <h3 className="text-xl text-gray-500 font-bold">Posts</h3>
                         <button 
                             className="bg-dark-green text-white p-2 mx-4 rounded-md h-1/2 hover:bg-yinmn-blue"
                             onClick={() => {setShowPostForm(true); setPostData({})}}
@@ -156,6 +189,7 @@ export default function Entry() {
                         }
                     </ul>
                 </div>
+
                 {showPostForm && 
                     <PostForm 
                         addPost={addPost} 
@@ -165,6 +199,24 @@ export default function Entry() {
                         entryId={entryId} 
                         postData={postData}
                     />
+                }
+
+                {showEntryForm &&
+                    <EntryForm
+                        entryIn={entry}
+                        updateEntry={updateEntry}
+                        setShowEntryForm={setShowEntryForm}
+                        setShowEntryDeleteConfirm={setShowEntryDeleteConfirm}
+                    />
+
+                }
+
+                {showEntryDeleteConfirm &&
+                    <DeleteConfirm
+                        deleteAction={deleteEntry}
+                        setShowDeleteConfirm={setShowEntryDeleteConfirm}
+                    />
+
                 }
             </div>
         );

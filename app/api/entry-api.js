@@ -116,11 +116,9 @@ async function deleteEntryFromDB(currentUser, entryId) {
 
 }
 
-async function updateEntryToDB(currentUser, entryEffort, oldEntry) {
+async function updateEntryToDB(currentUser, newEntry) {
 
     const token = await currentUser.getIdToken();
-
-    const data = {...oldEntry, effort: entryEffort};
 
     const options = {
       method: "PUT",
@@ -129,7 +127,7 @@ async function updateEntryToDB(currentUser, entryEffort, oldEntry) {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(newEntry)
     }
 
     const url = serverUrl + "/update-entry";
