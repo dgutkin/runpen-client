@@ -87,11 +87,9 @@ async function deleteGoalFromDB(currentUser, goalId) {
 
 }
 
-async function updateGoalToDB(currentUser, goalText, oldGoal) {
+async function updateGoalToDB(currentUser, newGoal) {
 
   const token = await currentUser.getIdToken();
-
-  const data = {...oldGoal, goalText: goalText};
 
   const options = {
     method: "PUT",
@@ -100,7 +98,7 @@ async function updateGoalToDB(currentUser, goalText, oldGoal) {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${token}`
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(newGoal)
   }
 
   const url = serverUrl + "/update-goal";
