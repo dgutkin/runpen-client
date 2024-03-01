@@ -156,7 +156,7 @@ export default function Journal() {
             </button>
           </div>
 
-          <div className="flex flex-row gap-12">
+          <div className="flex flex-row gap-12 mb-8">
 
             <div className="mb-8 px-4 flex flex-col w-1/3">
               <div className="flex flex-row justify-between">

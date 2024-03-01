@@ -142,9 +142,10 @@ export default function Entry() {
 
         return (
             <div className="px-36">
+                <div className="border shadow-md rounded-md my-6 pb-16">
                 <div className="flex flex-row justify-between">
                     <div>
-                        <h3 className="text-xl font-semibold ml-8 mt-8">{entryDateFormatted}</h3>
+                        <h3 className="text-xl font-bold ml-8 mt-8">{entryDateFormatted}</h3>
                         <h3 className="text-xl text-gray-600 font-semibold ml-8 mt-2">{journalName}</h3>
                     </div>
                     {journalId &&
@@ -156,7 +157,7 @@ export default function Entry() {
                                 <FontAwesomeIcon icon={faPencil} size="2xl"/>
                             </button>
                             <button 
-                                className="text-gray-500 rounded-md mr-12 hover:scale-125"
+                                className="text-gray-500 rounded-md mr-8 hover:scale-125"
                                 onClick={closeEntry}
                             >
                                 <FontAwesomeIcon icon={faRightFromBracket} size="2xl"/>
@@ -171,13 +172,13 @@ export default function Entry() {
                             "Every step you take in running is a stride towards greatness. Embrace the challenge, push through the pain, and let the rhythm of your feet carry you to your dreams."
                         </p>
                         {(entry.entryEffort == "Hard") &&
-                            <p className="my-2 mx-4 py-4 px-4 bg-red-600 text-white">{entry.entryEffort} Intensity</p>
+                            <p className="my-2 mx-2 p-4 text-red-600 font-bold">{entry.entryEffort} Intensity Day</p>
                         }
                         {(entry.entryEffort == "Good") && 
-                            <p className="my-2 mx-4 py-4 px-4 bg-green-600 text-white">{entry.entryEffort} Intensity</p>
+                            <p className="my-2 mx-2 p-4 text-green-600 font-bold">{entry.entryEffort} Intensity Day</p>
                         }
                         {(entry.entryEffort == "Light") && 
-                            <p className="my-2 mx-4 py-4 px-4 bg-gray-600 text-white">{entry.entryEffort} Intensity</p>
+                            <p className="my-2 mx-2 p-4 text-gray-600 font-bold">{entry.entryEffort} Intensity Day</p>
                         }
                     </div>
                     <div className="flex flex-row justify-between mt-12">
@@ -207,6 +208,7 @@ export default function Entry() {
                         }
                     </ul>
                     }
+                    </div>
                 </div>
 
                 {showPostForm && 
