@@ -4,9 +4,28 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
-function CreateJournalForm({addJournal, setShowAddJournal}) {
+function CreateJournalForm({ addJournal, setShowAddJournal }) {
 
     const [journalName, setJournalName] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+
+    const MAX_JOURNAL_NAME_LENGTH = 20;
+
+    function createJournal() {
+
+      setErrorMessage("");
+
+      if (!journalName || journalName == ""){
+        setErrorMessage("Journal name cannot be blank.");
+        return;
+      } else if (journalName.length > MAX_JOURNAL_NAME_LENGTH) {
+        setErrorMessage("Journal name exceeds character limit.");
+        return;
+      }
+
+      addJournal(journalName);
+
+    }
   
     return (
       <div className="fixed inset-0 flex items-center justify-center">
@@ -14,9 +33,11 @@ function CreateJournalForm({addJournal, setShowAddJournal}) {
 
         <div className="bg-white overflow-y-auto w-[40%] h-[25%] shadow-2xl border border-gray rounded-md p-4 m-10 z-10">
           <form>
-            <div className="flex flex-row justify-end">
+            <div className="flex flex-row justify-between">
+              <h3 className="text-xl font-semibold">Journal</h3>
               <button 
                 className="text-gray-600 hover:scale-125"
+                type="button"
                 onClick={() => setShowAddJournal(false)}
               >
                 <FontAwesomeIcon icon={faX}/>
@@ -33,21 +54,16 @@ function CreateJournalForm({addJournal, setShowAddJournal}) {
                 />
             </div>
 
-            <div className="flex flex-row justify-end">
+            <div className="flex flex-row justify-between">
+              <p className="text-red-600 text-sm px-2 py-2 mt-6">{errorMessage}</p>
               <button 
                   className="bg-dark-green text-white px-4 py-2 mt-6 mx-1 rounded-md hover:bg-yinmn-blue" 
-                  onClick={() => addJournal(journalName)}
+                  type="button"
+                  onClick={createJournal}
               >
                 Create Journal
               </button>
             </div>
-
-            {/* <button 
-                className="bg-dark-green text-white px-4 py-2 mt-6 mx-1 rounded-md hover:bg-yinmn-blue" 
-                onClick={() => setShowAddJournal(false)}
-            >
-              Cancel
-            </button> */}
           </form>
         </div>
       </div>

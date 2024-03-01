@@ -7,19 +7,36 @@ import { faX } from '@fortawesome/free-solid-svg-icons';
 function JournalForm({journalName, setShowJournalForm, setShowJournalDeleteConfirm, updateJournalName}) {
 
     const [journalTitle, setJournalTitle] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+
+    const MAX_JOURNAL_NAME_LENGTH = 20;
 
     useEffect(() => {
         setJournalTitle(journalName);
     }, []);
 
     function openDeleteConfirm() {
+
         setShowJournalForm(false);
         setShowJournalDeleteConfirm(true);
+        
     }
 
     function updateJournalTitle() {
+
+        setErrorMessage("");
+
+        if (!journalTitle || journalTitle.length == 0) {
+            setErrorMessage("Journal name cannot be blank.");
+            return;
+        } else if (journalTitle.length > MAX_JOURNAL_NAME_LENGTH) {
+            setErrorMessage("Journal name character limit exceeded.");
+            return;
+        }
+
         setShowJournalForm(false);
         updateJournalName(journalTitle);
+
     }
 
     return (
@@ -35,7 +52,7 @@ function JournalForm({journalName, setShowJournalForm, setShowJournalDeleteConfi
                         <FontAwesomeIcon icon={faX} size="lg"/>
                     </button>
                 </div>
-                <label className="text-md text-gray-600 my-2 px-1" htmlFor="title">Journal Title</label>
+                <label className="text-md text-gray-600 my-2 px-1" htmlFor="title">Journal Name</label>
                 <input 
                     type="text" 
                     id="title" 
@@ -44,12 +61,16 @@ function JournalForm({journalName, setShowJournalForm, setShowJournalDeleteConfi
                     onInput={(e) => setJournalTitle(e.target.value)}
                     value={journalTitle || ""}
                 />
-                <button 
-                    className="bg-dark-green text-white my-4 rounded-md w-1/3 p-2 hover:bg-yinmn-blue"
-                    onClick={updateJournalTitle}
-                >
-                    Update
-                </button>
+                <div className="flex flex-row justify-between">
+                    <p className="text-red-600 text-sm p-2 my-4">{errorMessage}</p>
+                    <button 
+                        className="bg-dark-green text-white my-4 rounded-md w-1/3 p-2 hover:bg-yinmn-blue"
+                        onClick={updateJournalTitle}
+                    >
+                        Update
+                    </button>
+                </div>
+                
                 <label className="text-md text-gray-600 mb-2 mt-4 px-1" htmlFor="delete">Delete Journal</label>
                 <button
                     name="delete"
