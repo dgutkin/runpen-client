@@ -236,6 +236,7 @@ export default function Journal() {
               setShowGoalForm={setShowGoalForm} 
               journalId={journalId} 
               goalInFocus={goalInFocus}
+              goalCount={goals.length}
             />
           }
 

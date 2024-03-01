@@ -5,10 +5,12 @@ import { v4 as uuidv4 } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
-function GoalForm({ addGoal, updateGoal, setShowGoalForm, journalId, goalInFocus }) {
+function GoalForm({ addGoal, updateGoal, setShowGoalForm, journalId, goalInFocus, goalCount }) {
 
     const [goalText, setGoalText] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+
+    const MAX_GOAL_COUNT = 5;
 
     useEffect(() => {
       if (goalInFocus) {
@@ -20,11 +22,14 @@ function GoalForm({ addGoal, updateGoal, setShowGoalForm, journalId, goalInFocus
       
       setErrorMessage("");
   
-      if (goalText === "") {
-        setErrorMessage("Your goal cannot be blank.");
+      if (!goalText || goalText == "") {
+        setErrorMessage("Please provide a goal.");
         return;
       } else if (goalText.length > 50) {
         setErrorMessage("Your goal exceeds the character limit.");
+        return;
+      } else if (goalCount >= MAX_GOAL_COUNT) {
+        setErrorMessage("Maximum number of goals allowed reached.");
         return;
       }
   
@@ -70,7 +75,7 @@ function GoalForm({ addGoal, updateGoal, setShowGoalForm, journalId, goalInFocus
             </div>
   
             <div className="flex flex-row my-2 mx-2 justify-between">
-              <p className="my-2 text-sm text-red-600">{errorMessage}</p>
+              <p className="my-2 px-1 text-sm text-red-600">{errorMessage}</p>
               <button 
                 className="bg-dark-green text-white w-[25%] px-4 py-2 rounded-md hover:bg-yinmn-blue" 
                 type="button"
