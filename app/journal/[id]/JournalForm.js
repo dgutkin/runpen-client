@@ -45,7 +45,7 @@ function JournalForm({journalName, setShowJournalForm, setShowJournalDeleteConfi
                     value={journalTitle || ""}
                 />
                 <button 
-                    className="bg-dark-green text-white my-4 rounded-md w-1/3 p-2"
+                    className="bg-dark-green text-white my-4 rounded-md w-1/3 p-2 hover:bg-yinmn-blue"
                     onClick={updateJournalTitle}
                 >
                     Update
@@ -53,7 +53,7 @@ function JournalForm({journalName, setShowJournalForm, setShowJournalDeleteConfi
                 <label className="text-md text-gray-600 mb-2 mt-4 px-1" htmlFor="delete">Delete Journal</label>
                 <button
                     name="delete"
-                    className="bg-red-600 text-white rounded-md p-2 w-1/3" 
+                    className="bg-red-500 text-white rounded-md p-2 w-1/3 hover:bg-yinmn-blue" 
                     onClick={openDeleteConfirm}
                 >
                     Delete Journal
