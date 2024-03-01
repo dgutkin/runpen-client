@@ -217,6 +217,7 @@ export default function Entry() {
                         setShowPostForm={setShowPostForm} 
                         entryId={entryId} 
                         postData={postData}
+                        postCount={posts.length}
                     />
                 }
 

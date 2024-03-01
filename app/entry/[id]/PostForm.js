@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
-function PostForm({addPost, updatePost, deletePost, setShowPostForm, entryId, postData}) {
+function PostForm({ addPost, updatePost, deletePost, setShowPostForm, entryId, postData, postCount }) {
 
     const [postTitle, setPostTitle] = useState("");
     const [postText, setPostText] = useState("");
@@ -12,6 +12,7 @@ function PostForm({addPost, updatePost, deletePost, setShowPostForm, entryId, po
 
     const POST_TEXT_MAX_WORDS = 200;
     const POST_TITLE_MAX_CHARS = 30;
+    const MAX_POST_COUNT = 20;
 
     useEffect(() => {
       
@@ -35,7 +36,10 @@ function PostForm({addPost, updatePost, deletePost, setShowPostForm, entryId, po
       } else if (postText.trim().split(/\s+/).length > POST_TEXT_MAX_WORDS) {
         setErrorMessage("Maximum word count exceeded.");
         return;
-      } 
+      } else if (postCount >= MAX_POST_COUNT) {
+        setErrorMessage("Maximum post count reached.");
+        return;
+      }
   
       const data = {
         postTitle: postTitle,
@@ -115,7 +119,7 @@ function PostForm({addPost, updatePost, deletePost, setShowPostForm, entryId, po
   
             <div className="flex flex-row my-3 mx-6 justify-between">
                 <button 
-                  className="bg-red-500 text-white p-2 rounded-md w-[25%]" 
+                  className="bg-red-500 text-white p-2 rounded-md w-[25%] hover:bg-yinmn-blue" 
                   onClick={removePost}
                 >
                   Delete Post
@@ -127,13 +131,6 @@ function PostForm({addPost, updatePost, deletePost, setShowPostForm, entryId, po
                 >
                 {Object.keys(postData).length ? "Update" : "Post"}
                 </button>
-                {/* <button 
-                  className="bg-dark-green text-white w-[25%] px-4 py-2 mx-2 rounded-md hover:bg-yinmn-blue" 
-                  type="button"
-                  onClick={cancelPost}
-                >
-                Cancel
-                </button> */}
             </div>
             <p className="my-2 mx-6 text-sm text-red-600">{errorMessage}</p>
           </div>
