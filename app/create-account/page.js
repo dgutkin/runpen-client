@@ -23,6 +23,18 @@ export default function CreateAccount() {
     async function handleCreateAccount(e) {
 
         e.preventDefault();
+        setSignInError(false);
+        setSignInErrorMessage("");
+
+        if (!name || !email || !password || !validateEmail(email)) {
+            setSignInError(true);
+            setSignInErrorMessage("Invalid name, email or password.");
+            return;
+        } else if (password.length < 8) {
+            setSignInError(true);
+            setSignInErrorMessage("Password must be at least 8 characters.");
+            return;
+        }
 
         setLoading(true);
 
@@ -30,15 +42,20 @@ export default function CreateAccount() {
             .then((userCredential) => {
                 const user = userCredential.user;
                 if (user) addUsertoDB(user);
-                setLoading(false);
             })
             .catch((error) => {
+                setLoading(false);
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 setSignInError(true);
                 setSignInErrorMessage(errorMessage);
             });
         
+    }
+
+    function validateEmail(email) {
+        var regex = /\S+@\S+\.\S+/;
+        return regex.test(email);
     }
 
     async function addUsertoDB(user) {
@@ -70,11 +87,13 @@ export default function CreateAccount() {
                 if (response.status == 201){
                     router.push(`/user/${user.uid}`);
                 } else {
+                    setLoading(false);
                     setSignInError(true);
                     setSignInErrorMessage(response.text());
                 }
             })
             .catch((error) => {
+                setLoading(false);
                 setSignInError(true);
                 setSignInErrorMessage(error);
             });
@@ -97,8 +116,21 @@ export default function CreateAccount() {
                 <div>
 
                     <div className="mb-4">
-                        <label htmlFor="name" className="block text-gray-600 text-sm font-semibold mb-2">Name</label>
-                        <input type="text" id="name" name="name" placeholder="Your name" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" value={name} onChange={(e) => setName(e.target.value)}/>
+                        <label 
+                            htmlFor="name" 
+                            className="block text-gray-600 text-sm font-semibold mb-2"
+                        >
+                            Name
+                        </label>
+                        <input 
+                            type="text" 
+                            id="name" 
+                            name="name" 
+                            placeholder="Your name" 
+                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" 
+                            value={name} 
+                            onChange={(e) => setName(e.target.value)}
+                        />
                     </div>
 
                     <div className="mb-4">
@@ -109,7 +141,7 @@ export default function CreateAccount() {
                 
                     <div className="mb-6">
                         <label htmlFor="password" className="block text-gray-600 text-sm font-semibold mb-2">Password</label>
-                        <input type="password" id="password" name="password" placeholder="Your password" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                        <input type="password" id="password" name="password" placeholder="Your password (at least 8 characters)" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" value={password} onChange={(e) => setPassword(e.target.value)}/>
                     </div>
 
                 
@@ -118,7 +150,7 @@ export default function CreateAccount() {
                     </button>
 
                     {signInError && 
-                        <p className="text-yinmn-blue text-sm mt-4">{signInErrorMessage}</p>
+                        <p className="text-red-600 text-sm mt-4">{signInErrorMessage}</p>
                     }
 
                 </div>
