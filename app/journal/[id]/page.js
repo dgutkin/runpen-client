@@ -169,7 +169,7 @@ export default function Journal() {
                 </button>
               </div>
 
-              <div className="flex flex-col mt-8">
+              <div className="flex flex-col mt-6">
                 {goals.map((item) => {
                   return (
                     <GoalCard 
@@ -199,7 +199,7 @@ export default function Journal() {
                   </div>
               </div>
 
-              <div className="my-4">
+              <div className="my-6 border shadow-md rounded-md py-2 px-6">
                 {!calendarView ? 
                   <div className="w-full">
                       {entries.map((item) => {
