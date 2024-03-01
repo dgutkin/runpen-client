@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { useAuth } from '@/app/context/auth-provider';
-import Loader from '@/app/components/Loader';
+import Loader from '@/app/components/Loading';
 import AccessDenied from '@/app/components/AccessDenied';
 import { getUserNameFromDB } from '@/app/api/user-api';
 import { getJournalsFromDB, addJournalToDB } from '@/app/api/journal-api';

@@ -5,8 +5,8 @@ import { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase/firebase-config';
 
-import { useAuth } from '../context/auth-provider';
-import Loader from '../components/Loader';
+import { useAuth } from '@/app/context/auth-provider';
+import Loader from '@/app/components/Loading';
 
 export default function CreateAccount() {
 

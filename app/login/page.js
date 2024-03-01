@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/app/firebase/firebase-config';
 
-import { useAuth } from '../context/auth-provider';
-import Loader from '../components/Loader';
+import { useAuth } from '@/app/context/auth-provider';
+import Loader from '@/app/components/Loading';
 
 export default function Login() {
 
