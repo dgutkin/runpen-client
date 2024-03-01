@@ -71,11 +71,11 @@ export default function User() {
               <h2 className="text-2xl font-semibold mb-4">Welcome {userName}!</h2>
             </div>
       
-            <div className="my-2 mx-8">
+            <div className="mx-8">
               <div className="flex flex-row justify-between">
-                <h2 className="text-2xl font-semibold mr-6 text-gray-600">Journals</h2>
+                <h2 className="text-2xl font-semibold mr-6 py-2 text-gray-600">Journals</h2>
                 <button 
-                  className="bg-dark-green text-white text-md w-[10%] px-2 py-1 rounded-md ml-6 hover:bg-yinmn-blue" 
+                  className="bg-dark-green text-white text-md rounded-md px-4 py-2 ml-6 hover:bg-yinmn-blue" 
                   onClick={() => setShowAddJournal(true)}
                 >
                   Add Journal
