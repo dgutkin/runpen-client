@@ -10,12 +10,14 @@ function AddEntryForm({ newEntryDate, addEntry, setShowAddEntry, journalId }) {
     const [entryLabel, setEntryLabel] = useState("");
     const [entryEffort, setEntryEffort] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-  
+
+    const MAX_LABEL_CHAR_COUNT = 30;
+
     function submitEntry() {
       
       setErrorMessage("");
   
-      if (entryLabel.length > 50) {
+      if (entryLabel.length > MAX_LABEL_CHAR_COUNT) {
         setErrorMessage("Label exceeds character limit.");
         return;
       } else if (entryEffort == "" || entryLabel == "") {
@@ -75,7 +77,7 @@ function AddEntryForm({ newEntryDate, addEntry, setShowAddEntry, journalId }) {
                   className="p-2 border rounded-md"
                   onInput={(e) => setEntryLabel(e.target.value)}
                 />
-                <p className="text-sm text-gray-200 mx-1">Character limit of 50.</p>
+                <p className="text-sm text-gray-200 mx-1">Character limit of 30.</p>
               </div>
             </div>
   
