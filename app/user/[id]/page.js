@@ -73,7 +73,7 @@ export default function User() {
       
             <div className="my-2 mx-8">
               <div className="flex flex-row justify-between">
-                <h2 className="text-2xl font-semibold mb-4 mr-6 text-gray-600">Journals</h2>
+                <h2 className="text-2xl font-semibold mr-6 text-gray-600">Journals</h2>
                 <button 
                   className="bg-dark-green text-white text-md w-[10%] px-2 py-1 rounded-md ml-6 hover:bg-yinmn-blue" 
                   onClick={() => setShowAddJournal(true)}
@@ -82,7 +82,7 @@ export default function User() {
                 </button>
               </div>
               
-              <div className="mt-16 flex flex-row flex-wrap justify-start">
+              <div className="my-16 flex flex-row flex-wrap justify-start">
               {
                 journals.map((item) => {
                   return <JournalCard 
