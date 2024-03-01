@@ -33,7 +33,7 @@ export default function Nav() {
                     className="bg-white text-md text-black py-1 px-3 mx-2 rounded-md hover:bg-gray-200" 
                     onClick={() => router.push(`/user/${currentUser.uid}`)}
                   >
-                    Home
+                    Journals
                   </button>
                   <button 
                     className="bg-white text-md text-black py-1 px-3 mx-2 rounded-md hover:bg-gray-200" 
