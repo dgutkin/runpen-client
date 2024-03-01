@@ -21,8 +21,7 @@ function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
         9: {days: 30, name: "September"},
         10: {days: 31, name: "October"},
         11: {days: 30, name: "November"},
-        12: {days: 31, name: "December"},
-        22: {days: 29, name: "February"}
+        12: {days: 31, name: "December"}
     };
 
     const daysInWeek = [
@@ -75,8 +74,10 @@ function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
     }
 
     function calcDays(month) {
+        let days = daysByMonth[month].days;
+        if (month == 2 && year % 4 == 0) days = 29;
         return Array.from(
-            { length: daysByMonth[month].days }, (_, index) => index + 1
+            { length: days }, (_, index) => index + 1
         );
     }
 
