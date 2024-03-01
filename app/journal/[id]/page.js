@@ -33,7 +33,7 @@ export default function Journal() {
   const [newEntryDate, setNewEntryDate] = useState();
   
   const [loading, setLoading] = useState(false);
-  const [calendarView, setCalendarView] = useState(false);
+  const [calendarView, setCalendarView] = useState(true);
 
   const [showGoalForm, setShowGoalForm] = useState(false);
   const [goals, setGoals] = useState([]);
@@ -184,18 +184,12 @@ export default function Journal() {
                 >
                   {calendarView? "List" : "Calendar"} View
                 </button>
-                <button 
-                  className="bg-dark-green text-white px-4 py-2 mx-2 rounded-md hover:bg-yinmn-blue"
-                  onClick={() => setShowAddEntry(true)}
-                >
-                  New Entry
-                </button>
               </div>
 
             </div>
             <div className="py-16">
               {!calendarView ? 
-                <div className="flex flex-col mx-6">
+                <div className="flex flex-col">
                     {entries.map((item) => {
                         return (
                           <EntryCard 
