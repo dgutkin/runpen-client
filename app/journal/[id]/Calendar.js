@@ -99,14 +99,12 @@ function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
     }
 
     function selectEntry(day) {
-        
         if (daysWithEntries[day]) {
             openEntry(daysWithEntries[day].entryId)
         } else {
             setNewEntryDate(new Date(year, month-1, day));
             setShowAddEntry(true);
         }
-
     }
 
     return (
@@ -122,7 +120,7 @@ function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
                         <FontAwesomeIcon icon={faArrowLeft} size="lg"/>    
                     </button>
                     <button 
-                        className="ml-1 mr-3 bg-dark-green text-white p-1 rounded-md hover:scale-125" 
+                        className="mr-3 bg-dark-green text-white p-1 rounded-md hover:scale-125" 
                         onClick={incrementMonth}
                     >
                         <FontAwesomeIcon icon={faArrowRight} size="lg"/>    
@@ -137,29 +135,43 @@ function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
                     if (day == 1) {
                         return (
                             <div key={day} className={"border border-gray-200 rounded-md h-24 hover:animate-wiggle"} ref={firstCardOfMonth}>
+                                {(day in daysWithEntries) ?
                                 <button
-                                    className="w-full h-full p-4 flex flex-col"
+                                    className="w-full h-full p-4 flex flex-col rounded-md bg-green-100"
                                     onClick={() => selectEntry(day)}
                                 >
                                     <p className="text-sm text-start font-semibold mb-2">{day}</p>
-                                    {(day in daysWithEntries) &&
-                                        <p className="text-sm text-start">{daysWithEntries[day].entryLabel}</p>
-                                    }
+                                    <p className="text-sm text-start">{daysWithEntries[day].entryLabel}</p>
                                 </button>
+                                :
+                                <button
+                                    className="w-full h-full p-4 flex flex-col rounded-md"
+                                    onClick={() => selectEntry(day)}
+                                >
+                                    <p className="text-sm text-start font-semibold mb-2">{day}</p>
+                                </button>
+                                }
                             </div>  
                         );
                     } else {
                         return (
                             <div key={day} className="border border-gray-200 rounded-md h-24 hover:animate-wiggle">
+                                {(day in daysWithEntries) ?
                                 <button
-                                    className="w-full h-full p-4 flex flex-col"
+                                    className="w-full h-full p-4 flex flex-col rounded-md bg-green-100"
                                     onClick={() => selectEntry(day)}
                                 >
                                     <p className="text-sm text-start font-semibold mb-2">{day}</p>
-                                    {(day in daysWithEntries) &&
-                                        <p className="text-sm text-start">{daysWithEntries[day].entryLabel}</p>
-                                    }
+                                    <p className="text-sm text-start">{daysWithEntries[day].entryLabel}</p>
                                 </button>
+                                :
+                                <button
+                                    className="w-full h-full p-4 flex flex-col rounded-md"
+                                    onClick={() => selectEntry(day)}
+                                >
+                                    <p className="text-sm text-start font-semibold mb-2">{day}</p>
+                                </button>
+                                }
                             </div>
                         );
                     }
