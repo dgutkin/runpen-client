@@ -156,11 +156,11 @@ export default function Journal() {
             </button>
           </div>
     
-          <div className="my-2 px-8">
+          <div className="my-2 px-4">
             <div className="flex flex-row justify-between">
               <h2 className="text-2xl font-semibold text-gray-600">Goals</h2>
               <button 
-                  className="bg-dark-green text-white px-4 py-2 rounded-md hover:bg-yinmn-blue"
+                  className="bg-dark-green text-white mx-2 px-4 py-2 rounded-md hover:bg-yinmn-blue"
                   onClick={() => {setShowGoalForm(true); setGoalInFocus({})}}
                 >
                   Add Goal
@@ -174,19 +174,18 @@ export default function Journal() {
             </div>
         </div>
           
-        <div className="my-8 px-8">
+        <div className="my-8 px-4">
           <div className="flex flex-row justify-between">
               <h2 className="text-2xl font-semibold mb-4 text-gray-600">Entries</h2>
-
               <div>
                 <button 
-                  className="bg-dark-green text-white px-4 py-2 mr-2 rounded-md hover:bg-yinmn-blue" 
+                  className="bg-dark-green text-white px-4 py-2 mx-2 rounded-md hover:bg-yinmn-blue" 
                   onClick={switchView}
                 >
                   {calendarView? "List" : "Calendar"} View
                 </button>
                 <button 
-                  className="bg-dark-green text-white px-4 py-2 rounded-md hover:bg-yinmn-blue"
+                  className="bg-dark-green text-white px-4 py-2 mx-2 rounded-md hover:bg-yinmn-blue"
                   onClick={() => setShowAddEntry(true)}
                 >
                   New Entry
@@ -196,7 +195,7 @@ export default function Journal() {
             </div>
             <div className="py-16">
               {!calendarView ? 
-                <div className="flex flex-col w-full">
+                <div className="flex flex-col mx-6">
                     {entries.map((item) => {
                         return (
                           <EntryCard 
