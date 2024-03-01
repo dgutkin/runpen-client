@@ -155,62 +155,78 @@ export default function Journal() {
               <FontAwesomeIcon icon={faGear} size="2xl"/>
             </button>
           </div>
-    
-          <div className="my-2 px-4">
-            <div className="flex flex-row justify-between">
-              <h2 className="text-2xl font-semibold text-gray-600">Goals</h2>
-              <button 
-                  className="bg-dark-green text-white mx-2 px-4 py-2 rounded-md hover:bg-yinmn-blue"
+
+          <div className="flex flex-row gap-12">
+
+            <div className="mb-8 px-4 flex flex-col w-1/3">
+              <div className="flex flex-row justify-between">
+                <h2 className="text-2xl py-1 font-semibold text-gray-600">Goals</h2>
+                <button 
+                  className="bg-dark-green text-white mx-2 px-4 py-1 rounded-md hover:bg-yinmn-blue"
                   onClick={() => {setShowGoalForm(true); setGoalInFocus({})}}
                 >
                   Add Goal
                 </button>
-            </div>
-            <div className="flex flex-row mt-8">
-              {goals.map((item) => {
-                return <GoalCard key={item.goalId} data={item} setShowGoalForm={setShowGoalForm} setGoalInFocus={setGoalInFocus} deleteGoal={deleteGoal}/>
-              })
-              }
-            </div>
-        </div>
-          
-        <div className="my-8 px-4">
-          <div className="flex flex-row justify-between">
-              <h2 className="text-2xl font-semibold text-gray-600">Entries</h2>
-              <div>
-                <button 
-                  className="bg-dark-green text-white px-4 py-2 mx-2 rounded-md hover:bg-yinmn-blue" 
-                  onClick={switchView}
-                >
-                  {calendarView? "List" : "Calendar"} View
-                </button>
+              </div>
+
+              <div className="flex flex-col mt-8">
+                {goals.map((item) => {
+                  return (
+                    <GoalCard 
+                      key={item.goalId} 
+                      data={item} 
+                      setShowGoalForm={setShowGoalForm} 
+                      setGoalInFocus={setGoalInFocus} 
+                      deleteGoal={deleteGoal}
+                    />
+                  );
+                })
+                }
               </div>
             </div>
-            <div className="pt-4 pb-8">
-              {!calendarView ? 
-                <div className="flex flex-col">
-                    {entries.map((item) => {
-                        return (
-                          <EntryCard 
-                            key={item.entryId} 
-                            data={item} 
-                            editEntry={openEntry} 
-                            setEntryInFocus={setEntryInFocus} 
-                            setShowDeleteConfirm={setShowDeleteConfirm}
-                          />
-                        );
-                      })
-                    }
-                </div>
-                :
-                <Calendar 
-                  entries={entries}
-                  setShowAddEntry={setShowAddEntry}
-                  setNewEntryDate={setNewEntryDate}
-                  openEntry={openEntry}
-                />
-              }
+
+            <div className="mb-8 px-4 flex flex-col w-full">
+
+              <div className="flex flex-row justify-between">
+                  <h2 className="text-2xl font-semibold text-gray-600">Entries</h2>
+                  <div>
+                    <button 
+                      className="bg-dark-green text-white px-4 py-2 mx-2 rounded-md hover:bg-yinmn-blue" 
+                      onClick={switchView}
+                    >
+                      {calendarView? "List" : "Calendar"} View
+                    </button>
+                  </div>
+              </div>
+
+              <div className="my-4">
+                {!calendarView ? 
+                  <div className="w-full">
+                      {entries.map((item) => {
+                          return (
+                            <EntryCard 
+                              key={item.entryId} 
+                              data={item} 
+                              editEntry={openEntry} 
+                              setEntryInFocus={setEntryInFocus} 
+                              setShowDeleteConfirm={setShowDeleteConfirm}
+                            />
+                          );
+                        })
+                      }
+                  </div>
+                  :
+                  <Calendar 
+                    entries={entries}
+                    setShowAddEntry={setShowAddEntry}
+                    setNewEntryDate={setNewEntryDate}
+                    openEntry={openEntry}
+                  />
+                }
+              </div>
+
             </div>
+        
           </div>
           
           {showJournalForm &&
