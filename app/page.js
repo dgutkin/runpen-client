@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import { useAuth } from './context/auth-provider';
+import { useAuth } from '@/app/context/auth-provider';
 
 export default function Home() {
 

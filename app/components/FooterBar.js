@@ -1,6 +1,6 @@
 'use client'
 
-export default function Footer() {
+export default function FooterBar() {
 
     return(
       <div className="bg-dark-green py-4 px-36 w-full fixed bottom-0">

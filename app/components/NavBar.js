@@ -6,7 +6,7 @@ import { signOut } from 'firebase/auth';
 import { auth }  from '../firebase/firebase-config';
 import { useAuth } from '../context/auth-provider';
 
-export default function Nav() {
+export default function NavBar() {
 
   const { currentUser } = useAuth();
   const router = useRouter();
