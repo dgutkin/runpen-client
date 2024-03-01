@@ -25,17 +25,17 @@ function JournalForm({journalName, setShowJournalForm, setShowJournalDeleteConfi
     return (
         <div className="fixed inset-0 flex items-center justify-center">
             <div className="fixed inset-0 bg-black opacity-50"></div>
-            <div className="bg-white w-[45%] h-[40%] shadow-2xl border border-gray rounded-md p-6 z-10 flex flex-col">
+            <div className="bg-white w-[45%] min-w-fit h-[40%] shadow-2xl border border-gray rounded-md p-6 z-10 flex flex-col">
                 <div className="flex flex-row justify-between mb-4">
                     <h3 className="text-xl font-semibold">Journal Settings</h3>
                     <button 
-                        className="rounded-md text-gray-300"
+                        className="rounded-md text-gray-500"
                         onClick={() => setShowJournalForm(false)}
                     >
                         <FontAwesomeIcon icon={faX} size="lg"/>
                     </button>
                 </div>
-                <label className="text-md text-gray-600 my-2" htmlFor="title">Journal Title</label>
+                <label className="text-md text-gray-600 my-2 px-1" htmlFor="title">Journal Title</label>
                 <input 
                     type="text" 
                     id="title" 
@@ -45,13 +45,15 @@ function JournalForm({journalName, setShowJournalForm, setShowJournalDeleteConfi
                     value={journalTitle || ""}
                 />
                 <button 
-                    className="bg-dark-green text-white my-4 rounded-md w-1/4 p-2"
+                    className="bg-dark-green text-white my-4 rounded-md w-1/3 p-2"
                     onClick={updateJournalTitle}
                 >
                     Update
                 </button>
-                <button 
-                    className="bg-red-600 text-white rounded-md p-2 mt-8 w-1/3" 
+                <label className="text-md text-gray-600 mb-2 mt-4 px-1" htmlFor="delete">Delete Journal</label>
+                <button
+                    name="delete"
+                    className="bg-red-600 text-white rounded-md p-2 w-1/3" 
                     onClick={openDeleteConfirm}
                 >
                     Delete Journal
