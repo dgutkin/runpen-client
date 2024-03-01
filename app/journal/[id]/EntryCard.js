@@ -22,12 +22,6 @@ function EntryCard({data, editEntry, setEntryInFocus, setShowDeleteConfirm}) {
                     {new Date(data.entryDate).toLocaleDateString('en-us', {month:'short', day:'numeric', year:'numeric'})}
                 </div>
             </button>
-            <button 
-                className="rounded-md text-gray-500 mx-4 z-10 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100" 
-                onClick={openDeleteConfirm}
-            >
-                <FontAwesomeIcon icon={faTrash}/>
-            </button>
         </div>
     );
 }
