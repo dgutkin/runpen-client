@@ -142,7 +142,7 @@ function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
                                     onClick={() => selectEntry(day)}
                                 >
                                     <p className="text-sm text-start font-semibold mb-2">{day}</p>
-                                    <p className="text-sm text-start">{daysWithEntries[day].entryLabel}</p>
+                                    <p className="text-xs text-start">{daysWithEntries[day].entryLabel}</p>
                                 </button>
                                 :
                                 <button
@@ -163,7 +163,7 @@ function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
                                     onClick={() => selectEntry(day)}
                                 >
                                     <p className="text-sm text-start font-semibold mb-2">{day}</p>
-                                    <p className="text-sm text-start">{daysWithEntries[day].entryLabel}</p>
+                                    <p className="text-xs text-start">{daysWithEntries[day].entryLabel}</p>
                                 </button>
                                 :
                                 <button
