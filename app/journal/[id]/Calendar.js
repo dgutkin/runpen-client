@@ -122,7 +122,7 @@ function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
                         <FontAwesomeIcon icon={faArrowLeft} size="lg"/>    
                     </button>
                     <button 
-                        className="mx-1 bg-dark-green text-white p-1 rounded-md hover:scale-125" 
+                        className="ml-1 mr-3 bg-dark-green text-white p-1 rounded-md hover:scale-125" 
                         onClick={incrementMonth}
                     >
                         <FontAwesomeIcon icon={faArrowRight} size="lg"/>    

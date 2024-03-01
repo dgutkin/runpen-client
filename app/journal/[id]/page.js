@@ -176,7 +176,7 @@ export default function Journal() {
           
         <div className="my-8 px-4">
           <div className="flex flex-row justify-between">
-              <h2 className="text-2xl font-semibold mb-4 text-gray-600">Entries</h2>
+              <h2 className="text-2xl font-semibold text-gray-600">Entries</h2>
               <div>
                 <button 
                   className="bg-dark-green text-white px-4 py-2 mx-2 rounded-md hover:bg-yinmn-blue" 
@@ -185,9 +185,8 @@ export default function Journal() {
                   {calendarView? "List" : "Calendar"} View
                 </button>
               </div>
-
             </div>
-            <div className="py-16">
+            <div className="pt-4 pb-8">
               {!calendarView ? 
                 <div className="flex flex-col">
                     {entries.map((item) => {
