@@ -37,6 +37,7 @@ export default function Entry() {
     const [posts, setPosts] = useState([]);
     const [showPostForm, setShowPostForm] = useState(false);
     const [postData, setPostData] = useState({});
+    const [noPosts, setNoPosts] = useState(false);
 
     const [loading, setLoading] = useState(false);
 
@@ -53,7 +54,19 @@ export default function Entry() {
 
         if (currentUser && journalId) getJournalName();
 
-    }, [journalId])
+    }, [journalId]);
+
+    useEffect(() => {
+        checkNoPosts();
+    }, [posts])
+
+    function checkNoPosts() {
+        if (!posts.length) {
+            setNoPosts(true);
+        } else {
+            setNoPosts(false);
+        }
+    }
 
     function getJournalName() {
         getJournalFromDB(currentUser, journalId).then((result) => {
@@ -154,15 +167,17 @@ export default function Entry() {
                 <div className="flex flex-col p-8">
                     <h2 className="text-2xl text-black font-bold mb-4">{entry.entryLabel}</h2>
                     <div className="flex flex-row justify-between">
-                        <p className="my-2 px-2 italic">Today's Quote: Insert AI-generated quote here.</p>
+                        <p className="my-2 py-2 italic w-[60%]">
+                            "Every step you take in running is a stride towards greatness. Embrace the challenge, push through the pain, and let the rhythm of your feet carry you to your dreams."
+                        </p>
                         {(entry.entryEffort == "Hard") &&
-                            <p className="my-2 mx-4 p-2 px-4 bg-red-600 text-white">{entry.entryEffort} Intensity</p>
+                            <p className="my-2 mx-4 py-4 px-4 bg-red-600 text-white">{entry.entryEffort} Intensity</p>
                         }
                         {(entry.entryEffort == "Good") && 
-                            <p className="my-2 mx-4 p-2 px-4 bg-green-600 text-white">{entry.entryEffort} Intensity</p>
+                            <p className="my-2 mx-4 py-4 px-4 bg-green-600 text-white">{entry.entryEffort} Intensity</p>
                         }
                         {(entry.entryEffort == "Light") && 
-                            <p className="my-2 mx-4 p-2 px-4 bg-gray-600 text-white">{entry.entryEffort} Intensity</p>
+                            <p className="my-2 mx-4 py-4 px-4 bg-gray-600 text-white">{entry.entryEffort} Intensity</p>
                         }
                     </div>
                     <div className="flex flex-row justify-between mt-12">
@@ -174,6 +189,9 @@ export default function Entry() {
                             Add Post
                         </button>
                     </div>
+                    {noPosts?
+                    <p className="text-sm py-24">How did today go? Add a post and write about it!</p>
+                    :
                     <ul className="flex flex-row flex-wrap py-8">
                         {
                             posts.map((item) => {
@@ -188,6 +206,7 @@ export default function Entry() {
                             })
                         }
                     </ul>
+                    }
                 </div>
 
                 {showPostForm && 
