@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 import { auth } from '@/app/firebase/firebase-config';
 import { useAuth } from '@/app/context/auth-provider';
 import Loader from '@/app/components/Loading';
+import { addUserToDB } from '@/app/api/user-api';
 
 export default function CreateAccount() {
 
@@ -44,11 +45,25 @@ export default function CreateAccount() {
         await createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                if (user) addUsertoDB(user);
+                const data = {
+                    name,
+                    email,
+                    password,
+                    uid: user.uid
+                }
+                if (user) {
+                    addUserToDB(user, data).then((response) => {
+                        if (response && response.status == 201)
+                            router.push(`/user/${user.uid}`);
+                    });
+                } else {
+                    setLoading(false);
+                    setSignInError(true);
+                    setSignInErrorMessage("Error creating user.");
+                }
             })
             .catch((error) => {
                 setLoading(false);
-                const errorCode = error.code;
                 const errorMessage = error.message;
                 setSignInError(true);
                 setSignInErrorMessage(errorMessage);
@@ -59,48 +74,6 @@ export default function CreateAccount() {
     function validateEmail(email) {
         var regex = /\S+@\S+\.\S+/;
         return regex.test(email);
-    }
-
-    async function addUsertoDB(user) {
-
-        const token = await user.getIdToken();
-        
-        const data = {
-            "name": name, 
-            "email": email, 
-            "password": password, 
-            "uid": user.uid
-        };
-        
-        const options = {
-            method: "POST",
-            mode: "cors",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify(data)
-        }
-
-        const url = process.env.NEXT_PUBLIC_SERVER_URL || "http://127.0.0.1:8080/add-user";
-            
-        await fetch(url, options)
-            .then((response) => {
-                console.log(response);
-                if (response.status == 201){
-                    router.push(`/user/${user.uid}`);
-                } else {
-                    setLoading(false);
-                    setSignInError(true);
-                    setSignInErrorMessage(response.text());
-                }
-            })
-            .catch((error) => {
-                setLoading(false);
-                setSignInError(true);
-                setSignInErrorMessage(error);
-            });
-
     }
 
     return (

@@ -34,4 +34,30 @@ async function getUserNameFromDB(currentUser) {
 
 }
 
-export { getUserNameFromDB };
+async function addUserToDB(user, data) {
+
+  const token = await user.getIdToken();
+  
+  const options = {
+      method: "POST",
+      mode: "cors",
+      headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(data)
+  }
+
+  const url = serverUrl + "/add-user";
+
+  await fetch(url, options)
+    .then((response) => {
+      return response.text();
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+
+}
+
+export { getUserNameFromDB, addUserToDB };
