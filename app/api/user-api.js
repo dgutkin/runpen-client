@@ -1,4 +1,6 @@
-import { v4 as uuidv4 } from 'uuid';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const serverUrl = process.env.SERVER_URL || "http://127.0.0.1:8080";
 

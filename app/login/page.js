@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '@/app/firebase/firebase-config';
 
+import { auth } from '@/app/firebase/firebase-config';
 import { useAuth } from '@/app/context/auth-provider';
 import Loader from '@/app/components/Loading';
 

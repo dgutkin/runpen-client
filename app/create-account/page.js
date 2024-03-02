@@ -3,12 +3,15 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase/firebase-config';
+import dotenv from 'dotenv';
 
+import { auth } from '@/app/firebase/firebase-config';
 import { useAuth } from '@/app/context/auth-provider';
 import Loader from '@/app/components/Loading';
 
 export default function CreateAccount() {
+
+    dotenv.config();
 
     const [signInError, setSignInError] = useState(false);
     const [signInErrorMessage, setSignInErrorMessage] = useState("");
