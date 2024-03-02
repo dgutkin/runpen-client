@@ -53,8 +53,13 @@ export default function CreateAccount() {
                 }
                 if (user) {
                     addUserToDB(user, data).then((response) => {
-                        if (response && response.status == 201)
+                        if (response) {
                             router.push(`/user/${user.uid}`);
+                        } else {
+                            setLoading(false);
+                            setSignInError(true);
+                            setSignInErrorMessage("Error creating user.");
+                        }
                     });
                 } else {
                     setLoading(false);

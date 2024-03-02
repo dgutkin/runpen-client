@@ -50,13 +50,15 @@ async function addUserToDB(user, data) {
 
   const url = serverUrl + "/add-user";
 
-  await fetch(url, options)
+  const response = await fetch(url, options)
     .then((response) => {
       return response.text();
     })
     .catch((error) => {
       console.log(error);
     })
+
+  return response;
 
 }
 
