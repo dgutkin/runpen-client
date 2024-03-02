@@ -82,7 +82,7 @@ export default function CreateAccount() {
             body: JSON.stringify(data)
         }
 
-        const url = process.env.SERVER_URL || "http://127.0.0.1:8080/add-user";
+        const url = process.env.NEXT_PUBLIC_SERVER_URL || "http://127.0.0.1:8080/add-user";
             
         await fetch(url, options)
             .then((response) => {
