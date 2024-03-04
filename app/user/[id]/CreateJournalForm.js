@@ -31,7 +31,7 @@ function CreateJournalForm({ addJournal, setShowAddJournal }) {
       <div className="fixed inset-0 flex items-center justify-center">
         <div className="fixed inset-0 bg-black opacity-50"></div>
 
-        <div className="bg-white overflow-y-auto w-[40%] h-[25%] shadow-2xl border border-gray rounded-md p-4 m-10 z-10">
+        <div className="bg-white overflow-y-auto w-min-fit w-[50%] h-64 shadow-2xl border border-gray rounded-md p-4 m-10 z-10">
           <form>
             <div className="flex flex-row justify-between">
               <h3 className="text-xl font-semibold">Journal</h3>
@@ -43,7 +43,7 @@ function CreateJournalForm({ addJournal, setShowAddJournal }) {
                 <FontAwesomeIcon icon={faX}/>
               </button>
             </div>
-            <div className="mb-4 mt-6">
+            <div className="mb-4 mt-12">
                 <input 
                 type="text" 
                 id="name" 
@@ -55,9 +55,9 @@ function CreateJournalForm({ addJournal, setShowAddJournal }) {
             </div>
 
             <div className="flex flex-row justify-between">
-              <p className="text-red-600 text-sm px-2 py-2 mt-6">{errorMessage}</p>
+              <p className="text-red-600 text-sm px-2 py-2 mt-8">{errorMessage}</p>
               <button 
-                  className="bg-dark-green text-white px-4 py-2 mt-6 mx-1 rounded-md hover:bg-yinmn-blue" 
+                  className="bg-dark-green text-white px-4 py-2 mt-8 mx-1 rounded-md hover:bg-yinmn-blue" 
                   type="button"
                   onClick={createJournal}
               >
