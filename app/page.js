@@ -23,7 +23,7 @@ export default function Home() {
         <div className="bg-white p-6 pl-12 mt-24">
           <div className="container">
             <h2 className="text-2xl font-semibold mb-4">runPen</h2>
-            <p>Your digital running journal.</p>
+            <p>Your private digital running journal.</p>
           </div>
         </div>
   
