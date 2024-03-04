@@ -61,7 +61,7 @@ export default function Login() {
                 <Loader/>
                 :
 
-                <div className="p-8 border border-gray-200 rounded-lg shadow-md min-w-fit min-h-fit">
+                <div className="p-8 border border-gray-200 rounded-lg shadow-md w-96">
 
                     <h2 className="text-2xl font-semibold mb-6">Login</h2>
                     

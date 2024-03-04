@@ -89,7 +89,7 @@ export default function CreateAccount() {
             <Loader/>
             :
 
-            <div className="bg-white p-8 rounded-lg shadow-md border border-gray-200 w-1/2">
+            <div className="bg-white p-8 rounded-lg shadow-md border border-gray-200 w-96">
 
                 <h2 className="text-2xl font-semibold mb-6">Create Account</h2>
 
