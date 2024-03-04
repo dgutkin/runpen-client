@@ -191,7 +191,7 @@ export default function Entry() {
                         </button>
                     </div>
                     {noPosts?
-                    <p className="text-sm py-24">How did today go? Add a post and write about it!</p>
+                    <p className="text-sm py-24 italic">How did today go? Add a post and write about it!</p>
                     :
                     <ul className="flex flex-row flex-wrap py-8">
                         {

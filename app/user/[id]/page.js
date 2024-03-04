@@ -17,6 +17,7 @@ export default function User() {
   const [userName, setUserName] = useState("");
   const [journals, setJournals] = useState([]);
   const [showAddJournal, setShowAddJournal] = useState(false);
+  const [noJournals, setNoJournals] = useState(false);
   const [loading, setLoading] = useState("");
 
   const { currentUser } = useAuth();
@@ -28,6 +29,18 @@ export default function User() {
       getJournalList();
     }
   }, []);
+
+  useEffect(() => {
+    checkNoJournals();
+  }, [journals]);
+
+  function checkNoJournals() {
+    if (!journals.length) {
+      setNoJournals(true);
+    } else {
+      setNoJournals(false);
+    }
+  }
 
   function getUserName() {
     getUserNameFromDB(currentUser).then((result) => {
@@ -83,14 +96,16 @@ export default function User() {
               </div>
               
               <div className="my-16 flex flex-row flex-wrap justify-start">
-              {
-                journals.map((item) => {
-                  return <JournalCard 
-                    key={item.journalId}
-                    data={item}
-                    openJournal={openJournal}
-                    />;
-                })
+              {noJournals ? 
+              <p className="text-sm mt-24 italic">Your journals appear here. Create a new journal to start logging entries!</p>
+              :
+              journals.map((item) => {
+                return <JournalCard 
+                  key={item.journalId}
+                  data={item}
+                  openJournal={openJournal}
+                  />;
+              })
               }
               </div>
             </div>
