@@ -12,11 +12,11 @@ import Loader from '@/app/components/Loading';
 import DeleteConfirm from '@/app/components/DeleteConfirm';
 import { getJournalFromDB } from '@/app/api/journal-api';
 import { deleteEntryFromDB, getEntryFromDB, updateEntryToDB } from '@/app/api/entry-api';
-import { addPostToDB, deletePostFromDB, getPostsFromDB, updatePostToDB } from '@/app/api/post-api';
+import { addNoteToDB, deleteNoteFromDB, getNotesFromDB, updateNoteToDB } from '@/app/api/note-api';
 
 import EntryForm from './EntryForm';
-import PostForm from './PostForm';
-import PostCard from './PostCard';
+import NoteForm from './NoteForm';
+import NoteCard from './NoteCard';
 
 export default function Entry() {
 
@@ -34,10 +34,10 @@ export default function Entry() {
     const [journalId, setJournalId] = useState("");
     const [journalName, setJournalName] = useState("");
 
-    const [posts, setPosts] = useState([]);
-    const [showPostForm, setShowPostForm] = useState(false);
-    const [postData, setPostData] = useState({});
-    const [noPosts, setNoPosts] = useState(false);
+    const [notes, setNotes] = useState([]);
+    const [showNoteForm, setShowNoteForm] = useState(false);
+    const [noteData, setNoteData] = useState({});
+    const [noNotes, setNoNotes] = useState(false);
 
     const [loading, setLoading] = useState(false);
 
@@ -45,7 +45,7 @@ export default function Entry() {
 
         if (currentUser) {
             getEntryData();
-            getPostList();
+            getNoteList();
         }
 
     }, []);
@@ -57,14 +57,14 @@ export default function Entry() {
     }, [journalId]);
 
     useEffect(() => {
-        checkNoPosts();
-    }, [posts])
+        checkNoNotes();
+    }, [notes])
 
-    function checkNoPosts() {
-        if (!posts.length) {
-            setNoPosts(true);
+    function checkNoNotes() {
+        if (!notes.length) {
+            setNoNotes(true);
         } else {
-            setNoPosts(false);
+            setNoNotes(false);
         }
     }
 
@@ -97,31 +97,31 @@ export default function Entry() {
         });
     }
 
-    function getPostList() {
-        getPostsFromDB(currentUser, entryId).then((result) => {
-            setPosts(result);
+    function getNoteList() {
+        getNotesFromDB(currentUser, entryId).then((result) => {
+            setNotes(result);
         });
     }
     
 
-    function addPost(formData) {
-        setShowPostForm(false);
-        addPostToDB(currentUser, formData).then(() => {
-            getPostList();
+    function addNote(formData) {
+        setShowNoteForm(false);
+        addNoteToDB(currentUser, formData).then(() => {
+            getNoteList();
         });
     }
 
-    function updatePost(formData) {
-        setShowPostForm(false);
-        updatePostToDB(currentUser, formData).then(() => {
-            getPostList();
+    function updateNote(formData) {
+        setShowNoteForm(false);
+        updateNoteToDB(currentUser, formData).then(() => {
+            getNoteList();
         });
     }
 
-    function deletePost(postId) {
-        setShowPostForm(false);
-        deletePostFromDB(currentUser, postId).then(() => {
-            getPostList();
+    function deleteNote(noteId) {
+        setShowNoteForm(false);
+        deleteNoteFromDB(currentUser, noteId).then(() => {
+            getNoteList();
         });
     }
 
@@ -182,26 +182,26 @@ export default function Entry() {
                         }
                     </div>
                     <div className="flex flex-row justify-between mt-12">
-                        <h3 className="text-xl text-gray-500 font-bold">Posts</h3>
+                        <h3 className="text-xl text-gray-500 font-bold">Notes</h3>
                         <button 
                             className="bg-dark-green text-white p-2 mx-4 rounded-md h-1/2 hover:bg-yinmn-blue"
-                            onClick={() => {setShowPostForm(true); setPostData({})}}
+                            onClick={() => {setShowNoteForm(true); setNoteData({})}}
                         >
-                            Add Post
+                            Add Note
                         </button>
                     </div>
-                    {noPosts?
-                    <p className="text-sm py-24 italic">How did today go? Add a post and write about it!</p>
+                    {noNotes?
+                    <p className="text-sm py-24 italic">How did today go? Add a note and write about it!</p>
                     :
                     <ul className="flex flex-row flex-wrap py-8">
                         {
-                            posts.map((item) => {
+                            notes.map((item) => {
                                 return (
-                                    <PostCard 
-                                        key={item.postId} 
+                                    <NoteCard 
+                                        key={item.noteId} 
                                         data={item} 
-                                        setShowPostForm={setShowPostForm} 
-                                        setPostData={setPostData}
+                                        setShowNoteForm={setShowNoteForm} 
+                                        setNoteData={setNoteData}
                                     />
                                 );
                             })
@@ -211,15 +211,15 @@ export default function Entry() {
                     </div>
                 </div>
 
-                {showPostForm && 
-                    <PostForm 
-                        addPost={addPost} 
-                        updatePost={updatePost}
-                        deletePost={deletePost} 
-                        setShowPostForm={setShowPostForm} 
+                {showNoteForm && 
+                    <NoteForm 
+                        addNote={addNote} 
+                        updateNote={updateNote}
+                        deleteNote={deleteNote} 
+                        setShowNoteForm={setShowNoteForm} 
                         entryId={entryId} 
-                        postData={postData}
-                        postCount={posts.length}
+                        noteData={noteData}
+                        noteCount={notes.length}
                     />
                 }
 

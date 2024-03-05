@@ -5,7 +5,7 @@ dotenv.config();
 
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://127.0.0.1:8080";
 
-async function getPostsFromDB(currentUser, entryId) {
+async function getNotesFromDB(currentUser, entryId) {
 
     const token = await currentUser.getIdToken();
 
@@ -18,9 +18,9 @@ async function getPostsFromDB(currentUser, entryId) {
       }
     }
 
-    const url = serverUrl + "/get-posts" + `?entryId=${entryId}`;
+    const url = serverUrl + "/get-notes" + `?entryId=${entryId}`;
 
-    const entries = await fetch(url, options)
+    const notes = await fetch(url, options)
       .then((response) => {
         return response.json();
       })
@@ -31,11 +31,11 @@ async function getPostsFromDB(currentUser, entryId) {
         console.log(error);
       });
 
-    return entries;
+    return notes;
 
 }
 
-async function addPostToDB(currentUser, post) {
+async function addNoteToDB(currentUser, note) {
 
     const token = await currentUser.getIdToken();
 
@@ -46,10 +46,10 @@ async function addPostToDB(currentUser, post) {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
       },
-      body: JSON.stringify(post)
+      body: JSON.stringify(note)
     }
 
-    const url = serverUrl + "/add-post";
+    const url = serverUrl + "/add-note";
 
     const response = await fetch(url, options)
       .then((response) => {
@@ -63,7 +63,7 @@ async function addPostToDB(currentUser, post) {
 
 }
 
-async function deletePostFromDB(currentUser, postId) {
+async function deleteNoteFromDB(currentUser, noteId) {
 
     const token = await currentUser.getIdToken();
 
@@ -76,7 +76,7 @@ async function deletePostFromDB(currentUser, postId) {
       }
     }
 
-    const url = serverUrl + "/delete-post" + `?postId=${postId}`;
+    const url = serverUrl + "/delete-note" + `?noteId=${noteId}`;
 
     const response = await fetch(url, options)
       .then((response) => {
@@ -90,7 +90,7 @@ async function deletePostFromDB(currentUser, postId) {
 
 }
 
-async function updatePostToDB(currentUser, post) {
+async function updateNoteToDB(currentUser, note) {
 
     const token = await currentUser.getIdToken();
 
@@ -101,10 +101,10 @@ async function updatePostToDB(currentUser, post) {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
       },
-      body: JSON.stringify(post)
+      body: JSON.stringify(note)
     }
 
-    const url = serverUrl + "/update-post";
+    const url = serverUrl + "/update-note";
 
     const response = await fetch(url, options)
       .then((response) => {
@@ -119,8 +119,8 @@ async function updatePostToDB(currentUser, post) {
 }
 
 export { 
-    getPostsFromDB, 
-    addPostToDB, 
-    deletePostFromDB,
-    updatePostToDB
+    getNotesFromDB, 
+    addNoteToDB, 
+    deleteNoteFromDB,
+    updateNoteToDB
 };
