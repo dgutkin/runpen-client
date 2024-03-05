@@ -142,7 +142,7 @@ export default function Entry() {
 
         return (
             <div className="px-36">
-                <div className="border shadow-md rounded-md my-6 pb-16">
+                <div className="border shadow-md rounded-md my-6 pb-16 min-w-[56rem]">
                 <div className="flex flex-row justify-between">
                     <div>
                         <h3 className="text-xl font-bold ml-8 mt-8">{entryDateFormatted}</h3>

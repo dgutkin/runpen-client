@@ -79,7 +79,7 @@ function PostForm({ addPost, updatePost, deletePost, setShowPostForm, entryId, p
     return (
       <div className="fixed inset-0 flex items-center justify-center">
         <div className="fixed inset-0 bg-black opacity-50"></div>
-        <div className="bg-white overflow-y-auto w-[70%] h-[65%] shadow-2xl border border-gray rounded-md p-4 m-10 z-10">
+        <div className="bg-white overflow-y-auto w-[56rem] h-[33rem] shadow-2xl border border-gray rounded-md p-4 m-10 z-10">
           <div className="flex flex-col">
             <div className="flex flex-row justify-between">
               <h2 className="text-xl font-semibold">Post</h2>
@@ -132,7 +132,7 @@ function PostForm({ addPost, updatePost, deletePost, setShowPostForm, entryId, p
                 {Object.keys(postData).length ? "Update" : "Post"}
                 </button>
             </div>
-            <p className="my-2 mx-6 text-sm text-red-600">{errorMessage}</p>
+            <p className="mx-8 text-sm text-red-600 text-end">{errorMessage}</p>
           </div>
         </div>
         

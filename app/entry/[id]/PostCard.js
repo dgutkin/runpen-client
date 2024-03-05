@@ -5,7 +5,7 @@ function PostCard({data, setShowPostForm, setPostData}) {
     const PREVIEW_CHAR_LENGTH = 50;
 
     return (
-        <div className="mb-4 mx-1 bg-white p-4 rounded-md shadow border w-[24%] h-36 hover:animate-wiggle">
+        <div className="mb-4 mx-1 bg-white p-4 rounded-md shadow border w-48 h-36 hover:animate-wiggle">
             <button className="h-full w-full flex flex-col" onClick={() => {setShowPostForm(true); setPostData(data)}}>
                 <h2 className="text-lg font-semibold mb-2">{data.postTitle}</h2>
                 <p className="text-start text-wrap">
