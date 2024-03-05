@@ -190,7 +190,7 @@ export default function Journal() {
 
               <div className="flex flex-row justify-between">
                   <h2 className="text-2xl font-semibold text-gray-600">Entries</h2>
-                  <div>
+                  <div className="py-1">
                     <Toggle calendarView={calendarView} setCalendarView={setCalendarView}/>
                   </div>
               </div>

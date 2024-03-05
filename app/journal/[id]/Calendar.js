@@ -27,6 +27,7 @@ function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
     const daysInWeek = [
         "M", "T", "W", "Th", "F", "S", "Su"
     ];
+    const CALENDAR_ENTRY_CHAR_MAX = 20;
 
     const [month, setMonth] = useState(todayMonth);
     const [year, setYear] = useState(todayYear);
@@ -142,7 +143,7 @@ function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
                                     onClick={() => selectEntry(day)}
                                 >
                                     <p className="text-sm text-start font-semibold mb-2">{day}</p>
-                                    <p className="text-xs text-start">{daysWithEntries[day].entryLabel}</p>
+                                    <p className="text-xs text-start">{daysWithEntries[day].entryLabel.slice(0,CALENDAR_ENTRY_CHAR_MAX)}{daysWithEntries[day].entryLabel.slice(CALENDAR_ENTRY_CHAR_MAX).length? "..." : ""}</p>
                                 </button>
                                 :
                                 <button
@@ -163,7 +164,7 @@ function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
                                     onClick={() => selectEntry(day)}
                                 >
                                     <p className="text-sm text-start font-semibold mb-2">{day}</p>
-                                    <p className="text-xs text-start">{daysWithEntries[day].entryLabel}</p>
+                                    <p className="text-xs text-start">{daysWithEntries[day].entryLabel.slice(0,CALENDAR_ENTRY_CHAR_MAX)}{daysWithEntries[day].entryLabel.slice(CALENDAR_ENTRY_CHAR_MAX).length? "..." : ""}</p>
                                 </button>
                                 :
                                 <button
