@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
@@ -13,6 +13,45 @@ function AddEntryForm({ newEntryDate, addEntry, setShowAddEntry, journalId }) {
 
     const MAX_LABEL_CHAR_COUNT = 30;
 
+    const hardEffort = useRef();
+    const goodEffort = useRef();
+    const lightEffort = useRef();
+
+    function selectEffort(effort) {
+
+      setEffortButtonStyle(effort);
+      setEntryEffort(effort);
+
+    }
+
+    function setEffortButtonStyle(effort) {
+
+      const DEFAULT_BG = "#eeeeee";
+      const DEFAULT_TEXT = "#000000"
+      // reset all button styles to default
+      hardEffort.current.style.background=DEFAULT_BG;
+      hardEffort.current.style.color=DEFAULT_TEXT;
+      goodEffort.current.style.background=DEFAULT_BG;
+      goodEffort.current.style.color=DEFAULT_TEXT;
+      lightEffort.current.style.background=DEFAULT_BG;
+      lightEffort.current.style.color=DEFAULT_TEXT;
+
+      const BACKGROUND = "#013220";
+      const TEXT = "#ffffff"
+
+      if (effort == "Hard") {
+          hardEffort.current.style.background=BACKGROUND;
+          hardEffort.current.style.color=TEXT;
+      } else if (effort == "Good") {
+          goodEffort.current.style.background=BACKGROUND;
+          goodEffort.current.style.color=TEXT;
+      } else {
+          lightEffort.current.style.background=BACKGROUND;
+          lightEffort.current.style.color=TEXT;
+      }
+
+  }
+
     function submitEntry() {
       
       setErrorMessage("");
@@ -21,7 +60,7 @@ function AddEntryForm({ newEntryDate, addEntry, setShowAddEntry, journalId }) {
         setErrorMessage("Label exceeds character limit.");
         return;
       } else if (entryEffort == "" || entryLabel == "") {
-        setErrorMessage("Form isn't complete.");
+        setErrorMessage("Form is incomplete.");
         return;
       }
   
@@ -85,39 +124,43 @@ function AddEntryForm({ newEntryDate, addEntry, setShowAddEntry, journalId }) {
               <label className="text-md w-1/4 py-2">Intensity</label>
               <div className="flex flex-row gap-1">
               <button 
-                className="text-black bg-gray-200 focus:bg-dark-green focus:text-white mx-1 p-2 rounded-md" 
+                className="text-black bg-gray-200 mx-1 p-2 rounded-md" 
                 type="button"
-                onClick={() => setEntryEffort("Hard")}
+                ref={hardEffort}
+                onClick={() => selectEffort("Hard")}
               >
                 Hard
               </button>
               <button 
-                className="text-black bg-gray-200 focus:bg-dark-green focus:text-white mx-1 p-2 rounded-md" 
-                type="button" 
-                onClick={() => setEntryEffort("Good")}
+                className="text-black bg-gray-200 mx-1 p-2 rounded-md" 
+                type="button"
+                ref={goodEffort}
+                onClick={() => selectEffort("Good")}
               >
                 Good
               </button>
               <button 
-                className="text-black bg-gray-200 focus:bg-dark-green focus:text-white mx-1 p-2 rounded-md" 
-                type="button" 
-                onClick={() => setEntryEffort("Light")}
+                className="text-black bg-gray-200 mx-1 p-2 rounded-md" 
+                type="button"
+                ref={lightEffort} 
+                onClick={() => selectEffort("Light")}
               >
                 Light
               </button>
               </div>
             </div>
   
-            <div className="flex flex-row my-8 mx-8 justify-end">
+            <div className="flex flex-row my-8 mx-8 justify-between">
+              <p className="my-4 py-2 text-sm text-red-600">{errorMessage}</p>
               <button 
-                className="bg-dark-green text-white w-[30%] px-4 py-2 mt-6 mx-2 rounded-md hover:bg-yinmn-blue" 
+                className="bg-dark-green text-white w-[30%] px-4 py-2 my-4 mx-2 rounded-md hover:bg-yinmn-blue" 
                 type="button"
                 onClick={submitEntry}
               >
                 Create Entry
               </button>
             </div>
-            <p className="my-2 mx-6 text-sm text-red-600">{errorMessage}</p>
+            
           </form>
         </div>
         

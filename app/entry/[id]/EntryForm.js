@@ -15,16 +15,48 @@ function EntryForm({ entryIn, updateEntry, setShowEntryForm, setShowEntryDeleteC
     const lightEffort = useRef();
 
     useEffect(() => {
+
         setEntryLabel(entryIn.entryLabel);
         setEntryEffort(entryIn.entryEffort);
-        if (entryIn.entryEffort == "Hard") {
-            hardEffort.current.focus();
-        } else if (entryIn.entryEffort == "Good") {
-            goodEffort.current.focus();
-        } else {
-            lightEffort.current.focus();
-        }
+
+        setEffortButtonStyle(entryIn.entryEffort);
+
     }, []);
+
+    function effortSelect(effort) {
+        
+        const DEFAULT_BG = "#eeeeee";
+        const DEFAULT_TEXT = "#000000"
+        // reset all button styles to default
+        hardEffort.current.style.background=DEFAULT_BG;
+        hardEffort.current.style.color=DEFAULT_TEXT;
+        goodEffort.current.style.background=DEFAULT_BG;
+        goodEffort.current.style.color=DEFAULT_TEXT;
+        lightEffort.current.style.background=DEFAULT_BG;
+        lightEffort.current.style.color=DEFAULT_TEXT;
+        
+        setEffortButtonStyle(effort);
+        setEntryEffort(effort);
+
+    }
+
+    function setEffortButtonStyle(effort) {
+
+        const BACKGROUND = "#013220";
+        const TEXT = "#ffffff"
+
+        if (effort == "Hard") {
+            hardEffort.current.style.background=BACKGROUND;
+            hardEffort.current.style.color=TEXT;
+        } else if (effort == "Good") {
+            goodEffort.current.style.background=BACKGROUND;
+            goodEffort.current.style.color=TEXT;
+        } else {
+            lightEffort.current.style.background=BACKGROUND;
+            lightEffort.current.style.color=TEXT;
+        }
+
+    }
 
     function callUpdateEntry() {
 
@@ -89,26 +121,26 @@ function EntryForm({ entryIn, updateEntry, setShowEntryForm, setShowEntryDeleteC
                     <div className="my-6 mx-6">
                         <label className="text-md mr-8">Intensity</label>
                         <button 
-                            className="text-black bg-gray-200 focus:bg-dark-green focus:text-white mx-1 p-2 rounded-md" 
+                            className="text-black bg-gray-200 mx-1 p-2 rounded-md" 
                             type="button"
                             ref={hardEffort}
-                            onClick={() => setEntryEffort("Hard")}
+                            onClick={() => effortSelect("Hard")}
                         >
                             Hard
                         </button>
                         <button 
-                            className="text-black bg-gray-200 focus:bg-dark-green focus:text-white mx-1 p-2 rounded-md" 
+                            className="text-black bg-gray-200 mx-1 p-2 rounded-md" 
                             type="button" 
                             ref={goodEffort}
-                            onClick={() => setEntryEffort("Good")}
+                            onClick={() => effortSelect("Good")}
                         >
                             Good
                         </button>
                         <button 
-                            className="text-black bg-gray-200 focus:bg-dark-green focus:text-white mx-1 p-2 rounded-md" 
+                            className="text-black bg-gray-200 mx-1 p-2 rounded-md" 
                             type="button"
                             ref={lightEffort}
-                            onClick={() => setEntryEffort("Light")}
+                            onClick={() => effortSelect("Light")}
                         >
                             Light
                         </button>
