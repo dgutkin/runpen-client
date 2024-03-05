@@ -6,7 +6,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 function GoalCard({ data, setShowGoalForm, setGoalInFocus, deleteGoal }) {
 
     return (
-        <div className="mb-4 mx-1 p-4 rounded-md shadow border h-24 flex flex-row hover:bg-gray-200 relative group">
+        <div className="mb-4 mx-1 p-4 rounded-md shadow border w-64 h-24 flex flex-row hover:bg-gray-200 relative group">
             <button 
                 className="h-full w-full transition-opacity duration-300 ease-in-out opacity-100 group-hover:opacity-100" 
                 onClick={() => {setShowGoalForm(true); setGoalInFocus(data)}}
