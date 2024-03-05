@@ -200,9 +200,7 @@ export default function Journal() {
                             <EntryCard 
                               key={item.entryId} 
                               data={item} 
-                              editEntry={openEntry} 
-                              setEntryInFocus={setEntryInFocus} 
-                              setShowDeleteConfirm={setShowDeleteConfirm}
+                              editEntry={openEntry}
                             />
                           );
                         })
