@@ -35,7 +35,7 @@ export default function User() {
   }, [journals]);
 
   function checkNoJournals() {
-    if (!journals.length) {
+    if (!journals?.length) {
       setNoJournals(true);
     } else {
       setNoJournals(false);
@@ -99,7 +99,7 @@ export default function User() {
               {noJournals ? 
               <p className="text-sm mt-24 italic">Your journals appear here. Create a new journal to start logging entries!</p>
               :
-              journals.map((item) => {
+              journals?.map((item) => {
                 return <JournalCard 
                   key={item.journalId}
                   data={item}
