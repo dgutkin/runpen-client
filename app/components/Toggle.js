@@ -1,5 +1,4 @@
-
-import { useState } from 'react';
+'use client'
 
 function Toggle({ calendarView, setCalendarView }) {
 
