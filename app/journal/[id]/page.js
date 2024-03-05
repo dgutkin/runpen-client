@@ -113,6 +113,7 @@ export default function Journal() {
     addEntryToDB(currentUser, formData).then(() => {
       getEntryList();
     });
+    router.push(`/entry/${formData.entryId}`);
   }
 
   function openEntry(entryId) {
@@ -127,10 +128,6 @@ export default function Journal() {
         getEntryList();
       });
     }
-  }
-
-  function switchView() {
-    setCalendarView(!calendarView);
   }
 
   if (!currentUser) {
