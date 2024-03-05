@@ -2,6 +2,9 @@
 
 import { useRouter } from 'next/navigation';
 import { signOut } from 'firebase/auth';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
 
 import { auth }  from '@/app/firebase/firebase-config';
 import { useAuth } from '@/app/context/auth-provider';
@@ -22,23 +25,23 @@ export default function NavBar() {
   return (
       <nav className="bg-dark-green py-4 px-36">
           <div className="flex flex-row justify-between mx-2">
-            <div className="text-lg text-white font-bold">
-              <button onClick={() => router.push("/")}>rP</button>
+            <div className="text-white font-bold">
+              <button className="py-1 scale-150" onClick={() => router.push("/")}>rP</button>
             </div>
 
             {currentUser && (
                 <div>
                   <button 
-                    className="bg-white text-md text-black py-1 px-3 mx-2 rounded-md hover:bg-gray-200" 
+                    className="text-md py-1 px-1 mx-1 rounded-md hover:scale-125"
                     onClick={() => router.push(`/user/${currentUser.uid}`)}
                   >
-                    Journals
+                    <FontAwesomeIcon icon={faHome} size="lg" style={{color: "#ffffff"}}/>
                   </button>
                   <button 
-                    className="bg-white text-md text-black py-1 px-3 ml-2 rounded-md hover:bg-gray-200" 
+                    className="text-md py-1 px-1 ml-1 rounded-md scale-110 hover:scale-125" 
                     onClick={handleLogout}
                   >
-                    Logout
+                    <FontAwesomeIcon icon={faRightFromBracket} size="lg" style={{color:"#ffffff"}}/>
                   </button>
                  </div>
               )
