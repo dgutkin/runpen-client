@@ -136,14 +136,14 @@ export default function Journal() {
           <div className="flex flex-row justify-between my-10 px-4">
             <h2 className="text-2xl font-semibold">{journal.journalName}</h2>
             <button 
-              className="bg-white text-gray-500 rounded-md hover:scale-125 mx-4"
+              className="bg-white text-gray-500 rounded-md hover:scale-125"
               onClick={() => setShowJournalForm(true)}
             >
               <FontAwesomeIcon icon={faGear} size="2xl"/>
             </button>
           </div>
 
-          <div className="flex flex-row gap-12 mb-8">
+          <div className="flex flex-row gap-6 mb-8">
 
             <div className="mb-8 px-4 flex flex-col w-1/3">
               <div className="flex flex-row justify-between">
