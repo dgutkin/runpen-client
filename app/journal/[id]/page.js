@@ -9,6 +9,7 @@ import { useAuth } from '@/app/context/auth-provider';
 import AccessDenied from '@/app/components/AccessDenied';
 import Loader from '@/app/components/Loading';
 import DeleteConfirm from '@/app/components/DeleteConfirm';
+import Toggle from '@/app/components/Toggle';
 import { getJournalFromDB, deleteJournalFromDB, updateJournalToDB } from '@/app/api/journal-api';
 import { getGoalsFromDB, addGoalToDB, deleteGoalFromDB, updateGoalToDB } from '@/app/api/goal-api';
 import { addEntryToDB, getEntriesFromDB, deleteEntryFromDB } from '@/app/api/entry-api';
@@ -190,12 +191,7 @@ export default function Journal() {
               <div className="flex flex-row justify-between">
                   <h2 className="text-2xl font-semibold text-gray-600">Entries</h2>
                   <div>
-                    <button 
-                      className="bg-dark-green text-white px-4 py-2 mx-2 rounded-md hover:bg-yinmn-blue" 
-                      onClick={switchView}
-                    >
-                      {calendarView? "List" : "Calendar"} View
-                    </button>
+                    <Toggle calendarView={calendarView} setCalendarView={setCalendarView}/>
                   </div>
               </div>
 
