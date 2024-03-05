@@ -50,7 +50,7 @@ function GoalForm({ addGoal, updateGoal, setShowGoalForm, journalId, goalInFocus
     return (
       <div className="fixed inset-0 flex items-center justify-center">
         <div className="fixed inset-0 bg-black opacity-50"></div>
-        <div className="bg-white overflow-y-auto w-[50%] h-[30%] shadow-2xl border border-gray rounded-md p-6 m-10 z-10">
+        <div className="bg-white overflow-y-auto w-[48rem] h-64 shadow-2xl border border-gray rounded-md p-6 m-10 z-10">
           <form className="flex flex-col">
             <div className="flex flex-row justify-between">
               <h2 className="text-xl font-semibold">Goal</h2>
