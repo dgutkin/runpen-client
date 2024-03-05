@@ -29,8 +29,6 @@ export default function Journal() {
 
   const [entries, setEntries] = useState([]);  
   const [showAddEntry, setShowAddEntry] = useState(false);
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [entryInFocus, setEntryInFocus] = useState("");
   const [newEntryDate, setNewEntryDate] = useState();
   
   const [loading, setLoading] = useState(false);
@@ -119,15 +117,6 @@ export default function Journal() {
   function openEntry(entryId) {
     setLoading(true);
     router.push(`/entry/${entryId}`);
-  }
-
-  function deleteEntry() {
-    if (entryInFocus) {
-      setShowDeleteConfirm(false);
-      deleteEntryFromDB(currentUser, entryInFocus).then(() => {
-        getEntryList();
-      });
-    }
   }
 
   if (!currentUser) {
@@ -256,12 +245,12 @@ export default function Journal() {
             />
           }
 
-          {showDeleteConfirm &&
+          {/* {showDeleteConfirm &&
             <DeleteConfirm 
               deleteAction={deleteEntry} 
               setShowDeleteConfirm={setShowDeleteConfirm}
             />
-          }
+          } */}
           
       </div>
 
