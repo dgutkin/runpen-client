@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faX } from '@fortawesome/free-solid-svg-icons';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 
 import { useAuth } from '@/app/context/auth-provider';
@@ -154,13 +154,13 @@ export default function Entry() {
                                 className="text-gray-500 rounded-md mr-6 hover:scale-125"
                                 onClick={() => setShowEntryForm(true)}
                             >
-                                <FontAwesomeIcon icon={faPencil} size="2xl"/>
+                                <FontAwesomeIcon icon={faPencil} size="xl"/>
                             </button>
                             <button 
                                 className="text-gray-500 rounded-md mr-8 hover:scale-125"
                                 onClick={closeEntry}
                             >
-                                <FontAwesomeIcon icon={faRightFromBracket} size="2xl"/>
+                                <FontAwesomeIcon icon={faX} size="xl"/>
                             </button> 
                         </div>
                     }
