@@ -53,7 +53,7 @@ function JournalForm({journalName, setShowJournalForm, setShowJournalDeleteConfi
                     </button>
                 </div>
                 <label 
-                    className="text-md text-gray-600 my-4 px-1" 
+                    className="text-md text-gray-600 my-4 px-2" 
                     htmlFor="title"
                     >
                     Journal Name
@@ -62,29 +62,29 @@ function JournalForm({journalName, setShowJournalForm, setShowJournalDeleteConfi
                     type="text" 
                     id="title" 
                     name="title"
-                    className="border border-gray-200 rounded-md p-2"
+                    className="border border-gray-200 rounded-md p-2 mx-2"
                     onInput={(e) => setJournalTitle(e.target.value)}
                     value={journalTitle || ""}
                 />
                 <div className="flex flex-row justify-between">
-                    <p className="text-red-600 text-sm p-2 my-4">{errorMessage}</p>
+                    <p className="text-red-600 text-sm p-2 my-4 mx-2">{errorMessage}</p>
                     <button 
-                        className="bg-dark-green text-white my-4 rounded-md w-1/3 p-2 hover:bg-yinmn-blue"
+                        className="bg-dark-green text-white my-4 mx-2 rounded-md w-1/3 p-2 hover:bg-yinmn-blue"
                         onClick={updateJournalTitle}
                     >
                         Update
                     </button>
                 </div>
-                <div className="flex flex-row justify-between">
+                <div className="flex flex-row justify-between bg-red-100 mt-10 py-4 px-2 rounded-sm">
                 <label 
-                    className="text-md text-red-600 mt-16 px-1 py-2" 
+                    className="text-md text-red-600 px-1 py-2" 
                     htmlFor="delete"
                 >
                     Delete Journal
                 </label>
                 <button
                     name="delete"
-                    className="bg-red-500 text-white rounded-md mt-16 p-2 w-1/3 hover:bg-yinmn-blue" 
+                    className="bg-red-500 text-white rounded-md p-2 w-1/3 hover:bg-yinmn-blue" 
                     onClick={openDeleteConfirm}
                 >
                     Delete
