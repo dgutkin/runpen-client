@@ -9,7 +9,7 @@ function CreateJournalForm({ addJournal, setShowAddJournal }) {
     const [journalName, setJournalName] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
-    const MAX_JOURNAL_NAME_LENGTH = 20;
+    const MAX_JOURNAL_NAME_LENGTH = 30;
 
     function createJournal() {
 
@@ -48,7 +48,7 @@ function CreateJournalForm({ addJournal, setShowAddJournal }) {
                 type="text" 
                 id="name" 
                 name="name" 
-                placeholder="Journal name" 
+                placeholder="Journal name (max 30 characters)" 
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" 
                 onChange={(e) => setJournalName(e.target.value)}
                 />
