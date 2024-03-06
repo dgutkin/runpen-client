@@ -9,9 +9,9 @@ function EntryCard({ data, editEntry }) {
                 className="w-full p-4 transition-opacity duration-300 ease-in-out opacity-100 group-hover:opacity-100" 
                 onClick={() => editEntry(data.entryId)}
             >
-                <div className="flex flex-row gap-12">
+                <div className="flex flex-row justify-between">
                     <p className="text-md font-semibold w-36 text-start">{data.entryLabel.slice(0,25)}{data.entryLabel.slice(25)? "..." : ""}</p>
-                    {new Date(data.entryDate).toLocaleDateString('en-us', {month:'short', day:'numeric', year:'numeric'})}
+                    <p className="text-md">{new Date(data.entryDate).toLocaleDateString('en-us', {month:'short', day:'numeric', year:'numeric'})}</p>
                 </div>
             </button>
         </div>
