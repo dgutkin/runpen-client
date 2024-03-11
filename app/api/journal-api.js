@@ -1,10 +1,6 @@
 
 import { v4 as uuidv4 } from 'uuid';
-import dotenv from 'dotenv';
-
-dotenv.config();
-
-const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://127.0.0.1:8080";
+import { serverUrl } from './api-util';
 
 async function getJournalFromDB(currentUser, journalId) {
     
@@ -32,7 +28,7 @@ async function getJournalFromDB(currentUser, journalId) {
           console.log(error);
       });
 
-      return journal;
+    return journal;
 
 }
 
