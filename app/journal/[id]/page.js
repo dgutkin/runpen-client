@@ -189,11 +189,11 @@ export default function Journal() {
 
           <div className="flex flex-col lg:flex-row gap-6 mb-8">
 
-            <div className="mb-8 px-4 flex flex-col lg:w-1/3">
+            <div className="mb-8 px-4 flex flex-col">
               <div className="flex flex-row justify-between gap-6">
                 <h2 className="text-2xl py-1 font-semibold text-gray-600">Goals</h2>
                 <button 
-                  className="bg-dark-green text-white text-2xl mx-2 px-4 py-1 rounded-md hover:bg-yinmn-blue"
+                  className="bg-dark-green text-white text-2xl mx-1 px-4 py-1 rounded-md hover:bg-yinmn-blue"
                   onClick={() => {setShowGoalForm(true); setGoalInFocus({})}}
                 >
                   +
