@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 import { auth } from '@/app/firebase/firebase-config';
 import { useAuth } from '@/app/context/auth-provider';
 import Loader from '@/app/components/Loading';
+
 import { addUserToDB } from '@/app/api/user-api';
 
 export default function CreateAccount() {
@@ -52,15 +53,16 @@ export default function CreateAccount() {
                     uid: user.uid
                 }
                 if (user) {
-                    addUserToDB(user, data).then((response) => {
-                        if (response) {
-                            router.push(`/user/${user.uid}`);
-                        } else {
+                    addUserToDB(user, data)
+                        .then((response) => {
+                            if (response) 
+                                router.push(`/user/${user.uid}`);
+                        })
+                        .catch((error) => {
                             setLoading(false);
                             setSignInError(true);
                             setSignInErrorMessage("Error creating user.");
-                        }
-                    });
+                        }); 
                 } else {
                     setLoading(false);
                     setSignInError(true);
@@ -69,9 +71,8 @@ export default function CreateAccount() {
             })
             .catch((error) => {
                 setLoading(false);
-                const errorMessage = error.message;
                 setSignInError(true);
-                setSignInErrorMessage(errorMessage);
+                setSignInErrorMessage(error.message);
             });
         
     }

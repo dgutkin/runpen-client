@@ -1,6 +1,6 @@
 
 import { v4 as uuidv4 } from 'uuid';
-import { serverUrl } from './api-util';
+import { fetchWithJSONResponse, fetchWithTextResponse, serverUrl } from './api-util';
 
 async function getJournalFromDB(currentUser, journalId) {
     
@@ -17,16 +17,7 @@ async function getJournalFromDB(currentUser, journalId) {
 
     const url = serverUrl + "/get-journal" + `?journalId=${journalId}`;
     
-    const journal = await fetch(url, options)
-      .then((response) => {
-          return response.json();
-      })
-      .then((result) => {
-        return result;
-      })
-      .catch((error) => {
-          console.log(error);
-      });
+    const journal = await fetchWithTextResponse(url, options)
 
     return journal;
 
@@ -47,16 +38,7 @@ async function getJournalsFromDB(currentUser) {
 
     const url = serverUrl + "/get-journals" + `?uid=${currentUser.uid}`;
 
-    const journals = await fetch(url, options)
-      .then((response) => {
-        return response.json();
-      })
-      .then((result) => {
-        return result;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const journals = await fetchWithJSONResponse(url, options)
 
     return journals;
 
@@ -85,13 +67,7 @@ async function addJournalToDB(currentUser, journalName) {
 
     const url = serverUrl + "/add-journal";
 
-    const response = await fetch(url, options)
-      .then((response) => {
-        return response.text();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const response = await fetchWithTextResponse(url, options)
 
     return response;
 
@@ -112,13 +88,7 @@ async function deleteJournalFromDB(currentUser, journalId) {
 
     const url = serverUrl + "/delete-journal" + `?journalId=${journalId}`;
 
-    const response = await fetch(url, options)
-      .then((response) => {
-        return response.text();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const response = await fetchWithTextResponse(url, options)
 
     return response;
 
@@ -142,13 +112,7 @@ async function updateJournalToDB(currentUser, journalName, oldJournal) {
 
     const url = serverUrl + "/update-journal";
 
-    const response = await fetch(url, options)
-      .then((response) => {
-        return response.text();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const response = await fetchWithTextResponse(url, options)
 
     return response;
 

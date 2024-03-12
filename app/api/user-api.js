@@ -1,33 +1,24 @@
 
-import { serverUrl } from './api-util';
+import { fetchWithTextResponse, serverUrl } from './api-util';
 
 async function getUserNameFromDB(currentUser) {
 
-    const token = await currentUser.getIdToken();
+  const token = await currentUser.getIdToken();
 
-    const options = {
-      method: "GET",
-      mode: "cors",
-      headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-      }
+  const options = {
+    method: "GET",
+    mode: "cors",
+    headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
     }
+  }
 
-    const url = serverUrl + "/user-name" + `?uid=${currentUser.uid}`;
-    
-    const userName = await fetch(url, options)
-      .then((response) => {
-        return response.text();
-      })
-      .then((result) => {
-        return result;
-      })
-      .catch((error) => {
-          console.log(error);
-      });
+  const url = serverUrl + "/user-name" + `?uid=${currentUser.uid}`;
+  
+  const userName = await fetchWithTextResponse(url, options);
 
-    return userName;
+  return userName;
 
 }
 
@@ -47,13 +38,7 @@ async function addUserToDB(user, data) {
 
   const url = serverUrl + "/add-user";
 
-  const response = await fetch(url, options)
-    .then((response) => {
-      return response.text();
-    })
-    .catch((error) => {
-      console.log(error);
-    })
+  const response = await fetchWithTextResponse(url, options)
 
   return response;
 

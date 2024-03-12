@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
@@ -10,6 +11,8 @@ import { useAuth } from '@/app/context/auth-provider';
 import AccessDenied from '@/app/components/AccessDenied';
 import Loader from '@/app/components/Loading';
 import DeleteConfirm from '@/app/components/DeleteConfirm';
+import ErrorPage from '@/app/components/ErrorPage';
+
 import { getJournalFromDB } from '@/app/api/journal-api';
 import { deleteEntryFromDB, getEntryFromDB, updateEntryToDB } from '@/app/api/entry-api';
 import { addNoteToDB, deleteNoteFromDB, getNotesFromDB, updateNoteToDB } from '@/app/api/note-api';
@@ -40,6 +43,7 @@ export default function Entry() {
     const [noNotes, setNoNotes] = useState(false);
 
     const [loading, setLoading] = useState(false);
+    const [errorPage, setErrorPage] = useState(false);
 
     useEffect(() => {
 
@@ -69,60 +73,92 @@ export default function Entry() {
     }
 
     function getJournalName() {
-        getJournalFromDB(currentUser, journalId).then((result) => {
-            setJournalName(result.journalName);
-        });
+        getJournalFromDB(currentUser, journalId)
+            .then((result) => {
+                setJournalName(result.journalName);
+            })
+            .catch((error) => {
+                setErrorPage(true);
+            });
     }
 
     function getEntryData() {
-        getEntryFromDB(currentUser, entryId).then((result) => {
-            const entryDateAsDate = new Date(result.entryDate);
-            const formattedDate = (entryDateAsDate).toLocaleString('en-us', {month: 'short', day: 'numeric', year: 'numeric'});
-            setEntryDateFormatted(formattedDate);
-            setEntry(result);
-            setJournalId(result.journalId);
-        });
+        getEntryFromDB(currentUser, entryId)
+            .then((result) => {
+                const entryDateAsDate = new Date(result.entryDate);
+                const formattedDate = (entryDateAsDate).toLocaleString('en-us', {month: 'short', day: 'numeric', year: 'numeric'});
+                setEntryDateFormatted(formattedDate);
+                setEntry(result);
+                setJournalId(result.journalId);
+            })
+            .catch((error) => {
+                setErrorPage(true);
+            });
     }
 
     function updateEntry(formData) {
         setShowEntryForm(false);
-        updateEntryToDB(currentUser, formData).then(() => {
-            getEntryData();
-        });
+        updateEntryToDB(currentUser, formData)
+            .then(() => {
+                getEntryData();
+            })
+            .catch((error) => {
+                setErrorPage(true);
+            })
     }
 
     function deleteEntry() {
-        deleteEntryFromDB(currentUser, entryId).then(() => {
-            closeEntry();
-        });
+        deleteEntryFromDB(currentUser, entryId)
+            .then(() => {
+                closeEntry();
+            })
+            .catch((error) => {
+                setErrorPage(true);
+            })
     }
 
     function getNoteList() {
-        getNotesFromDB(currentUser, entryId).then((result) => {
-            setNotes(result);
-        });
+        getNotesFromDB(currentUser, entryId)
+            .then((result) => {
+                setNotes(result);
+            })
+            .catch((error) => {
+                setErrorPage(true);
+            });
     }
     
 
     function addNote(formData) {
         setShowNoteForm(false);
-        addNoteToDB(currentUser, formData).then(() => {
-            getNoteList();
-        });
+        addNoteToDB(currentUser, formData)
+            .then(() => {
+                getNoteList();
+            })
+            .catch((error) => {
+                setErrorPage(true);
+            });
     }
 
     function updateNote(formData) {
         setShowNoteForm(false);
-        updateNoteToDB(currentUser, formData).then(() => {
-            getNoteList();
-        });
+        updateNoteToDB(currentUser, formData)
+            .then(() => {
+                getNoteList();
+            })
+            .catch((error) => {
+                setErrorPage(true);
+            })
     }
 
     function deleteNote(noteId) {
         setShowNoteForm(false);
-        deleteNoteFromDB(currentUser, noteId).then(() => {
-            getNoteList();
-        });
+        deleteNoteFromDB(currentUser, noteId)
+            .then(() => {
+                getNoteList();
+            })
+            .catch((error) => {
+                setErrorPage(true);
+            });
     }
 
     function closeEntry() {
@@ -137,6 +173,10 @@ export default function Entry() {
     } else if (loading) {
         
         return <Loader/>;
+
+    } else if (errorPage) {
+        
+        return <ErrorPage/>;
 
     } else {
 

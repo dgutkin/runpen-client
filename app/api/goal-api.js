@@ -1,5 +1,5 @@
 
-import { serverUrl } from './api-util';
+import { fetchWithJSONResponse, fetchWithTextResponse, serverUrl } from './api-util';
 
 async function getGoalsFromDB(currentUser, journalId) {
 
@@ -16,16 +16,7 @@ async function getGoalsFromDB(currentUser, journalId) {
 
     const url = serverUrl + "/get-goals" + `?journalId=${journalId}`;
 
-    const goals = await fetch(url, options)
-      .then((response) => {
-        return response.json();
-      })
-      .then((result) => {
-        return result;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const goals = await fetchWithJSONResponse(url, options)
 
     return goals;
 
@@ -47,13 +38,7 @@ async function addGoalToDB(currentUser, goal) {
 
   const url = serverUrl + "/add-goal";
 
-  const response = await fetch(url, options)
-    .then((response) => {
-      return response.text();
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  const response = await fetchWithTextResponse(url, options)
 
   return response;
 
@@ -74,13 +59,7 @@ async function deleteGoalFromDB(currentUser, goalId) {
 
   const url = serverUrl + "/delete-goal" + `?goalId=${goalId}`;
 
-  const response = await fetch(url, options)
-    .then((response) => {
-      return response.text();
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  const response = await fetchWithTextResponse(url, options)
 
   return response;
 
@@ -102,13 +81,7 @@ async function updateGoalToDB(currentUser, newGoal) {
 
   const url = serverUrl + "/update-goal";
 
-  const response = await fetch(url, options)
-    .then((response) => {
-      return response.text();
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  const response = await fetchWithTextResponse(url, options)
 
   return response;
 

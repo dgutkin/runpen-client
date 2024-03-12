@@ -1,5 +1,5 @@
 
-import { serverUrl } from './api-util';
+import { fetchWithJSONResponse, fetchWithTextResponse, serverUrl } from './api-util';
 
 async function getNotesFromDB(currentUser, entryId) {
 
@@ -16,16 +16,7 @@ async function getNotesFromDB(currentUser, entryId) {
 
     const url = serverUrl + "/get-notes" + `?entryId=${entryId}`;
 
-    const notes = await fetch(url, options)
-      .then((response) => {
-        return response.json();
-      })
-      .then((result) => {
-        return result;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const notes = await fetchWithJSONResponse(url, options)
 
     return notes;
 
@@ -47,13 +38,7 @@ async function addNoteToDB(currentUser, note) {
 
     const url = serverUrl + "/add-note";
 
-    const response = await fetch(url, options)
-      .then((response) => {
-        return response.text();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const response = await fetchWithTextResponse(url, options)
 
     return response;
 
@@ -74,13 +59,7 @@ async function deleteNoteFromDB(currentUser, noteId) {
 
     const url = serverUrl + "/delete-note" + `?noteId=${noteId}`;
 
-    const response = await fetch(url, options)
-      .then((response) => {
-        return response.text();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const response = await fetchWithTextResponse(url, options)
 
     return response;
 
@@ -102,13 +81,7 @@ async function updateNoteToDB(currentUser, note) {
 
     const url = serverUrl + "/update-note";
 
-    const response = await fetch(url, options)
-      .then((response) => {
-        return response.text();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const response = await fetchWithTextResponse(url, options)
 
     return response;
 

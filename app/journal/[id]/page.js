@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 
@@ -10,9 +11,11 @@ import AccessDenied from '@/app/components/AccessDenied';
 import Loader from '@/app/components/Loading';
 import DeleteConfirm from '@/app/components/DeleteConfirm';
 import Toggle from '@/app/components/Toggle';
+import ErrorPage from '@/app/components/ErrorPage';
+
 import { getJournalFromDB, deleteJournalFromDB, updateJournalToDB } from '@/app/api/journal-api';
 import { getGoalsFromDB, addGoalToDB, deleteGoalFromDB, updateGoalToDB } from '@/app/api/goal-api';
-import { addEntryToDB, getEntriesFromDB, deleteEntryFromDB } from '@/app/api/entry-api';
+import { addEntryToDB, getEntriesFromDB } from '@/app/api/entry-api';
 
 import JournalForm from './JournalForm';
 import AddEntryForm from './AddEntryForm';
@@ -33,6 +36,7 @@ export default function Journal() {
   
   const [loading, setLoading] = useState(false);
   const [calendarView, setCalendarView] = useState(true);
+  const [errorPage, setErrorPage] = useState(false);
 
   const [showGoalForm, setShowGoalForm] = useState(false);
   const [goals, setGoals] = useState([]);
@@ -55,63 +59,99 @@ export default function Journal() {
   }, [])
 
   function getJournal() {
-    getJournalFromDB(currentUser, journalId).then((result) => {
-      setJournal(result);
-    });
+    getJournalFromDB(currentUser, journalId)
+      .then((result) => {
+        setJournal(result);
+      })
+      .catch((error) => {
+        setErrorPage(true);
+      });
   }
 
   async function getEntryList() {
-    getEntriesFromDB(currentUser, journalId).then((result) => {
-      setEntries(result);
-    });
+    getEntriesFromDB(currentUser, journalId)
+      .then((result) => {
+        setEntries(result);
+      })
+      .catch((error) => {
+        setErrorPage(true);
+      });
   }
 
   function updateJournalName(journalName) {
-    updateJournalToDB(currentUser, journalName, journal).then(() => {
-      getJournal();
-    });
+    updateJournalToDB(currentUser, journalName, journal)
+      .then(() => {
+        getJournal();
+      })
+      .catch((error) => {
+        setErrorPage(true);
+      });
   }
 
   function deleteJournal() {
     setShowJournalDeleteConfirm(false);
-    deleteJournalFromDB(currentUser, journalId).then(() => {
-      setLoading(true);
-      router.push(`/user/${currentUser.uid}`);
-    });
+    deleteJournalFromDB(currentUser, journalId)
+      .then(() => {
+        setLoading(true);
+        router.push(`/user/${currentUser.uid}`);
+      })
+      .catch((error) => {
+        setErrorPage(true);
+      });
   }
 
   function getGoalList() {
-    getGoalsFromDB(currentUser, journalId).then((result) => {
-      setGoals(result);
-    });
+    getGoalsFromDB(currentUser, journalId)
+      .then((result) => {
+        setGoals(result);
+      })
+      .catch((error) => {
+        setErrorPage(true);
+      });
   }
 
   function addGoal(goalData) {
     setShowGoalForm(false);
-    addGoalToDB(currentUser, goalData).then(() => {
-      getGoalList();
-    });
+    addGoalToDB(currentUser, goalData)
+      .then(() => {
+        getGoalList();
+      })
+      .catch((error) => {
+        setErrorPage(true);
+      });
   }
 
   function updateGoal(goalData) {
     setShowGoalForm(false);
-    updateGoalToDB(currentUser, goalData).then(() => {
-      getGoalList();
-    });
+    updateGoalToDB(currentUser, goalData)
+      .then(() => {
+        getGoalList();
+      })
+      .catch((error) => {
+        setErrorPage(true);
+      });
   }
 
   function deleteGoal(goalId) {
-    deleteGoalFromDB(currentUser, goalId).then(() => {
-      getGoalList();
-    });
+    deleteGoalFromDB(currentUser, goalId)
+      .then(() => {
+        getGoalList();
+      })
+      .catch((error) => {
+        setErrorPage(true);
+      })
   }
 
   function addEntry(formData) {
     setShowAddEntry(false);
-    addEntryToDB(currentUser, formData).then(() => {
-      getEntryList();
-    });
-    router.push(`/entry/${formData.entryId}`);
+    addEntryToDB(currentUser, formData)
+      .then(() => {
+        getEntryList();
+        router.push(`/entry/${formData.entryId}`);
+      })
+      .catch((error) => {
+        setErrorPage(true);
+      });
   }
 
   function openEntry(entryId) {
@@ -127,6 +167,10 @@ export default function Journal() {
 
     return <Loader/>;
   
+  } else if (errorPage) {
+    
+    return <ErrorPage/>;
+
   } else {
 
     return (
@@ -244,13 +288,6 @@ export default function Journal() {
               journalId={journalId} 
             />
           }
-
-          {/* {showDeleteConfirm &&
-            <DeleteConfirm 
-              deleteAction={deleteEntry} 
-              setShowDeleteConfirm={setShowDeleteConfirm}
-            />
-          } */}
           
       </div>
 

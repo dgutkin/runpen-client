@@ -1,5 +1,5 @@
 
-import { serverUrl } from './api-util';
+import { fetchWithJSONResponse, fetchWithTextResponse, serverUrl } from './api-util';
 
 async function getEntryFromDB(currentUser, entryId) {
     
@@ -16,18 +16,9 @@ async function getEntryFromDB(currentUser, entryId) {
 
     const url = serverUrl + "/get-entry" + `?entryId=${entryId}`;
     
-    const entry = await fetch(url, options)
-      .then((response) => {
-          return response.json();
-      })
-      .then((result) => {
-        return result;
-      })
-      .catch((error) => {
-          console.log(error);
-      });
+    const entry = await fetchWithJSONResponse(url, options)
 
-      return entry;
+    return entry;
 
 }
 
@@ -46,16 +37,7 @@ async function getEntriesFromDB(currentUser, journalId) {
 
     const url = serverUrl + "/get-entries" + `?journalId=${journalId}`;
 
-    const entries = await fetch(url, options)
-      .then((response) => {
-        return response.json();
-      })
-      .then((result) => {
-        return result;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const entries = await fetchWithJSONResponse(url, options)
 
     return entries;
 
@@ -77,13 +59,7 @@ async function addEntryToDB(currentUser, entry) {
 
     const url = serverUrl + "/add-entry";
 
-    const response = await fetch(url, options)
-      .then((response) => {
-        return response.text();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const response = await fetchWithTextResponse(url, options)
 
     return response;
 
@@ -104,13 +80,7 @@ async function deleteEntryFromDB(currentUser, entryId) {
 
     const url = serverUrl + "/delete-entry" + `?entryId=${entryId}`;
 
-    const response = await fetch(url, options)
-      .then((response) => {
-        return response.text();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const response = await fetchWithTextResponse(url, options)
 
     return response;
 
@@ -132,13 +102,7 @@ async function updateEntryToDB(currentUser, newEntry) {
 
     const url = serverUrl + "/update-entry";
 
-    const response = await fetch(url, options)
-      .then((response) => {
-        return response.text();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const response = await fetchWithTextResponse(url, options)
 
     return response;
 

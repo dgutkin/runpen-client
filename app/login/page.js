@@ -38,7 +38,6 @@ export default function Login() {
             })
             .catch((error) => {
                 setLoading(false);
-                const errorCode = error.code;
                 const errorMessage = error.message;
                 setAuthError(true);
                 setAuthErrorMessage(errorMessage);

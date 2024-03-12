@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/app/context/auth-provider';
 import Loader from '@/app/components/Loading';
 import AccessDenied from '@/app/components/AccessDenied';
+import ErrorPage from '@/app/components/ErrorPage';
+
 import { getUserNameFromDB } from '@/app/api/user-api';
 import { getJournalsFromDB, addJournalToDB } from '@/app/api/journal-api';
 
@@ -19,6 +21,7 @@ export default function User() {
   const [showAddJournal, setShowAddJournal] = useState(false);
   const [noJournals, setNoJournals] = useState(false);
   const [loading, setLoading] = useState("");
+  const [errorPage, setErrorPage] = useState(false);
 
   const { currentUser } = useAuth();
   const router = useRouter();
@@ -43,22 +46,34 @@ export default function User() {
   }
 
   function getUserName() {
-    getUserNameFromDB(currentUser).then((result) => {
-      setUserName(result);
-    });
+    getUserNameFromDB(currentUser)
+      .then((result) => {
+        setUserName(result);
+      })
+      .catch((error) => {
+        setErrorPage(true);
+      });
   }
 
   function getJournalList() {
-    getJournalsFromDB(currentUser).then((result) => {
-      setJournals(result);
-    });
+    getJournalsFromDB(currentUser)
+      .then((result) => {
+        setJournals(result);
+      })
+      .catch((error) => {
+        setErrorPage(true);
+      });
   }
 
   function addJournal(journalName) {
     setShowAddJournal(false);
-    addJournalToDB(currentUser, journalName).then(() => {
-      getJournalList();
-    });
+    addJournalToDB(currentUser, journalName)
+      .then(() => {
+        getJournalList();
+      })
+      .catch((error) => {
+        setErrorPage(true);
+      });
   }
 
   function openJournal(journalId) {
@@ -73,6 +88,10 @@ export default function User() {
   } else if (loading) { 
 
     return <Loader/>
+
+  } else if (errorPage) {
+    
+    return <ErrorPage/>
 
   } else {
 
