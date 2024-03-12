@@ -83,15 +83,15 @@ export default function User() {
   
   if (!currentUser) {
 
-    return <AccessDenied/>
+    return <AccessDenied/>;
 
   } else if (loading) { 
 
-    return <Loader/>
+    return <Loader/>;
 
   } else if (errorPage) {
     
-    return <ErrorPage/>
+    return <ErrorPage/>;
 
   } else {
 

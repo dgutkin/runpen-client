@@ -17,7 +17,7 @@ async function getUserNameFromDB(currentUser) {
   const url = serverUrl + "/user-name" + `?uid=${currentUser.uid}`;
   
   const userName = await fetchWithTextResponse(url, options);
-
+  
   return userName;
 
 }
