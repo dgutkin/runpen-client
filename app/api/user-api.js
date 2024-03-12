@@ -38,7 +38,7 @@ async function addUserToDB(user, data) {
 
   const url = serverUrl + "/add-user";
 
-  const response = await fetchWithTextResponse(url, options)
+  const response = await fetchWithTextResponse(url, options);
 
   return response;
 

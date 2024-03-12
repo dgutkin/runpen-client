@@ -16,7 +16,7 @@ async function getEntryFromDB(currentUser, entryId) {
 
     const url = serverUrl + "/get-entry" + `?entryId=${entryId}`;
     
-    const entry = await fetchWithJSONResponse(url, options)
+    const entry = await fetchWithJSONResponse(url, options);
 
     return entry;
 
@@ -37,7 +37,7 @@ async function getEntriesFromDB(currentUser, journalId) {
 
     const url = serverUrl + "/get-entries" + `?journalId=${journalId}`;
 
-    const entries = await fetchWithJSONResponse(url, options)
+    const entries = await fetchWithJSONResponse(url, options);
 
     return entries;
 
@@ -59,7 +59,7 @@ async function addEntryToDB(currentUser, entry) {
 
     const url = serverUrl + "/add-entry";
 
-    const response = await fetchWithTextResponse(url, options)
+    const response = await fetchWithTextResponse(url, options);
 
     return response;
 
@@ -80,7 +80,7 @@ async function deleteEntryFromDB(currentUser, entryId) {
 
     const url = serverUrl + "/delete-entry" + `?entryId=${entryId}`;
 
-    const response = await fetchWithTextResponse(url, options)
+    const response = await fetchWithTextResponse(url, options);
 
     return response;
 
@@ -102,7 +102,7 @@ async function updateEntryToDB(currentUser, newEntry) {
 
     const url = serverUrl + "/update-entry";
 
-    const response = await fetchWithTextResponse(url, options)
+    const response = await fetchWithTextResponse(url, options);
 
     return response;
 
