@@ -8,7 +8,7 @@ function Toggle({ calendarView, setCalendarView }) {
 
     return (
         <div className="flex items-center">
-            <p className="mr-3 text-gray-700 font-medium">Calendar</p>
+            <p className="mr-2 text-gray-700 font-medium">Calendar</p>
             <input
             id="toggle"
             type="checkbox"

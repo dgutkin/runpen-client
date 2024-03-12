@@ -181,7 +181,7 @@ export default function Entry() {
     } else {
 
         return (
-            <div className="px-36">
+            <div className="px-16 lg:px-36 py-16">
                 <div className="border shadow-md rounded-md my-6 pb-16 min-w-[56rem]">
                 <div className="flex flex-row justify-between">
                     <div>
@@ -233,7 +233,7 @@ export default function Entry() {
                     {noNotes?
                     <p className="text-sm py-24 italic">How did today go? Add a note and write about it!</p>
                     :
-                    <ul className="flex flex-row flex-wrap py-8">
+                    <ul className="flex flex-row flex-wrap py-4">
                         {
                             notes.map((item) => {
                                 return (

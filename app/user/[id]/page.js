@@ -97,7 +97,7 @@ export default function User() {
 
     return (
       <div>
-          <div className="flex flex-col px-36">
+          <div className="flex flex-col px-16 lg:px-36 py-16">
 
             <div className="my-8 mx-8">
               <h2 className="text-2xl font-semibold mb-4">Welcome {userName}!</h2>

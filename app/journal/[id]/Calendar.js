@@ -111,7 +111,7 @@ function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
 
     return (
 
-        <div className="my-4 min-w-[44rem]">
+        <div className="my-4">
             <div className="flex flex-row justify-between">
                 <h2 className="text-xl text-gray-700 font-semibold mb-4">{daysByMonth[month].name} {year}</h2>
                 <div>

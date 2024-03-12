@@ -23,7 +23,7 @@ export default function NavBar() {
   }
 
   return (
-      <nav className="bg-dark-green py-4 px-36">
+      <nav className="bg-dark-green py-4 px-16 lg:px-36 w-full fixed top-0">
           <div className="flex flex-row justify-between mx-2">
             <div className="text-white font-bold">
               <button className="py-1 scale-150" onClick={() => router.push("/")}>rP</button>

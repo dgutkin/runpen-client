@@ -175,7 +175,7 @@ export default function Journal() {
 
     return (
 
-        <div className="flex flex-col px-36">
+        <div className="flex flex-col px-16 lg:px-36 py-16">
 
           <div className="flex flex-row justify-between my-10 px-4">
             <h2 className="text-2xl font-semibold">{journal.journalName}</h2>
@@ -187,16 +187,16 @@ export default function Journal() {
             </button>
           </div>
 
-          <div className="flex flex-row gap-6 mb-8">
+          <div className="flex flex-col lg:flex-row gap-6 mb-8">
 
-            <div className="mb-8 px-4 flex flex-col w-1/3">
-              <div className="flex flex-row justify-between">
+            <div className="mb-8 px-4 flex flex-col lg:w-1/3">
+              <div className="flex flex-row justify-between gap-6">
                 <h2 className="text-2xl py-1 font-semibold text-gray-600">Goals</h2>
                 <button 
-                  className="bg-dark-green text-white mx-2 px-4 py-1 rounded-md hover:bg-yinmn-blue"
+                  className="bg-dark-green text-white text-2xl mx-2 px-4 py-1 rounded-md hover:bg-yinmn-blue"
                   onClick={() => {setShowGoalForm(true); setGoalInFocus({})}}
                 >
-                  Add Goal
+                  +
                 </button>
               </div>
 
@@ -216,9 +216,9 @@ export default function Journal() {
               </div>
             </div>
 
-            <div className="mb-8 px-4 flex flex-col w-full">
+            <div className="mb-8 px-4 flex flex-col min-w-[48rem]">
 
-              <div className="flex flex-row justify-between">
+              <div className="flex flex-row justify-between gap-6">
                   <h2 className="text-2xl font-semibold text-gray-600">Entries</h2>
                   <div className="py-1">
                     <Toggle calendarView={calendarView} setCalendarView={setCalendarView}/>

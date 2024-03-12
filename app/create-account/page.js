@@ -84,7 +84,7 @@ export default function CreateAccount() {
 
     return (
         
-        <div className="px-36 mx-8 mt-8">
+        <div className="px-16 lg:px-36 py-16 my-8">
 
             {loading?
             <Loader/>

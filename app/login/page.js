@@ -52,9 +52,9 @@ export default function Login() {
 
     return (
         
-        <div className="px-36">
+        <div className="px-16 lg:px-36 py-16">
         
-            <div className="mx-8 mt-8 w-1/2">
+            <div className="my-8 w-1/2">
 
                 {loading?
                 <Loader/>

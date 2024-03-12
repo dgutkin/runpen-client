@@ -18,7 +18,7 @@ export default function Home() {
 
     return (
   
-      <div className="flex flex-col px-36">
+      <div className="flex flex-col px-16 py-16 lg:px-36">
 
         <div className="bg-white p-6 pl-12 mt-24">
           <div className="container">
@@ -28,12 +28,18 @@ export default function Home() {
         </div>
   
         <div className="bg-white p-6 pl-12 mt-4 flex justify-left">
-          <button className="bg-dark-green text-white px-4 py-2 rounded-md mr-4 hover:bg-yinmn-blue">
-            <Link href="/login">Login</Link>
-          </button>
-          <button className="bg-dark-green text-white px-4 py-2 rounded-md hover:bg-yinmn-blue">
-            <Link href="/create-account">Create Account</Link>
-          </button>
+            <Link 
+              className="bg-dark-green text-white px-4 py-2 rounded-md mr-4 hover:bg-yinmn-blue" 
+              href="/login"
+            >
+              Login
+            </Link>
+            <Link 
+              className="bg-dark-green text-white px-4 py-2 rounded-md hover:bg-yinmn-blue" 
+              href="/create-account"
+            >
+              Create Account
+            </Link>
         </div>
         
       </div>
