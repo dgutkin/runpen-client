@@ -39,6 +39,12 @@ async function getEntriesFromDB(currentUser, journalId) {
 
     const entries = await fetchWithJSONResponse(url, options);
 
+    if (entries) {
+      entries.sort(
+        (a,b) => (new Date(b.entryDate) - new Date(a.entryDate))
+      );
+    }
+    
     return entries;
 
 }
