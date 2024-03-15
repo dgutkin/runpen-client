@@ -23,7 +23,7 @@ export default function NavBar() {
   }
 
   return (
-      <nav className="bg-dark-green py-4 px-16 lg:px-36 w-full fixed top-0 z-10">
+      <nav className="bg-dark-green py-4 px-6 xl:px-36 w-full fixed top-0 z-10">
           <div className="flex flex-row justify-between mx-2">
             <div className="text-white font-bold">
               <button className="py-1 scale-150" onClick={() => router.push("/")}>rP</button>
@@ -32,13 +32,13 @@ export default function NavBar() {
             {currentUser && (
                 <div>
                   <button 
-                    className="text-md py-1 px-1 mx-1 rounded-md hover:scale-125"
+                    className="text-md py-1 mx-2 rounded-md hover:scale-125"
                     onClick={() => router.push(`/user/${currentUser.uid}`)}
                   >
                     <FontAwesomeIcon icon={faHome} size="lg" style={{color: "#ffffff"}}/>
                   </button>
                   <button 
-                    className="text-md py-1 px-1 ml-1 rounded-md scale-110 hover:scale-125" 
+                    className="text-md py-1 ml-1 rounded-md scale-110 hover:scale-125" 
                     onClick={handleLogout}
                   >
                     <FontAwesomeIcon icon={faRightFromBracket} size="lg" style={{color:"#ffffff"}}/>

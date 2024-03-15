@@ -77,7 +77,7 @@ function GoalForm({ addGoal, updateGoal, setShowGoalForm, journalId, goalInFocus
             <div className="flex flex-row my-2 mx-2 justify-between">
               <p className="my-2 px-1 text-sm text-red-600">{errorMessage}</p>
               <button 
-                className="bg-dark-green text-white w-[25%] px-4 py-2 rounded-md hover:bg-yinmn-blue" 
+                className="bg-dark-green text-white px-4 py-2 rounded-md hover:bg-yinmn-blue" 
                 type="button"
                 onClick={() => {Object.keys(goalInFocus).length ? submitGoal({update: true}) : submitGoal({update: false})}}
               >

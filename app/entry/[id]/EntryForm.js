@@ -148,14 +148,14 @@ function EntryForm({ entryIn, updateEntry, setShowEntryForm, setShowEntryDeleteC
 
                     <div className="flex flex-row justify-between mx-6 mt-6">
                         <button 
-                            className="bg-red-500 text-white w-[35%] px-4 py-2 mt-6 rounded-md hover:bg-yinmn-blue" 
+                            className="bg-red-500 text-white w-36 px-4 py-2 mt-6 rounded-md hover:bg-yinmn-blue" 
                             type="button"
                             onClick={openEntryDeleteConfirm}
                         >
                             Delete Entry
                         </button>
                         <button 
-                            className="bg-dark-green text-white w-[35%] px-4 py-2 mt-6 rounded-md hover:bg-yinmn-blue" 
+                            className="bg-dark-green text-white w-36 px-4 py-2 mt-6 rounded-md hover:bg-yinmn-blue" 
                             type="button"
                             onClick={callUpdateEntry}
                         >

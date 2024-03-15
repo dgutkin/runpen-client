@@ -181,8 +181,8 @@ export default function Entry() {
     } else {
 
         return (
-            <div className="px-16 lg:px-36 py-16">
-                <div className="border shadow-md rounded-md my-6 pb-16 min-w-[56rem]">
+            <div className="px-6 xl:px-36 py-16">
+                <div className="border shadow-md rounded-md my-6">
                 <div className="flex flex-row justify-between">
                     <div>
                         <h3 className="text-xl font-bold ml-8 mt-8">{entryDateFormatted}</h3>
@@ -212,22 +212,22 @@ export default function Entry() {
                             "Every step you take in running is a stride towards greatness. Embrace the challenge, push through the pain, and let the rhythm of your feet carry you to your dreams."
                         </p>
                         {(entry.entryEffort == "Hard") &&
-                            <p className="my-2 mx-2 p-4 text-red-600 font-bold">{entry.entryEffort} Intensity Day</p>
+                            <p className="my-2 mx-2 py-4 text-red-600 text-right font-bold">{entry.entryEffort} Intensity Day</p>
                         }
                         {(entry.entryEffort == "Good") && 
-                            <p className="my-2 mx-2 p-4 text-green-600 font-bold">{entry.entryEffort} Intensity Day</p>
+                            <p className="my-2 mx-2 py-4 text-green-600 text-right font-bold">{entry.entryEffort} Intensity Day</p>
                         }
                         {(entry.entryEffort == "Light") && 
-                            <p className="my-2 mx-2 p-4 text-gray-600 font-bold">{entry.entryEffort} Intensity Day</p>
+                            <p className="my-2 mx-2 py-4 text-gray-600 text-right font-bold">{entry.entryEffort} Intensity Day</p>
                         }
                     </div>
                     <div className="flex flex-row justify-between mt-12">
-                        <h3 className="text-xl text-gray-500 font-bold">Notes</h3>
+                        <h3 className="text-xl text-gray-500 py-2 font-bold">Notes</h3>
                         <button 
-                            className="bg-dark-green text-white p-2 mx-4 rounded-md h-1/2 hover:bg-yinmn-blue"
+                            className="bg-dark-green text-white text-2xl px-4 py-2 mx-4 rounded-md h-1/2 hover:bg-yinmn-blue"
                             onClick={() => {setShowNoteForm(true); setNoteData({})}}
                         >
-                            Add Note
+                            +
                         </button>
                     </div>
                     {noNotes?

@@ -175,9 +175,9 @@ export default function Journal() {
 
     return (
 
-        <div className="flex flex-col px-16 lg:px-36 py-16">
+        <div className="flex flex-col px-6 xl:px-36 py-16">
 
-          <div className="flex flex-row justify-between my-10 px-4">
+          <div className="flex flex-row justify-between my-10 px-2">
             <h2 className="text-2xl font-semibold">{journal.journalName}</h2>
             <button 
               className="bg-white text-gray-500 rounded-md hover:scale-125"
@@ -189,7 +189,7 @@ export default function Journal() {
 
           <div className="flex flex-col lg:flex-row gap-6 mb-8">
 
-            <div className="mb-8 px-4 flex flex-col">
+            <div className="mb-8 px-2 flex flex-col lg:w-1/3">
               <div className="flex flex-row justify-between gap-6">
                 <h2 className="text-2xl py-1 font-semibold text-gray-600">Goals</h2>
                 <button 
@@ -216,7 +216,7 @@ export default function Journal() {
               </div>
             </div>
 
-            <div className="mb-8 px-4 flex flex-col min-w-[48rem]">
+            <div className="px-4 flex flex-col lg:w-[66%]">
 
               <div className="flex flex-row justify-between gap-6">
                   <h2 className="text-2xl font-semibold text-gray-600">Entries</h2>

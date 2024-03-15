@@ -18,7 +18,7 @@ export default function Home() {
 
     return (
   
-      <div className="flex flex-col px-16 py-16 lg:px-36">
+      <div className="flex flex-col px-6 py-16 xl:px-36">
 
         <div className="bg-white p-6 pl-12 mt-24">
           <div className="container">

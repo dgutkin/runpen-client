@@ -111,7 +111,7 @@ function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
 
     return (
 
-        <div className="my-4">
+        <div className="my-2">
             <div className="flex flex-row justify-between">
                 <h2 className="text-xl text-gray-700 font-semibold mb-4">{daysByMonth[month].name} {year}</h2>
                 <div>
@@ -122,7 +122,7 @@ function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
                         <FontAwesomeIcon icon={faArrowLeft} size="lg"/>    
                     </button>
                     <button 
-                        className="mr-3 bg-dark-green text-white p-1 rounded-md hover:scale-125" 
+                        className="mr-1 bg-dark-green text-white p-1 rounded-md hover:scale-125" 
                         onClick={incrementMonth}
                     >
                         <FontAwesomeIcon icon={faArrowRight} size="lg"/>    
@@ -143,7 +143,7 @@ function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
                                     onClick={() => selectEntry(day)}
                                 >
                                     <p className="text-sm text-start font-semibold mb-2">{day}</p>
-                                    <p className="text-xs text-start">{daysWithEntries[day].entryLabel.slice(0,CALENDAR_ENTRY_CHAR_MAX)}{daysWithEntries[day].entryLabel.slice(CALENDAR_ENTRY_CHAR_MAX).length? "..." : ""}</p>
+                                    <p className="text-xs text-start hidden md:inline-flex">{daysWithEntries[day].entryLabel.slice(0,CALENDAR_ENTRY_CHAR_MAX)}{daysWithEntries[day].entryLabel.slice(CALENDAR_ENTRY_CHAR_MAX).length? "..." : ""}</p>
                                 </button>
                                 :
                                 <button
@@ -164,7 +164,7 @@ function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
                                     onClick={() => selectEntry(day)}
                                 >
                                     <p className="text-sm text-start font-semibold mb-2">{day}</p>
-                                    <p className="text-xs text-start">{daysWithEntries[day].entryLabel.slice(0,CALENDAR_ENTRY_CHAR_MAX)}{daysWithEntries[day].entryLabel.slice(CALENDAR_ENTRY_CHAR_MAX).length? "..." : ""}</p>
+                                    <p className="text-xs text-start hidden md:inline-flex">{daysWithEntries[day].entryLabel.slice(0,CALENDAR_ENTRY_CHAR_MAX)}{daysWithEntries[day].entryLabel.slice(CALENDAR_ENTRY_CHAR_MAX).length? "..." : ""}</p>
                                 </button>
                                 :
                                 <button

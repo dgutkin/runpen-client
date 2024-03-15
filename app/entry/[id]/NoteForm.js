@@ -80,14 +80,14 @@ function NoteForm({ addNote, updateNote, deleteNote, setShowNoteForm, entryId, n
         <div className="fixed inset-0 bg-black opacity-50"></div>
         <div className="bg-white overflow-y-auto w-[56rem] h-[33rem] shadow-2xl border border-gray rounded-md p-4 m-10 z-10">
           <div className="flex flex-col">
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-row justify-between px-1">
               <h2 className="text-xl font-semibold">Note</h2>
               <button 
                 className="text-gray-600"
                 type="button"
                 onClick={cancelNote}
               >
-                <FontAwesomeIcon icon={faX} size="xl"/>
+                <FontAwesomeIcon icon={faX} size="lg"/>
               </button>
             </div>
             <div className="my-6 mx-6">
@@ -118,13 +118,13 @@ function NoteForm({ addNote, updateNote, deleteNote, setShowNoteForm, entryId, n
   
             <div className="flex flex-row my-3 mx-6 justify-between">
                 <button 
-                  className="bg-red-500 text-white p-2 rounded-md w-[25%] hover:bg-yinmn-blue" 
+                  className="bg-red-500 text-white p-2 rounded-md w-36 hover:bg-yinmn-blue" 
                   onClick={removeNote}
                 >
                   Delete Note
                 </button>
                 <button
-                  className="bg-dark-green text-white w-[25%] px-4 py-2 mx-2 rounded-md hover:bg-yinmn-blue" 
+                  className="bg-dark-green text-white w-36 px-4 py-2 mx-2 rounded-md hover:bg-yinmn-blue" 
                   type="button"
                   onClick={() => Object.keys(noteData).length ? submitNote({update: true}) : submitNote({update: false})}
                 >

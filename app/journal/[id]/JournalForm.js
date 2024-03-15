@@ -42,7 +42,7 @@ function JournalForm({journalName, setShowJournalForm, setShowJournalDeleteConfi
     return (
         <div className="fixed inset-0 flex items-center justify-center">
             <div className="fixed inset-0 bg-black opacity-50"></div>
-            <div className="bg-white w-[32rem] h-96 shadow-2xl border border-gray rounded-md p-6 z-10 flex flex-col">
+            <div className="bg-white w-[80%] md:w-[32rem] h-96 shadow-2xl border border-gray rounded-md p-6 z-10 flex flex-col">
                 <div className="flex flex-row justify-between mb-4">
                     <h3 className="text-xl font-semibold">Journal Settings</h3>
                     <button 
