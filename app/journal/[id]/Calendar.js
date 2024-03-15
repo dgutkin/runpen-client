@@ -139,7 +139,7 @@ function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
                             <div key={day} className={"border border-gray-200 rounded-md h-24 hover:animate-wiggle"} ref={firstCardOfMonth}>
                                 {(day in daysWithEntries) ?
                                 <button
-                                    className="w-full h-full p-4 flex flex-col rounded-md bg-green-100"
+                                    className="w-full h-full p-2 flex flex-col rounded-md bg-green-100"
                                     onClick={() => selectEntry(day)}
                                 >
                                     <p className="text-sm text-start font-semibold mb-2">{day}</p>
@@ -147,7 +147,7 @@ function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
                                 </button>
                                 :
                                 <button
-                                    className="w-full h-full p-4 flex flex-col rounded-md"
+                                    className="w-full h-full p-2 flex flex-col rounded-md"
                                     onClick={() => selectEntry(day)}
                                 >
                                     <p className="text-sm text-start font-semibold mb-2">{day}</p>
@@ -160,7 +160,7 @@ function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
                             <div key={day} className="border border-gray-200 rounded-md h-24 hover:animate-wiggle">
                                 {(day in daysWithEntries) ?
                                 <button
-                                    className="w-full h-full p-4 flex flex-col rounded-md bg-green-100"
+                                    className="w-full h-full p-2 flex flex-col rounded-md bg-green-100"
                                     onClick={() => selectEntry(day)}
                                 >
                                     <p className="text-sm text-start font-semibold mb-2">{day}</p>
@@ -168,7 +168,7 @@ function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
                                 </button>
                                 :
                                 <button
-                                    className="w-full h-full p-4 flex flex-col rounded-md"
+                                    className="w-full h-full p-2 flex flex-col rounded-md"
                                     onClick={() => selectEntry(day)}
                                 >
                                     <p className="text-sm text-start font-semibold mb-2">{day}</p>
