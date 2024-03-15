@@ -147,6 +147,7 @@ export default function Journal() {
     addEntryToDB(currentUser, formData)
       .then(() => {
         getEntryList();
+        setLoading(true);
         router.push(`/entry/${formData.entryId}`);
       })
       .catch((error) => {
