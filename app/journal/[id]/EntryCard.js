@@ -10,7 +10,7 @@ function EntryCard({ data, editEntry }) {
                 onClick={() => editEntry(data.entryId)}
             >
                 <div className="flex flex-row justify-between">
-                    <p className="text-md font-semibold w-36 text-start">{data.entryLabel.slice(0,25)}{data.entryLabel.slice(25)? "..." : ""}</p>
+                    <p className="text-md font-semibold w-36 text-start text-wrap break-words">{data.entryLabel.slice(0,25)}{data.entryLabel.slice(25)? "..." : ""}</p>
                     <p className="text-md">{new Date(data.entryDate).toLocaleDateString('en-us', {month:'short', day:'numeric', year:'numeric'})}</p>
                 </div>
             </button>

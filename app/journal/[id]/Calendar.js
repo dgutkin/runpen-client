@@ -143,7 +143,7 @@ function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
                                     onClick={() => selectEntry(day)}
                                 >
                                     <p className="text-sm text-start font-semibold mb-2">{day}</p>
-                                    <p className="text-xs text-start hidden md:inline-flex">{daysWithEntries[day].entryLabel.slice(0,CALENDAR_ENTRY_CHAR_MAX)}{daysWithEntries[day].entryLabel.slice(CALENDAR_ENTRY_CHAR_MAX).length? "..." : ""}</p>
+                                    <p className="text-xs text-start text-wrap break-words hidden md:inline-flex">{daysWithEntries[day].entryLabel.slice(0,CALENDAR_ENTRY_CHAR_MAX)}{daysWithEntries[day].entryLabel.slice(CALENDAR_ENTRY_CHAR_MAX).length? "..." : ""}</p>
                                 </button>
                                 :
                                 <button
@@ -164,7 +164,7 @@ function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
                                     onClick={() => selectEntry(day)}
                                 >
                                     <p className="text-sm text-start font-semibold mb-2">{day}</p>
-                                    <p className="text-xs text-start hidden md:inline-flex">{daysWithEntries[day].entryLabel.slice(0,CALENDAR_ENTRY_CHAR_MAX)}{daysWithEntries[day].entryLabel.slice(CALENDAR_ENTRY_CHAR_MAX).length? "..." : ""}</p>
+                                    <p className="text-xs text-start text-wrap break-words hidden md:inline-flex">{daysWithEntries[day].entryLabel.slice(0,CALENDAR_ENTRY_CHAR_MAX)}{daysWithEntries[day].entryLabel.slice(CALENDAR_ENTRY_CHAR_MAX).length? "..." : ""}</p>
                                 </button>
                                 :
                                 <button

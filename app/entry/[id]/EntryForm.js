@@ -94,7 +94,7 @@ function EntryForm({ entryIn, updateEntry, setShowEntryForm, setShowEntryDeleteC
             <div className="bg-white overflow-y-auto w-80 sm:w-96 min-h-fit shadow-2xl border border-gray rounded-md p-4 m-10 z-10">
                 <form className="flex flex-col mx-2">
                     
-                    <div className="flex flex-row justify-between my-2">
+                    <div className="flex flex-row justify-between mb-4">
                         <h2 className="text-xl font-semibold">Entry</h2>
                         <button 
                             className="text-gray-500"

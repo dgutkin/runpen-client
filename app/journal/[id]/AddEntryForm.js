@@ -81,10 +81,10 @@ function AddEntryForm({ newEntryDate, addEntry, setShowAddEntry, journalId }) {
         <div className="fixed inset-0 bg-black opacity-50"></div>
         <div className="bg-white overflow-y-auto w-80 sm:w-96 shadow-2xl border border-gray rounded-md p-4 m-10 z-10">
           <form className="flex flex-col px-2">
-            <div className="flex flex-row justify-between">
-              <h2 className="text-xl font-semibold mb-4">Add Entry</h2>
+            <div className="flex flex-row justify-between mb-4">
+              <h2 className="text-xl font-semibold">Add Entry</h2>
               <button 
-                className="text-gray-500 px-2" 
+                className="text-gray-500" 
                 type="button"
                 onClick={() => setShowAddEntry(false)}
               >

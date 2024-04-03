@@ -179,7 +179,7 @@ export default function Journal() {
         <div className="flex flex-col px-6 xl:px-36 py-16">
 
           <div className="flex flex-row justify-between my-10 px-2">
-            <h2 className="text-2xl font-semibold">{journal.journalName}</h2>
+            <h2 className="text-2xl font-semibold w-[80%] text-wrap break-words">{journal.journalName}</h2>
             <button 
               className="bg-white text-gray-500 rounded-md hover:scale-125"
               onClick={() => setShowJournalForm(true)}

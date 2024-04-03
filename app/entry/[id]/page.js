@@ -184,9 +184,9 @@ export default function Entry() {
             <div className="px-6 xl:px-36 py-16">
                 <div className="border shadow-md rounded-md my-6">
                 <div className="flex flex-row justify-between">
-                    <div>
+                    <div className="w-1/2">
                         <h3 className="text-xl font-bold ml-8 mt-6">{entryDateFormatted}</h3>
-                        <h3 className="text-lg text-gray-600 font-semibold ml-8 mt-2">{journalName}</h3>
+                        <h3 className="text-lg text-wrap break-words text-gray-600 font-semibold ml-8 mt-2">{journalName}</h3>
                     </div>
                     {journalId &&
                         <div className="flex flex-row mt-6">
