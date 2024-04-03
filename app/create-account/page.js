@@ -90,7 +90,7 @@ export default function CreateAccount() {
             <Loader/>
             :
 
-            <div className="bg-white p-8 rounded-lg shadow-md border border-gray-200 w-96">
+            <div className="bg-white p-8 rounded-lg shadow-md border border-gray-200 w-80 sm:w-96">
 
                 <h2 className="text-2xl font-semibold mb-6">Create Account</h2>
 
@@ -123,7 +123,7 @@ export default function CreateAccount() {
                 
                     <div className="mb-6">
                         <label htmlFor="password" className="block text-gray-600 text-sm font-semibold mb-2">Password</label>
-                        <input type="password" id="password" name="password" placeholder="Your password (at least 8 characters)" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                        <input type="password" id="password" name="password" placeholder="Your password (min. 8 characters)" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" value={password} onChange={(e) => setPassword(e.target.value)}/>
                     </div>
 
                 

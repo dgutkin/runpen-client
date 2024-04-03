@@ -91,11 +91,11 @@ function EntryForm({ entryIn, updateEntry, setShowEntryForm, setShowEntryDeleteC
 
         <div className="fixed inset-0 flex items-center justify-center">
             <div className="fixed inset-0 bg-black opacity-50"></div>
-            <div className="bg-white overflow-y-auto w-[36rem] h-96 min-h-fit shadow-2xl border border-gray rounded-md p-4 m-10 z-10">
-                <form className="flex flex-col">
+            <div className="bg-white overflow-y-auto w-80 sm:w-96 min-h-fit shadow-2xl border border-gray rounded-md p-4 m-10 z-10">
+                <form className="flex flex-col mx-2">
                     
-                    <div className="flex flex-row justify-between">
-                        <h2 className="text-xl font-semibold px-2">Entry</h2>
+                    <div className="flex flex-row justify-between my-2">
+                        <h2 className="text-xl font-semibold">Entry</h2>
                         <button 
                             className="text-gray-500"
                             type="button"
@@ -105,23 +105,27 @@ function EntryForm({ entryIn, updateEntry, setShowEntryForm, setShowEntryDeleteC
                         </button>
                     </div>
                     
-                    <div className="m-6">
-                        <label htmlFor="label" className="text-md mb-2 mr-12">Label</label>
-                        <input
-                            type="text"
-                            id="label"
-                            name="label"
-                            className="p-2 border rounded-md w-[80%]"
-                            onInput={(e) => setEntryLabel(e.target.value)}
-                            value={entryLabel}
-                        />
-                        <p className="text-sm text-gray-200 ml-24">Character limit of 50.</p>
+                    <div className="flex flex-row gap-6 my-2">
+                        <label htmlFor="label" className="text-md py-2">Label</label>
+                        <div className="flex flex-col">
+                            <input
+                                type="text"
+                                id="label"
+                                name="label"
+                                className="p-2 border rounded-md"
+                                onInput={(e) => setEntryLabel(e.target.value)}
+                                value={entryLabel}
+                            />
+                            <p className="text-sm text-gray-200">Character limit of 50.</p>
+                        </div>
                     </div>
+                    
 
-                    <div className="my-6 mx-6">
-                        <label className="text-md mr-8">Intensity</label>
+                    <div className="my-6 flex flex-row gap-6">
+                        <label className="text-md py-2">Intensity</label>
+                        <div className="flex flex-row gap-1">
                         <button 
-                            className="text-black bg-gray-200 mx-1 p-2 rounded-md" 
+                            className="text-black bg-gray-200 p-2 rounded-md" 
                             type="button"
                             ref={hardEffort}
                             onClick={() => effortSelect("Hard")}
@@ -129,7 +133,7 @@ function EntryForm({ entryIn, updateEntry, setShowEntryForm, setShowEntryDeleteC
                             Hard
                         </button>
                         <button 
-                            className="text-black bg-gray-200 mx-1 p-2 rounded-md" 
+                            className="text-black bg-gray-200 p-2 rounded-md" 
                             type="button" 
                             ref={goodEffort}
                             onClick={() => effortSelect("Good")}
@@ -137,25 +141,26 @@ function EntryForm({ entryIn, updateEntry, setShowEntryForm, setShowEntryDeleteC
                             Good
                         </button>
                         <button 
-                            className="text-black bg-gray-200 mx-1 p-2 rounded-md" 
+                            className="text-black bg-gray-200 p-2 rounded-md" 
                             type="button"
                             ref={lightEffort}
                             onClick={() => effortSelect("Light")}
                         >
                             Light
                         </button>
+                        </div>
                     </div>
 
-                    <div className="flex flex-row justify-between mx-6 mt-6">
+                    <div className="flex flex-row justify-between mx-2 mt-4">
                         <button 
-                            className="bg-red-500 text-white w-36 px-4 py-2 mt-6 rounded-md hover:bg-yinmn-blue" 
+                            className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-yinmn-blue" 
                             type="button"
                             onClick={openEntryDeleteConfirm}
                         >
                             Delete Entry
                         </button>
                         <button 
-                            className="bg-dark-green text-white w-36 px-4 py-2 mt-6 rounded-md hover:bg-yinmn-blue" 
+                            className="bg-dark-green text-white px-4 py-2 rounded-md hover:bg-yinmn-blue" 
                             type="button"
                             onClick={callUpdateEntry}
                         >

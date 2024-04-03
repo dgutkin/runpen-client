@@ -78,7 +78,7 @@ function NoteForm({ addNote, updateNote, deleteNote, setShowNoteForm, entryId, n
     return (
       <div className="fixed inset-0 flex items-center justify-center">
         <div className="fixed inset-0 bg-black opacity-50"></div>
-        <div className="bg-white overflow-y-auto w-[56rem] h-[33rem] shadow-2xl border border-gray rounded-md p-4 m-10 z-10">
+        <div className="bg-white overflow-y-auto w-[56rem] shadow-2xl border border-gray rounded-md p-4 m-10 z-10">
           <div className="flex flex-col">
             <div className="flex flex-row justify-between px-1">
               <h2 className="text-xl font-semibold">Note</h2>
@@ -90,19 +90,19 @@ function NoteForm({ addNote, updateNote, deleteNote, setShowNoteForm, entryId, n
                 <FontAwesomeIcon icon={faX} size="lg"/>
               </button>
             </div>
-            <div className="my-6 mx-6">
+            <div className="my-6 mx-3">
                 <input 
                     type="text" 
                     id="note-title" 
                     name="note-title" 
-                    className="w-[40%] bg-white border text-black py-3 px-3 rounded-md focus:border-gray-500"
+                    className="w-full bg-white border text-black py-3 px-3 rounded-md focus:border-gray-500"
                     placeholder="Note title"
                     onInput={(e) => setNoteTitle(e.target.value)}
                     value={noteTitle || ""}
                 />
                 <p className="text-xs text-gray-200 my-1 mx-1">Character count limit is 30.</p>
             </div>
-            <div className="my-6 mx-6">
+            <div className="my-6 mx-3">
                 <textarea 
                     id="note" 
                     name="note" 
@@ -116,15 +116,15 @@ function NoteForm({ addNote, updateNote, deleteNote, setShowNoteForm, entryId, n
                 <p className="text-xs text-gray-200 mx-1">Word count limit is 200.</p>
             </div>
   
-            <div className="flex flex-row my-3 mx-6 justify-between">
+            <div className="flex flex-row my-3 mx-3 justify-between">
                 <button 
-                  className="bg-red-500 text-white p-2 rounded-md w-36 hover:bg-yinmn-blue" 
+                  className="bg-red-500 text-white p-2 rounded-md hover:bg-yinmn-blue" 
                   onClick={removeNote}
                 >
                   Delete Note
                 </button>
                 <button
-                  className="bg-dark-green text-white w-36 px-4 py-2 mx-2 rounded-md hover:bg-yinmn-blue" 
+                  className="bg-dark-green text-white px-4 py-2 mx-2 rounded-md hover:bg-yinmn-blue" 
                   type="button"
                   onClick={() => Object.keys(noteData).length ? submitNote({update: true}) : submitNote({update: false})}
                 >

@@ -5,7 +5,7 @@ function DeleteConfirm({deleteAction, setShowDeleteConfirm}) {
     return (
         <div className="fixed inset-0 flex items-center justify-center">
             <div className="fixed inset-0 bg-black opacity-50"></div>
-            <div className="bg-white z-10 rounded-md p-6 flex flex-col w-96">
+            <div className="bg-white z-10 rounded-md p-6 flex flex-col w-80">
                 <h3 className="my-3 text-lg font-semibold text-gray-600">Delete</h3>
                 <p className="mb-6">This action cannot be undone. All associated contents will be deleted.</p>
                 <div className="flex flex-row justify-between">

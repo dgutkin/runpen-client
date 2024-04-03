@@ -129,7 +129,7 @@ function Calendar({ entries, setShowAddEntry, setNewEntryDate, openEntry }) {
                     </button>
                 </div>
             </div>
-            <div className="grid grid-cols-7 gap-2">
+            <div className="grid grid-cols-7 gap-1">
                 {daysInWeek.map((day) => {
                     return <p key={day} className="text-center mt-4 mb-2">{day}</p>
                 })}

@@ -20,7 +20,7 @@ export default function Home() {
   
       <div className="flex flex-col px-6 py-16 xl:px-36">
 
-        <div className="bg-white p-6 pl-12 mt-24">
+        <div className="bg-white p-6 pl-12 mt-12">
           <div className="container">
             <h2 className="text-2xl font-semibold mb-4">runPen</h2>
             <p>Your private digital running journal.</p>

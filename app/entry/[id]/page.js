@@ -185,11 +185,11 @@ export default function Entry() {
                 <div className="border shadow-md rounded-md my-6">
                 <div className="flex flex-row justify-between">
                     <div>
-                        <h3 className="text-xl font-bold ml-8 mt-8">{entryDateFormatted}</h3>
-                        <h3 className="text-xl text-gray-600 font-semibold ml-8 mt-2">{journalName}</h3>
+                        <h3 className="text-xl font-bold ml-8 mt-6">{entryDateFormatted}</h3>
+                        <h3 className="text-lg text-gray-600 font-semibold ml-8 mt-2">{journalName}</h3>
                     </div>
                     {journalId &&
-                        <div className="flex flex-row">
+                        <div className="flex flex-row mt-6">
                             <button 
                                 className="text-gray-500 rounded-md mr-6 hover:scale-125"
                                 onClick={() => setShowEntryForm(true)}
@@ -208,23 +208,23 @@ export default function Entry() {
                 <div className="flex flex-col p-8">
                     <h2 className="text-2xl text-black font-bold mb-4">{entry.entryLabel}</h2>
                     <div className="flex flex-row justify-between">
-                        <p className="my-2 py-2 italic w-[60%]">
-                            "Every step you take in running is a stride towards greatness. Embrace the challenge, push through the pain, and let the rhythm of your feet carry you to your dreams."
+                        <p className="my-2 w-[60%]">
+                            Way to get out there!
                         </p>
                         {(entry.entryEffort == "Hard") &&
-                            <p className="my-2 mx-2 py-4 text-red-600 text-right font-bold">{entry.entryEffort} Intensity Day</p>
+                            <p className="my-2 text-red-600 text-right font-bold">{entry.entryEffort} Day</p>
                         }
                         {(entry.entryEffort == "Good") && 
-                            <p className="my-2 mx-2 py-4 text-green-600 text-right font-bold">{entry.entryEffort} Intensity Day</p>
+                            <p className="my-2 text-green-600 text-right font-bold">{entry.entryEffort} Day</p>
                         }
                         {(entry.entryEffort == "Light") && 
-                            <p className="my-2 mx-2 py-4 text-gray-600 text-right font-bold">{entry.entryEffort} Intensity Day</p>
+                            <p className="my-2 text-gray-600 text-right font-bold">{entry.entryEffort} Day</p>
                         }
                     </div>
                     <div className="flex flex-row justify-between mt-12">
                         <h3 className="text-xl text-gray-500 py-2 font-bold">Notes</h3>
                         <button 
-                            className="bg-dark-green text-white text-2xl px-4 py-2 mx-4 rounded-md h-1/2 hover:bg-yinmn-blue"
+                            className="bg-dark-green text-white text-2xl px-4 py-2 rounded-md h-1/2 hover:bg-yinmn-blue"
                             onClick={() => {setShowNoteForm(true); setNoteData({})}}
                         >
                             +
