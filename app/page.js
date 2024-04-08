@@ -18,28 +18,50 @@ export default function Home() {
 
     return (
   
-      <div className="flex flex-col px-6 py-16 xl:px-36">
+      <div className="flex flex-col px-6 py-12 xl:px-36">
+        
+        <div className="flex flex-row mb-12 justify-between">
 
-        <div className="bg-white p-6 pl-12 mt-12">
-          <div className="container">
-            <h2 className="text-2xl font-semibold mb-4">runPen</h2>
-            <p>Your private digital running journal.</p>
+          <div className="bg-white mt-12">
+
+            <div className="container mt-12">
+              <h2 className="text-4xl font-semibold mb-4 text-dark-green">Your private digital training journal.</h2>
+              <p>Unlock your potential with self-reflection.</p>
+            </div>
+
+            <div className="mt-12 mb-8">
+              <Link 
+                className="bg-dark-green text-white px-4 py-2 rounded-md mr-4 hover:bg-yinmn-blue" 
+                href="/login"
+              >
+                Login
+              </Link>
+              <Link 
+                className="bg-dark-green text-white px-4 py-2 rounded-md hover:bg-yinmn-blue" 
+                href="/create-account"
+              >
+                Sign Up
+              </Link>
+            </div>
           </div>
+
+          <img className="mt-12 w-[40%] hidden md:flex" src="/green_notebook.png"/>
+
         </div>
-  
-        <div className="bg-white p-6 pl-12 mt-4 flex justify-left">
-            <Link 
-              className="bg-dark-green text-white px-4 py-2 rounded-md mr-4 hover:bg-yinmn-blue" 
-              href="/login"
-            >
-              Login
-            </Link>
-            <Link 
-              className="bg-dark-green text-white px-4 py-2 rounded-md hover:bg-yinmn-blue" 
-              href="/create-account"
-            >
-              Create Account
-            </Link>
+
+        <div className="flex flex-col gap-36 md:flex-row p-6">
+          <div className="flex-1">
+            <h3 className="font-bold text-dark-green">Go digital</h3>
+            <p className="text-sm text-pretty">Paper journals are a hassle. Write from anywhere and never lose your notes.</p>
+          </div>
+          <div className="flex-1">
+            <h3 className="font-bold text-dark-green">Secure writing</h3>
+            <p className="text-sm text-pretty">Your data is AES encrypted and not visible to anyone else.</p>
+          </div>
+          <div className="flex-1">
+            <h3 className="font-bold text-dark-green">Smart and simple</h3>
+            <p className="text-sm text-pretty">Stay organized with a minimalist user interface.</p>
+          </div>
         </div>
         
       </div>
