@@ -26,7 +26,8 @@ export default function Home() {
 
             <div className="container mt-12">
               <h2 className="text-4xl font-semibold mb-4 text-dark-green">Your private digital training journal.</h2>
-              <p>Unlock your potential with self-reflection.</p>
+              <p className="mb-2 mx-1">Unlock your potential with self-reflection.</p>
+              <p className="mx-1">Free to use.</p>
             </div>
 
             <div className="mt-12 mb-8">
