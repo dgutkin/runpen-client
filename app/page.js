@@ -46,7 +46,7 @@ export default function Home() {
             </div>
           </div>
 
-          <img className="mt-16 w-[45%] hidden md:flex" src="/notebook.png"/>
+          <img className="mt-16 w-[43%] hidden md:flex" src="/notebook.png"/>
 
         </div>
 
