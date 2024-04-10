@@ -45,11 +45,11 @@ export default function Home() {
             </div>
           </div>
 
-          <img className="mt-12 w-[40%] hidden md:flex" src="/green_notebook.png"/>
+          <img className="mt-16 w-[45%] hidden md:flex" src="/notebook.png"/>
 
         </div>
 
-        <div className="flex flex-col gap-36 md:flex-row p-6">
+        <div className="flex flex-col gap-12 md:gap-36 md:flex-row py-8">
           <div className="flex-1">
             <h3 className="font-bold text-dark-green">Go digital</h3>
             <p className="text-sm text-pretty">Paper journals are a hassle. Write from anywhere and never lose your notes.</p>
