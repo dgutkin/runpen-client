@@ -25,9 +25,8 @@ export default function Home() {
           <div className="bg-white mt-12">
 
             <div className="container mt-12">
-              <h2 className="text-4xl font-semibold mb-4 text-dark-green">Your private digital training journal.</h2>
-              <p className="mb-2 mx-1">Unlock your potential with self-reflection.</p>
-              <p className="mx-1">Free to use.</p>
+              <h2 className="text-5xl font-semibold mb-8 text-dark-green">Your personal digital training journal.</h2>
+              <p className="my-2 mx-1">Free to use.</p>
             </div>
 
             <div className="mt-12 mb-8">
@@ -50,7 +49,7 @@ export default function Home() {
 
         </div>
 
-        <div className="flex flex-col gap-12 md:gap-36 md:flex-row py-8">
+        <div className="flex flex-col gap-12 md:gap-36 md:flex-row py-2 md:py-16">
           <div className="flex-1">
             <h3 className="font-bold text-dark-green">Go digital</h3>
             <p className="text-sm text-pretty">Paper journals are a hassle. Write from anywhere and never lose your notes.</p>
