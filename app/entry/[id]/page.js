@@ -248,20 +248,20 @@ export default function Entry() {
                         <h3 className="text-lg text-wrap break-words text-gray-600 font-semibold ml-8 mt-2">{journalName}</h3>
                     </div>
                     {journalId &&
-                        <div className="flex flex-row mt-6">
-                            <button 
-                                className="text-gray-500 rounded-md mr-6 hover:scale-125"
-                                onClick={() => setShowEntryForm(true)}
-                            >
-                                <FontAwesomeIcon icon={faPencil} size="xl"/>
-                            </button>
-                            <button 
-                                className="text-gray-500 rounded-md mr-8 hover:scale-125"
-                                onClick={closeEntry}
-                            >
-                                <FontAwesomeIcon icon={faX} size="xl"/>
-                            </button> 
-                        </div>
+                    <div className="flex flex-row mt-2">
+                        <button 
+                            className="text-gray-500 rounded-md mr-6 hover:scale-125"
+                            onClick={() => setShowEntryForm(true)}
+                        >
+                            <FontAwesomeIcon icon={faPencil} size="xl"/>
+                        </button>
+                        <button 
+                            className="text-gray-500 rounded-md mr-8 hover:scale-125"
+                            onClick={closeEntry}
+                        >
+                            <FontAwesomeIcon icon={faX} size="xl"/>
+                        </button> 
+                    </div>
                     }
                 </div>
                 <div className="flex flex-col p-8">
