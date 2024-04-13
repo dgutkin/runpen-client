@@ -7,56 +7,13 @@ import { faX } from '@fortawesome/free-solid-svg-icons';
 function EntryForm({ entryIn, updateEntry, setShowEntryForm, setShowEntryDeleteConfirm }) {
 
     const [entryLabel, setEntryLabel] = useState("");
-    const [entryEffort, setEntryEffort] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-
-    const hardEffort = useRef();
-    const goodEffort = useRef();
-    const lightEffort = useRef();
 
     useEffect(() => {
 
         setEntryLabel(entryIn.entryLabel);
-        setEntryEffort(entryIn.entryEffort);
-
-        setEffortButtonStyle(entryIn.entryEffort);
 
     }, []);
-
-    function effortSelect(effort) {
-        
-        const DEFAULT_BG = "#eeeeee";
-        const DEFAULT_TEXT = "#000000"
-        // reset all button styles to default
-        hardEffort.current.style.background=DEFAULT_BG;
-        hardEffort.current.style.color=DEFAULT_TEXT;
-        goodEffort.current.style.background=DEFAULT_BG;
-        goodEffort.current.style.color=DEFAULT_TEXT;
-        lightEffort.current.style.background=DEFAULT_BG;
-        lightEffort.current.style.color=DEFAULT_TEXT;
-        
-        setEffortButtonStyle(effort);
-        setEntryEffort(effort);
-
-    }
-
-    function setEffortButtonStyle(effort) {
-
-        const BACKGROUND = "#013220";
-        const TEXT = "#ffffff"
-
-        if (effort == "Hard") {
-            hardEffort.current.style.background=BACKGROUND;
-            hardEffort.current.style.color=TEXT;
-        } else if (effort == "Good") {
-            goodEffort.current.style.background=BACKGROUND;
-            goodEffort.current.style.color=TEXT;
-        } else {
-            lightEffort.current.style.background=BACKGROUND;
-            lightEffort.current.style.color=TEXT;
-        }
-
-    }
 
     function callUpdateEntry() {
 
@@ -65,7 +22,7 @@ function EntryForm({ entryIn, updateEntry, setShowEntryForm, setShowEntryDeleteC
         if (entryLabel.length > 50) {
             setErrorMessage("Label exceeds character limit.");
             return;
-        } else if (entryEffort == "" || entryLabel == "") {
+        } else if (entryLabel == "") {
             setErrorMessage("Form incomplete.");
             return;
         }
@@ -73,7 +30,6 @@ function EntryForm({ entryIn, updateEntry, setShowEntryForm, setShowEntryDeleteC
         const newEntry = {
             entryDate: entryIn.entryDate,
             entryLabel: entryLabel,
-            entryEffort: entryEffort,
             entryId: entryIn.entryId,
             journalId: entryIn.journalId
         }
@@ -106,8 +62,8 @@ function EntryForm({ entryIn, updateEntry, setShowEntryForm, setShowEntryDeleteC
                     </div>
                     
                     <div className="flex flex-row gap-6 my-2">
-                        <label htmlFor="label" className="text-md py-2">Label</label>
-                        <div className="flex flex-col">
+                        <label htmlFor="label" className="text-md py-2 mx-1 text-gray-600">Label</label>
+                        <div className="flex flex-col w-full">
                             <input
                                 type="text"
                                 id="label"
@@ -120,38 +76,7 @@ function EntryForm({ entryIn, updateEntry, setShowEntryForm, setShowEntryDeleteC
                         </div>
                     </div>
                     
-
-                    <div className="my-6 flex flex-row gap-6">
-                        <label className="text-md py-2">Intensity</label>
-                        <div className="flex flex-row gap-1">
-                        <button 
-                            className="text-black bg-gray-200 p-2 rounded-md" 
-                            type="button"
-                            ref={hardEffort}
-                            onClick={() => effortSelect("Hard")}
-                        >
-                            Hard
-                        </button>
-                        <button 
-                            className="text-black bg-gray-200 p-2 rounded-md" 
-                            type="button" 
-                            ref={goodEffort}
-                            onClick={() => effortSelect("Good")}
-                        >
-                            Good
-                        </button>
-                        <button 
-                            className="text-black bg-gray-200 p-2 rounded-md" 
-                            type="button"
-                            ref={lightEffort}
-                            onClick={() => effortSelect("Light")}
-                        >
-                            Light
-                        </button>
-                        </div>
-                    </div>
-
-                    <div className="flex flex-row justify-between mx-2 mt-4">
+                    <div className="flex flex-row justify-between mt-4">
                         <button 
                             className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-yinmn-blue" 
                             type="button"
