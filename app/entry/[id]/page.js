@@ -180,7 +180,7 @@ export default function Entry() {
     }
 
     function getTagList() {
-        getTagsFromDB(currentUser, entryId)
+        getTagsFromDB(currentUser, entryId, false)
             .then((result) => {
                 setTags(result);
             })

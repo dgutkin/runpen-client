@@ -16,6 +16,7 @@ import ErrorPage from '@/app/components/ErrorPage';
 import { getJournalFromDB, deleteJournalFromDB, updateJournalToDB } from '@/app/api/journal-api';
 import { getGoalsFromDB, addGoalToDB, deleteGoalFromDB, updateGoalToDB } from '@/app/api/goal-api';
 import { addEntryToDB, getEntriesFromDB } from '@/app/api/entry-api';
+import { getTagsFromDB } from '@/app/api/tag-api';
 
 import JournalForm from './JournalForm';
 import AddEntryForm from './AddEntryForm';
@@ -42,6 +43,8 @@ export default function Journal() {
   const [goals, setGoals] = useState([]);
   const [goalInFocus, setGoalInFocus] = useState({});
 
+  const [tags, setTags] = useState([]);
+
   const pathname = usePathname();
   const router = useRouter();
 
@@ -54,6 +57,7 @@ export default function Journal() {
       getJournal();
       getGoalList();
       getEntryList();
+      getTagList();
     }
 
   }, [])
@@ -160,6 +164,16 @@ export default function Journal() {
     router.push(`/entry/${entryId}`);
   }
 
+  function getTagList() { 
+    getTagsFromDB(currentUser, journalId, true)
+      .then((result) => {
+        setTags(result);
+      })
+      .catch((error) => {
+        setErrorPage(true);
+      });
+  }
+
   if (!currentUser) {
 
     return <AccessDenied/>;
@@ -235,6 +249,7 @@ export default function Journal() {
                               key={item.entryId} 
                               data={item} 
                               editEntry={openEntry}
+                              tagList={tags.filter((tag) => tag.entryId == item.entryId)}
                             />
                           );
                         })

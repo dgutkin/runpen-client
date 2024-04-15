@@ -1,7 +1,7 @@
 
 import { fetchWithJSONResponse, fetchWithTextResponse, serverUrl } from './api-util';
 
-async function getTagsFromDB(currentUser, entryId) {
+async function getTagsFromDB(currentUser, id, allJournal) {
 
     const token = await currentUser.getIdToken();
 
@@ -14,7 +14,7 @@ async function getTagsFromDB(currentUser, entryId) {
       }
     }
 
-    const url = serverUrl + "/get-tags" + `?entryId=${entryId}`;
+    const url = serverUrl + "/get-tags" + `?id=${id}&allJournal=${allJournal}`;
 
     const tags = await fetchWithJSONResponse(url, options);
 
