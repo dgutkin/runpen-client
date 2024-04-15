@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import { v4 as uuidv4 } from 'uuid';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
@@ -15,9 +16,11 @@ import ErrorPage from '@/app/components/ErrorPage';
 
 import { getJournalFromDB } from '@/app/api/journal-api';
 import { deleteEntryFromDB, getEntryFromDB, updateEntryToDB } from '@/app/api/entry-api';
+import { addTagToDB, updateTagToDB, deleteTagFromDB, getTagsFromDB } from '@/app/api/tag-api';
 import { addNoteToDB, deleteNoteFromDB, getNotesFromDB, updateNoteToDB } from '@/app/api/note-api';
 
 import EntryForm from './EntryForm';
+import TagCard from './TagCard';
 import NoteForm from './NoteForm';
 import NoteCard from './NoteCard';
 
@@ -37,6 +40,9 @@ export default function Entry() {
     const [journalId, setJournalId] = useState("");
     const [journalName, setJournalName] = useState("");
 
+    const [tags, setTags] = useState([]);
+    const [tagLimit, setTagLimit] = useState(false);
+
     const [notes, setNotes] = useState([]);
     const [showNoteForm, setShowNoteForm] = useState(false);
     const [noteData, setNoteData] = useState({});
@@ -45,11 +51,14 @@ export default function Entry() {
     const [loading, setLoading] = useState(false);
     const [errorPage, setErrorPage] = useState(false);
 
+    const MAX_TAGS = 10;
+
     useEffect(() => {
 
         if (currentUser) {
             getEntryData();
             getNoteList();
+            getTagList();
         }
 
     }, []);
@@ -63,6 +72,10 @@ export default function Entry() {
     useEffect(() => {
         checkNoNotes();
     }, [notes])
+
+    useEffect(() => {
+        tags.length >= MAX_TAGS ? setTagLimit(true) : setTagLimit(false);
+    }, [tags])
 
     function checkNoNotes() {
         if (!notes.length) {
@@ -166,6 +179,52 @@ export default function Entry() {
         router.push(`/journal/${journalId}`);
     }
 
+    function getTagList() {
+        getTagsFromDB(currentUser, entryId, false)
+            .then((result) => {
+                setTags(result);
+            })
+            .catch((error) => {
+                setErrorPage(true);
+            });
+    }
+
+    function addTag() {
+        const newTag = {
+            tagText: "New Tag",
+            tagId: "T-" + uuidv4(),
+            entryId: entryId
+        };
+        addTagToDB(currentUser, newTag)
+            .then(() => {
+                getTagList();
+            })
+            .catch((error) => {
+                setErrorPage(true);
+            });
+    }
+
+    function updateTag(updatedTag) {
+        
+        updateTagToDB(currentUser, updatedTag)
+            .then(() => {
+                getTagList();
+            })
+            .catch((error) => {
+                setErrorPage(true);
+            })
+    }
+
+    function deleteTag(tagId) {
+        deleteTagFromDB(currentUser, tagId)
+            .then(() => {
+                getTagList();
+            })
+            .catch((error) => {
+                setErrorPage(true);
+            });
+    }
+
     if (!currentUser) {
 
         return <AccessDenied/>;
@@ -189,39 +248,47 @@ export default function Entry() {
                         <h3 className="text-lg text-wrap break-words text-gray-600 font-semibold ml-8 mt-2">{journalName}</h3>
                     </div>
                     {journalId &&
-                        <div className="flex flex-row mt-6">
-                            <button 
-                                className="text-gray-500 rounded-md mr-6 hover:scale-125"
-                                onClick={() => setShowEntryForm(true)}
-                            >
-                                <FontAwesomeIcon icon={faPencil} size="xl"/>
-                            </button>
-                            <button 
-                                className="text-gray-500 rounded-md mr-8 hover:scale-125"
-                                onClick={closeEntry}
-                            >
-                                <FontAwesomeIcon icon={faX} size="xl"/>
-                            </button> 
-                        </div>
+                    <div className="flex flex-row mt-2">
+                        <button 
+                            className="text-gray-500 rounded-md mr-6 hover:scale-125"
+                            onClick={() => setShowEntryForm(true)}
+                        >
+                            <FontAwesomeIcon icon={faPencil} size="xl"/>
+                        </button>
+                        <button 
+                            className="text-gray-500 rounded-md mr-8 hover:scale-125"
+                            onClick={closeEntry}
+                        >
+                            <FontAwesomeIcon icon={faX} size="xl"/>
+                        </button> 
+                    </div>
                     }
                 </div>
                 <div className="flex flex-col p-8">
-                    <h2 className="text-2xl text-black font-bold mb-4">{entry.entryLabel}</h2>
-                    <div className="flex flex-row justify-between">
-                        <p className="my-2 w-[60%]">
-                            Way to get out there!
-                        </p>
-                        {(entry.entryEffort == "Hard") &&
-                            <p className="my-2 text-red-600 text-right font-bold">{entry.entryEffort} Day</p>
+                    <h2 className="text-2xl text-black font-bold mb-8">{entry.entryLabel}</h2>
+                    
+                    <ul className="flex flex-row flex-wrap py-2 gap-4 mx-2">
+                        {tags.map((item) => {
+                            return (
+                                <TagCard
+                                    key={item.tagId}
+                                    data={item}
+                                    updateTag={updateTag}
+                                    deleteTag={deleteTag}
+                                />
+                            );
+                        })}
+                        {!tagLimit &&
+                        <button 
+                            className="p-2 border-2 rounded-md border-dashed" 
+                            onClick={addTag}
+                        >
+                            + Tag
+                        </button>
                         }
-                        {(entry.entryEffort == "Good") && 
-                            <p className="my-2 text-green-600 text-right font-bold">{entry.entryEffort} Day</p>
-                        }
-                        {(entry.entryEffort == "Light") && 
-                            <p className="my-2 text-gray-600 text-right font-bold">{entry.entryEffort} Day</p>
-                        }
-                    </div>
-                    <div className="flex flex-row justify-between mt-12">
+                    </ul>
+
+                    <div className="flex flex-row justify-between mt-8">
                         <h3 className="text-xl text-gray-500 py-2 font-bold">Notes</h3>
                         <button 
                             className="bg-dark-green text-white text-2xl px-4 py-2 rounded-md h-1/2 hover:bg-yinmn-blue"
