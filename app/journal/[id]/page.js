@@ -249,7 +249,7 @@ export default function Journal() {
                               key={item.entryId} 
                               data={item} 
                               editEntry={openEntry}
-                              tagList={tags.filter((tag) => tag.entryId == item.entryId)}
+                              tagList={tags.filter((tag) => tag.entryId == item.entryId).slice(0,3)}
                             />
                           );
                         })

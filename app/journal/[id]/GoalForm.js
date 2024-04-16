@@ -10,7 +10,7 @@ function GoalForm({ addGoal, updateGoal, setShowGoalForm, journalId, goalInFocus
     const [goalText, setGoalText] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
-    const MAX_GOAL_COUNT = 5;
+    const MAX_GOAL_COUNT = 10;
 
     useEffect(() => {
       if (goalInFocus) {
@@ -28,7 +28,7 @@ function GoalForm({ addGoal, updateGoal, setShowGoalForm, journalId, goalInFocus
       } else if (goalText.length > 50) {
         setErrorMessage("Your goal exceeds the character limit.");
         return;
-      } else if (goalCount >= MAX_GOAL_COUNT) {
+      } else if (!update && goalCount >= MAX_GOAL_COUNT) {
         setErrorMessage("Maximum number of goals allowed reached.");
         return;
       }
