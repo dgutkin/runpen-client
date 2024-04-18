@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'runPen',
-  description: 'Your private digital training journal',
+  description: 'Your personal digital training journal.',
 }
 
 export default function RootLayout({ children }) {
@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
           content="5dn7bCy9bR7Fc5pP1I5mZcuu9ASoGzDbk4ImIQVKDvc"
         />
       </head>
-      <body className={inter.className}>
+      <body className={inter.className} style={{"height": "100%"}}>
           <AuthProvider>
             <Nav/>
             {children}
