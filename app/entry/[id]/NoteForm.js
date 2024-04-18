@@ -118,18 +118,22 @@ function NoteForm({ addNote, updateNote, deleteNote, setShowNoteForm, entryId, n
             </div>
   
             <div className="flex flex-row my-3 mx-3 justify-between">
-                <button 
-                  className="bg-red-500 text-white p-2 rounded-md hover:bg-yinmn-blue" 
-                  onClick={removeNote}
-                >
-                  Delete Note
-                </button>
+                {Object.keys(noteData).length > 0 ?
+                  <button 
+                    className="bg-red-500 text-white p-2 rounded-md hover:bg-yinmn-blue" 
+                    onClick={removeNote}
+                  >
+                    Delete Note
+                  </button>
+                :
+                  <div/>
+                }
                 <button
                   className="bg-dark-green text-white px-4 py-2 mx-2 rounded-md hover:bg-yinmn-blue" 
                   type="button"
                   onClick={() => Object.keys(noteData).length ? submitNote({update: true}) : submitNote({update: false})}
                 >
-                {Object.keys(noteData).length ? "Update" : "Add Note"}
+                  {Object.keys(noteData).length ? "Update" : "Add Note"}
                 </button>
             </div>
             <p className="mx-8 text-sm text-red-600 text-end">{errorMessage}</p>

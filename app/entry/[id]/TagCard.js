@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import { faX } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 function TagCard({ data, updateTag, deleteTag }) {
 
@@ -60,7 +60,7 @@ function TagCard({ data, updateTag, deleteTag }) {
                     <FontAwesomeIcon icon={faCheck} size="lg"/>
                 </button>
                 <button className="mx-2" onClick={handleTagDelete}>
-                    <FontAwesomeIcon icon={faX}/>
+                    <FontAwesomeIcon icon={faTrash}/>
                 </button>
             </div>
             :

@@ -52,7 +52,7 @@ export default function Login() {
 
     return (
         
-        <div className="px-6 xl:px-36 py-16">
+        <div className="px-6 xl:px-36 py-16 bg-gray-50 h-full">
         
             <div className="my-8 w-1/2">
 

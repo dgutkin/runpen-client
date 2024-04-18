@@ -6,9 +6,9 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 function GoalCard({ data, setShowGoalForm, setGoalInFocus, deleteGoal }) {
 
     return (
-        <div className="mb-4 mx-2 p-4 rounded-md shadow border flex flex-row hover:bg-gray-200 relative group">
+        <div className="mb-4 mx-2 bg-[#fdfdfd] rounded-md shadow border flex flex-row hover:bg-gray-200 relative group">
             <button 
-                className="h-full w-full transition-opacity duration-300 ease-in-out opacity-100 group-hover:opacity-100" 
+                className="h-full w-full p-4 transition-opacity duration-300 ease-in-out opacity-100 group-hover:opacity-100" 
                 onClick={() => {setShowGoalForm(true); setGoalInFocus(data)}}
             >
                 <p className="text-start text-wrap">
@@ -16,7 +16,7 @@ function GoalCard({ data, setShowGoalForm, setGoalInFocus, deleteGoal }) {
                 </p>
             </button>
             <button 
-                className="text-gray-500 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100"
+                className="text-gray-500 p-4 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100"
                 onClick={() => deleteGoal(data.goalId)}
             >
                 <FontAwesomeIcon icon={faTrash}/>

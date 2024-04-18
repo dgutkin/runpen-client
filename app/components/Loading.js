@@ -3,7 +3,13 @@
 export default function Loading() {
 
     return (
-        <p className="py-20 px-6 xl:px-36">Loading...</p>
+        <div className="fixed inset-0 flex items-center justify-center">
+            <div className="fixed inset-0 bg-black opacity-50"/>
+
+            <div className="bg-[#fdfdfd] p-8 z-10 rounded-md border">
+                <p className="text-md text-gray-900">Loading...</p>
+            </div>
+        </div>
     );
 
 }

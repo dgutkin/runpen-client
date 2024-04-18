@@ -13,6 +13,7 @@ import DeleteConfirm from '@/app/components/DeleteConfirm';
 import Toggle from '@/app/components/Toggle';
 import ErrorPage from '@/app/components/ErrorPage';
 
+import { getBgImageFromDB } from '@/app/api/user-api';
 import { getJournalFromDB, deleteJournalFromDB, updateJournalToDB } from '@/app/api/journal-api';
 import { getGoalsFromDB, addGoalToDB, deleteGoalFromDB, updateGoalToDB } from '@/app/api/goal-api';
 import { addEntryToDB, getEntriesFromDB } from '@/app/api/entry-api';
@@ -45,6 +46,8 @@ export default function Journal() {
 
   const [tags, setTags] = useState([]);
 
+  const [bgImage, setBgImage] = useState("");
+
   const pathname = usePathname();
   const router = useRouter();
 
@@ -58,6 +61,7 @@ export default function Journal() {
       getGoalList();
       getEntryList();
       getTagList();
+      getBgImage();
     }
 
   }, [])
@@ -174,13 +178,19 @@ export default function Journal() {
       });
   }
 
+  function getBgImage() {
+    getBgImageFromDB(currentUser)
+      .then((result) => {
+        setBgImage(result);
+      })
+      .catch((error) => {
+        setErrorPage(true);
+      })
+  }
+
   if (!currentUser) {
 
     return <AccessDenied/>;
-
-  } else if (loading) {
-
-    return <Loader/>;
   
   } else if (errorPage) {
     
@@ -190,12 +200,15 @@ export default function Journal() {
 
     return (
 
-        <div className="flex flex-col px-6 xl:px-36 py-16">
+        <div 
+          className="flex flex-col px-6 xl:px-36 py-16 h-full overflow-y-auto" 
+          style={{backgroundImage: `url(${bgImage})`, backgroundRepeat: "no-repeat", backgroundSize: "cover"}}
+        >
 
-          <div className="flex flex-row justify-between my-10 px-2">
-            <h2 className="text-2xl font-semibold w-[80%] text-wrap break-words">{journal.journalName}</h2>
+          <div className="flex flex-row justify-between my-10">
+            <h2 className="text-2xl text-gray-900 font-semibold w-[80%] text-wrap break-words">{journal.journalName}</h2>
             <button 
-              className="bg-white text-gray-500 rounded-md hover:scale-125"
+              className="text-dark-green rounded-md hover:scale-125 px-2"
               onClick={() => setShowJournalForm(true)}
             >
               <FontAwesomeIcon icon={faGear} size="2xl"/>
@@ -204,9 +217,9 @@ export default function Journal() {
 
           <div className="flex flex-col lg:flex-row gap-6 mb-8">
 
-            <div className="mb-8 px-2 flex flex-col lg:w-1/3">
+            <div className="mb-8 flex flex-col lg:w-1/3">
               <div className="flex flex-row justify-between gap-6">
-                <h2 className="text-2xl py-1 font-semibold text-gray-600">Goals</h2>
+                <h2 className="text-2xl py-1 font-semibold text-gray-700">Goals</h2>
                 <button 
                   className="bg-dark-green text-white text-2xl mx-1 px-4 py-1 rounded-md hover:bg-yinmn-blue"
                   onClick={() => {setShowGoalForm(true); setGoalInFocus({})}}
@@ -234,13 +247,13 @@ export default function Journal() {
             <div className="px-4 flex flex-col lg:w-[66%]">
 
               <div className="flex flex-row justify-between gap-6">
-                  <h2 className="text-2xl font-semibold text-gray-600">Entries</h2>
+                  <h2 className="text-2xl font-semibold text-gray-700">Entries</h2>
                   <div className="py-1">
                     <Toggle calendarView={calendarView} setCalendarView={setCalendarView}/>
                   </div>
               </div>
 
-              <div className="my-6 border shadow-md rounded-md py-2 px-3">
+              <div className="my-6 border shadow-md rounded-md py-2 px-3 bg-[#fdfdfd]">
                 {!calendarView ? 
                   <div className="w-full">
                       {entries.map((item) => {
@@ -303,6 +316,10 @@ export default function Journal() {
               setShowAddEntry={setShowAddEntry} 
               journalId={journalId} 
             />
+          }
+
+          {loading &&
+            <Loader/>
           }
           
       </div>

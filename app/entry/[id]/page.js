@@ -14,6 +14,7 @@ import Loader from '@/app/components/Loading';
 import DeleteConfirm from '@/app/components/DeleteConfirm';
 import ErrorPage from '@/app/components/ErrorPage';
 
+import { getBgImageFromDB } from '@/app/api/user-api';
 import { getJournalFromDB } from '@/app/api/journal-api';
 import { deleteEntryFromDB, getEntryFromDB, updateEntryToDB } from '@/app/api/entry-api';
 import { addTagToDB, updateTagToDB, deleteTagFromDB, getTagsFromDB } from '@/app/api/tag-api';
@@ -48,25 +49,24 @@ export default function Entry() {
     const [noteData, setNoteData] = useState({});
     const [noNotes, setNoNotes] = useState(false);
 
+    const [bgImage, setBgImage] = useState("");
+
     const [loading, setLoading] = useState(false);
     const [errorPage, setErrorPage] = useState(false);
 
     const MAX_TAGS = 10;
 
     useEffect(() => {
-
         if (currentUser) {
             getEntryData();
             getNoteList();
             getTagList();
+            getBgImage();
         }
-
     }, []);
 
     useEffect(() => {
-
         if (currentUser && journalId) getJournalName();
-
     }, [journalId]);
 
     useEffect(() => {
@@ -225,13 +225,19 @@ export default function Entry() {
             });
     }
 
+    function getBgImage() {
+        getBgImageFromDB(currentUser)
+            .then((result) => {
+                setBgImage(result);
+            })
+            .catch((error) => {
+                setErrorPage(true);
+            })
+    }
+
     if (!currentUser) {
 
         return <AccessDenied/>;
-
-    } else if (loading) {
-        
-        return <Loader/>;
 
     } else if (errorPage) {
         
@@ -240,12 +246,19 @@ export default function Entry() {
     } else {
 
         return (
-            <div className="px-6 xl:px-36 py-16">
-                <div className="border shadow-md rounded-md my-6">
+            <div 
+                className="px-6 xl:px-36 py-16 overflow-y-auto h-full" 
+                style={{
+                    backgroundImage: `url(${bgImage})`, 
+                    backgroundRepeat: "no-repeat", 
+                    backgroundSize: "cover"
+                }}
+            >
+                <div className="border shadow-md rounded-md my-6 bg-[#fdfdfd]">
                 <div className="flex flex-row justify-between">
                     <div className="w-1/2">
-                        <h3 className="text-xl font-bold ml-8 mt-6">{entryDateFormatted}</h3>
-                        <h3 className="text-lg text-wrap break-words text-gray-600 font-semibold ml-8 mt-2">{journalName}</h3>
+                        <h3 className="text-xl text-gray-900 font-bold ml-8 mt-6">{entryDateFormatted}</h3>
+                        <h3 className="text-lg text-wrap break-words text-gray-700 font-semibold ml-8 mt-2">{journalName}</h3>
                     </div>
                     {journalId &&
                     <div className="flex flex-row mt-2">
@@ -265,7 +278,7 @@ export default function Entry() {
                     }
                 </div>
                 <div className="flex flex-col p-8">
-                    <h2 className="text-2xl text-black font-bold mb-8">{entry.entryLabel}</h2>
+                    <h2 className="text-2xl text-gray-900 font-bold mb-8">{entry.entryLabel}</h2>
                     
                     <ul className="flex flex-row flex-wrap py-2 gap-4 mx-2">
                         {tags.map((item) => {
@@ -298,9 +311,9 @@ export default function Entry() {
                         </button>
                     </div>
                     {noNotes?
-                    <p className="text-sm py-24 italic">How did today go? Add a note and write about it!</p>
+                    <p className="text-sm py-24 italic my-2">How did today go? Add a note and write about it!</p>
                     :
-                    <ul className="flex flex-row flex-wrap py-4">
+                    <ul className="flex flex-row flex-wrap py-4 my-2">
                         {
                             notes.map((item) => {
                                 return (
@@ -346,6 +359,10 @@ export default function Entry() {
                         setShowDeleteConfirm={setShowEntryDeleteConfirm}
                     />
 
+                }
+
+                {loading &&
+                    <Loader/>
                 }
             </div>
         );

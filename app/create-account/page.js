@@ -84,13 +84,13 @@ export default function CreateAccount() {
 
     return (
         
-        <div className="px-6 xl:px-36 py-16 my-8">
+        <div className="px-6 xl:px-36 py-16 my-8 bg-gray-50 h-full">
 
             {loading?
             <Loader/>
             :
 
-            <div className="bg-white p-8 rounded-lg shadow-md border border-gray-200 w-80 sm:w-96">
+            <div className="p-8 rounded-lg shadow-md border border-gray-200 w-80 sm:w-96">
 
                 <h2 className="text-2xl font-semibold mb-6">Create Account</h2>
 
