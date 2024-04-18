@@ -18,11 +18,11 @@ export default function Home() {
 
     return (
   
-      <div className="flex flex-col px-6 py-12 xl:px-36">
+      <div className="flex flex-col px-6 py-12 xl:px-36 bg-gray-50">
         
         <div className="flex flex-row mb-12 justify-between">
 
-          <div className="bg-white mt-12">
+          <div className="mt-12">
 
             <div className="container mt-12">
               <h2 className="text-5xl font-semibold mb-8 text-dark-green">Your personal digital training journal.</h2>
@@ -45,7 +45,7 @@ export default function Home() {
             </div>
           </div>
 
-          <img className="mt-16 w-[43%] hidden md:flex" src="/notebook.png"/>
+          <img className="mt-16 w-[45%] hidden md:flex" src="/notebook.png"/>
 
         </div>
 

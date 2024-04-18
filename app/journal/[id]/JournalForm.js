@@ -42,9 +42,9 @@ function JournalForm({journalName, setShowJournalForm, setShowJournalDeleteConfi
     return (
         <div className="fixed inset-0 flex items-center justify-center">
             <div className="fixed inset-0 bg-black opacity-50"></div>
-            <div className="bg-white w-[80%] md:w-[32rem] shadow-2xl border border-gray rounded-md p-6 z-10 flex flex-col">
+            <div className="bg-[#fdfdfd] w-[80%] md:w-[32rem] shadow-2xl border border-gray rounded-md p-6 z-10 flex flex-col">
                 <div className="flex flex-row justify-between mb-4">
-                    <h3 className="text-xl font-semibold">Journal Settings</h3>
+                    <h3 className="text-xl text-gray-900 font-semibold">Settings</h3>
                     <button 
                         className="rounded-md text-gray-500"
                         onClick={() => setShowJournalForm(false)}
@@ -53,7 +53,7 @@ function JournalForm({journalName, setShowJournalForm, setShowJournalDeleteConfi
                     </button>
                 </div>
                 <label 
-                    className="text-md text-gray-600 my-4 px-2" 
+                    className="text-md text-gray-600 my-2 px-2" 
                     htmlFor="title"
                     >
                     Journal Name
@@ -75,20 +75,20 @@ function JournalForm({journalName, setShowJournalForm, setShowJournalDeleteConfi
                         Update
                     </button>
                 </div>
-                <div className="flex flex-row justify-between bg-red-100 mt-10 py-4 px-2 rounded-sm">
-                <label 
-                    className="text-md text-red-600 px-1 py-2" 
-                    htmlFor="delete"
-                >
-                    Delete Journal
-                </label>
-                <button
-                    name="delete"
-                    className="bg-red-500 text-white rounded-md p-2 w-1/3 hover:bg-yinmn-blue" 
-                    onClick={openDeleteConfirm}
-                >
-                    Delete
-                </button>
+                <div className="flex flex-row justify-between mt-10 py-4 px-2 rounded-sm">
+                    <label 
+                        className="text-md text-red-600 px-1 py-2" 
+                        htmlFor="delete"
+                    >
+                        Delete Journal
+                    </label>
+                    <button
+                        name="delete"
+                        className="bg-red-500 text-white rounded-md p-2 w-1/3 hover:bg-yinmn-blue" 
+                        onClick={openDeleteConfirm}
+                    >
+                        Delete
+                    </button>
                 </div>
             </div>
         </div>

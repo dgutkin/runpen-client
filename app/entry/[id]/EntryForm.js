@@ -47,7 +47,7 @@ function EntryForm({ entryIn, updateEntry, setShowEntryForm, setShowEntryDeleteC
 
         <div className="fixed inset-0 flex items-center justify-center">
             <div className="fixed inset-0 bg-black opacity-50"></div>
-            <div className="bg-white overflow-y-auto w-80 sm:w-96 min-h-fit shadow-2xl border border-gray rounded-md p-4 m-10 z-10">
+            <div className="bg-[#fdfdfd] overflow-y-auto w-80 sm:w-96 min-h-fit shadow-2xl border border-gray rounded-md p-4 m-10 z-10">
                 <form className="flex flex-col mx-2">
                     
                     <div className="flex flex-row justify-between mb-4">
