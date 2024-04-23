@@ -62,7 +62,7 @@ export default function Login() {
 
                 <div className="p-8 border border-gray-200 rounded-lg shadow-md w-80 sm:w-96">
 
-                    <h2 className="text-2xl font-semibold mb-6">Login</h2>
+                    <h2 className="text-2xl font-semibold mb-6">Log In</h2>
                     
                     {!currentUser ? 
                         
@@ -80,7 +80,7 @@ export default function Login() {
                                 id="email" 
                                 name="email" 
                                 placeholder="Your email"
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" 
+                                className="w-full px-4 py-2 bg-gray-50 border rounded-md focus:outline-none focus:border-dark-green" 
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
@@ -98,7 +98,7 @@ export default function Login() {
                                 id="password" 
                                 name="password" 
                                 placeholder="Your password" 
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                                className="w-full px-4 py-2 bg-gray-50 border rounded-md focus:outline-none focus:border-dark-green"
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
