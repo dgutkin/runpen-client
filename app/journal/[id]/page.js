@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 
 import { useAuth } from '@/app/context/auth-provider';
-import AccessDenied from '@/app/components/AccessDenied';
 import Loader from '@/app/components/Loading';
 import DeleteConfirm from '@/app/components/DeleteConfirm';
 import Toggle from '@/app/components/Toggle';
@@ -190,7 +189,7 @@ export default function Journal() {
 
   if (!currentUser) {
 
-    return <AccessDenied/>;
+    router.push('/login');
   
   } else if (errorPage) {
     

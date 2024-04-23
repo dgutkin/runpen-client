@@ -1,9 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 import { useAuth } from '@/app/context/auth-provider';
-import AccessDenied from '@/app/components/AccessDenied';
 import ErrorPage from '@/app/components/ErrorPage';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,6 +24,7 @@ export default function Profile() {
     ];
 
     const { currentUser } = useAuth();
+    const router = useRouter();
 
     const [bgImage, setBgImage] = useState("");
 
@@ -52,7 +53,7 @@ export default function Profile() {
 
     if (!currentUser) {
 
-        return <AccessDenied/>;
+        router.push('/login');
     
     } else if (errorPage) {
         

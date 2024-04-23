@@ -18,7 +18,7 @@ export default function Home() {
 
     return (
   
-      <div className="flex flex-col px-6 py-12 xl:px-36 bg-gray-50">
+      <div className="flex flex-col px-6 pt-8 pb-16 xl:px-36 bg-gray-50">
         
         <div className="flex flex-row mb-12 justify-between">
 
@@ -34,11 +34,11 @@ export default function Home() {
                 className="bg-dark-green text-white px-4 py-2 rounded-md mr-4 hover:bg-yinmn-blue" 
                 href="/login"
               >
-                Login
+                Log In
               </Link>
               <Link 
                 className="bg-dark-green text-white px-4 py-2 rounded-md hover:bg-yinmn-blue" 
-                href="/create-account"
+                href="/signup"
               >
                 Sign Up
               </Link>

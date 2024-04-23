@@ -11,21 +11,21 @@ import Loader from '@/app/components/Loading';
 
 import { addUserToDB } from '@/app/api/user-api';
 
-export default function CreateAccount() {
+export default function SignUp() {
 
     dotenv.config();
 
-    const [signInError, setSignInError] = useState(false);
-    const [signInErrorMessage, setSignInErrorMessage] = useState("");
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [signInError, setSignInError] = useState(false);
+    const [signInErrorMessage, setSignInErrorMessage] = useState("");
 
     const { currentUser } = useAuth();
     const router = useRouter();
 
-    async function handleCreateAccount(e) {
+    async function handleSignUp(e) {
 
         e.preventDefault();
         setSignInError(false);
@@ -92,7 +92,7 @@ export default function CreateAccount() {
 
             <div className="p-8 rounded-lg shadow-md border border-gray-200 w-80 sm:w-96">
 
-                <h2 className="text-2xl font-semibold mb-6">Create Account</h2>
+                <h2 className="text-2xl font-semibold mb-6">Sign Up</h2>
 
                 {!currentUser ? 
                 <div>
@@ -109,37 +109,66 @@ export default function CreateAccount() {
                             id="name" 
                             name="name" 
                             placeholder="Your name" 
-                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" 
+                            className="w-full bg-gray-50 px-4 py-2 border rounded-md focus:outline-none focus:border-dark-green" 
                             value={name} 
                             onChange={(e) => setName(e.target.value)}
                         />
                     </div>
 
                     <div className="mb-4">
-                        <label htmlFor="email" className="block text-gray-600 text-sm font-semibold mb-2">Email</label>
-                        <input type="email" id="email" name="email" placeholder="Your email" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                        <label 
+                            htmlFor="email" 
+                            className="block text-gray-600 text-sm font-semibold mb-2"
+                        >
+                            Email
+                        </label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            placeholder="Your email" 
+                            className="w-full bg-gray-50 px-4 py-2 border rounded-md focus:outline-none focus:border-dark-green" 
+                            value={email} 
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
                     </div>
 
                 
                     <div className="mb-6">
-                        <label htmlFor="password" className="block text-gray-600 text-sm font-semibold mb-2">Password</label>
-                        <input type="password" id="password" name="password" placeholder="Your password (min. 8 characters)" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                        <label 
+                            htmlFor="password" 
+                            className="block text-gray-600 text-sm font-semibold mb-2"
+                        >
+                            Password
+                        </label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            placeholder="Your password (min. 8 characters)" 
+                            className="w-full bg-gray-50 px-4 py-2 border rounded-md focus:outline-none focus:border-dark-green" 
+                            value={password} 
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
                     </div>
 
                 
-                    <button className="bg-dark-green text-white px-4 py-2 rounded-md hover:bg-yinmn-blue" onClick={handleCreateAccount}>
-                        Create Account
+                    <button 
+                        className="bg-dark-green text-white px-4 py-2 rounded-md hover:bg-yinmn-blue" 
+                        onClick={handleSignUp}
+                    >
+                        Sign Up
                     </button>
 
                     {signInError && 
-                        <p className="text-red-600 text-sm mt-4">{signInErrorMessage}</p>
+                    <p className="text-red-600 text-sm mt-4">{signInErrorMessage}</p>
                     }
 
                 </div>
 
                 :
 
-                <p>Please logout to create another account.</p>
+                <p>Please log out to create another account.</p>
 
                 }
 

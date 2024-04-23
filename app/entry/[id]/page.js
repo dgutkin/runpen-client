@@ -9,7 +9,6 @@ import { faX } from '@fortawesome/free-solid-svg-icons';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 
 import { useAuth } from '@/app/context/auth-provider';
-import AccessDenied from '@/app/components/AccessDenied';
 import Loader from '@/app/components/Loading';
 import DeleteConfirm from '@/app/components/DeleteConfirm';
 import ErrorPage from '@/app/components/ErrorPage';
@@ -237,7 +236,7 @@ export default function Entry() {
 
     if (!currentUser) {
 
-        return <AccessDenied/>;
+        router.push('/login');
 
     } else if (errorPage) {
         

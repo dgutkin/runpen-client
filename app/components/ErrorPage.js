@@ -3,9 +3,9 @@
 export default function ErrorPage() {
 
     return (
-        <p className="py-20 px-6 xl:px-36">
-            Server Error
-        </p>
+        <h2 className="py-24 px-6 xl:px-36 text-md">
+            Server error.
+        </h2>
     );
 
 }

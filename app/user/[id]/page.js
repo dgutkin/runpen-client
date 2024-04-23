@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 
 import { useAuth } from '@/app/context/auth-provider';
 import Loader from '@/app/components/Loading';
-import AccessDenied from '@/app/components/AccessDenied';
 import ErrorPage from '@/app/components/ErrorPage';
 
 import { getUserNameFromDB, getBgImageFromDB } from '@/app/api/user-api';
@@ -96,7 +95,7 @@ export default function User() {
   
   if (!currentUser) {
 
-    return <AccessDenied/>;
+    router.push('/login');
 
   } else if (errorPage) {
     
