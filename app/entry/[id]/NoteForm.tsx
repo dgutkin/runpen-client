@@ -14,16 +14,17 @@ interface NoteFormProps {
   setShowNoteForm: (_: boolean) => void;
   entryId: string;
   noteData: note;
+  update: boolean;
   noteCount: number;
 }
 
-interface Update {
-  update: boolean;
-}
+// interface Update {
+//   update: boolean;
+// }
 
 const NoteForm = (
   { addNote, updateNote, deleteNote, setShowNoteForm, 
-    entryId, noteData, noteCount }: NoteFormProps
+    entryId, noteData, update, noteCount }: NoteFormProps
 ) => {
 
     const [noteTitle, setNoteTitle] = useState("");
@@ -43,7 +44,7 @@ const NoteForm = (
       
     }, [])
   
-    function submitNote({update}: Update) {
+    function submitNote() {
       
       setErrorMessage("");
   
@@ -139,7 +140,7 @@ const NoteForm = (
             </div>
   
             <div className="flex flex-row my-3 mx-3 justify-between">
-                {Object.keys(noteData).length > 0 ?
+                {update ?
                   <button 
                     className="bg-red-500 text-white p-2 rounded-md hover:bg-yinmn-blue" 
                     onClick={removeNote}
@@ -152,9 +153,10 @@ const NoteForm = (
                 <button
                   className="bg-dark-green text-white px-4 py-2 mx-2 rounded-md hover:bg-yinmn-blue" 
                   type="button"
-                  onClick={() => Object.keys(noteData).length ? submitNote({update: true}) : submitNote({update: false})}
+                  // onClick={() => Object.keys(noteData).length ? submitNote({update: true}) : submitNote({update: false})}
+                  onClick={submitNote}
                 >
-                  {Object.keys(noteData).length ? "Update" : "Add Note"}
+                  {update ? "Update" : "Add Note"}
                 </button>
             </div>
             <p className="mx-8 text-sm text-red-600 text-end">{errorMessage}</p>

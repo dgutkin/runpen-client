@@ -47,8 +47,9 @@ const Entry = () => {
 
     const [notes, setNotes] = useState<Array<note>>([]);
     const [showNoteForm, setShowNoteForm] = useState(false);
-    const [noteData, setNoteData] = useState<note | null>();
+    const [noteData, setNoteData] = useState<note>();
     const [noNotes, setNoNotes] = useState(false);
+    const [noteUpdate, setNoteUpdate] = useState(false);
 
     const [bgImage, setBgImage] = useState("");
 
@@ -237,6 +238,19 @@ const Entry = () => {
             })
     }
 
+    function handleNewNote() {
+        setNoteData({
+            noteTitle: "",
+            noteTitleIV: "",
+            noteText: "",
+            noteTextIV: "",
+            noteId: "",
+            entryId: ""
+        });
+        setNoteUpdate(false);
+        setShowNoteForm(true);
+    }
+
     if (!currentUser) {
 
         router.push('/login');
@@ -309,7 +323,7 @@ const Entry = () => {
                         <h3 className="text-xl text-gray-500 py-2 font-bold">Notes</h3>
                         <button 
                             className="bg-dark-green text-white text-2xl px-4 py-2 rounded-md h-1/2 hover:bg-yinmn-blue"
-                            onClick={() => {setShowNoteForm(true); setNoteData({})}}
+                            onClick={handleNewNote}
                         >
                             +
                         </button>
@@ -326,6 +340,7 @@ const Entry = () => {
                                         data={item} 
                                         setShowNoteForm={setShowNoteForm} 
                                         setNoteData={setNoteData}
+                                        setNoteUpdate={setNoteUpdate}
                                     />
                                 );
                             })
@@ -343,6 +358,7 @@ const Entry = () => {
                         setShowNoteForm={setShowNoteForm} 
                         entryId={entryId} 
                         noteData={noteData}
+                        update={noteUpdate}
                         noteCount={notes.length}
                     />
                 }
