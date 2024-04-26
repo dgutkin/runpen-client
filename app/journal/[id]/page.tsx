@@ -18,7 +18,7 @@ import { getGoalsFromDB, addGoalToDB, deleteGoalFromDB, updateGoalToDB } from '@
 import { addEntryToDB, getEntriesFromDB } from '@/app/api/entry-api';
 import { getTagsFromDB } from '@/app/api/tag-api';
 
-import type { goal, entry } from '@/app/types/common-types';
+import type { journal, goal, entry } from '@/app/types/common-types';
 
 import JournalForm from './JournalForm';
 import AddEntryForm from './AddEntryForm';
@@ -27,15 +27,15 @@ import GoalForm from './GoalForm';
 import GoalCard from './GoalCard';
 import Calendar from './Calendar';
 
-const Journal: React.FC = () => {
+const Journal = () => {
 
-  const [journal, setJournal] = useState({}); 
+  const [journal, setJournal] = useState<journal>();
   const [showJournalDeleteConfirm, setShowJournalDeleteConfirm] = useState(false);
   const [showJournalForm, setShowJournalForm] = useState(false);
 
   const [entries, setEntries] = useState([]);  
   const [showAddEntry, setShowAddEntry] = useState(false);
-  const [newEntryDate, setNewEntryDate] = useState();
+  const [newEntryDate, setNewEntryDate] = useState<string>("");
   
   const [loading, setLoading] = useState(false);
   const [calendarView, setCalendarView] = useState(true);
@@ -43,7 +43,8 @@ const Journal: React.FC = () => {
 
   const [showGoalForm, setShowGoalForm] = useState(false);
   const [goals, setGoals] = useState([]);
-  const [goalInFocus, setGoalInFocus] = useState({});
+  const [goalInFocus, setGoalInFocus] = useState<goal>();
+  const [updateGoalFlag, setUpdateGoalFlag] = useState(false);
 
   const [tags, setTags] = useState([]);
 
@@ -189,6 +190,18 @@ const Journal: React.FC = () => {
       })
   }
 
+  function handleAddGoal() {
+    setUpdateGoalFlag(false);
+    const emptyGoal = {
+      goalText: "",
+      goalTextIV: "",
+      goalId: "",
+      journalId: ""
+    }
+    setGoalInFocus(emptyGoal);
+    setShowGoalForm(true); 
+  }
+
   if (!currentUser) {
 
     router.push('/login');
@@ -207,7 +220,9 @@ const Journal: React.FC = () => {
         >
 
           <div className="flex flex-row justify-between my-10">
-            <h2 className="text-2xl text-gray-900 font-semibold w-[80%] text-wrap break-words">{journal.journalName}</h2>
+            <h2 className="text-2xl text-gray-900 font-semibold w-[80%] text-wrap break-words">
+              {journal ? journal.journalName : ""}
+            </h2>
             <button 
               className="text-dark-green rounded-md hover:scale-125 px-2"
               onClick={() => setShowJournalForm(true)}
@@ -223,7 +238,7 @@ const Journal: React.FC = () => {
                 <h2 className="text-2xl py-1 font-semibold text-gray-700">Goals</h2>
                 <button 
                   className="bg-dark-green text-white text-2xl mx-1 px-4 py-1 rounded-md hover:bg-yinmn-blue"
-                  onClick={() => {setShowGoalForm(true); setGoalInFocus({})}}
+                  onClick={handleAddGoal}
                 >
                   +
                 </button>
@@ -238,6 +253,7 @@ const Journal: React.FC = () => {
                       setShowGoalForm={setShowGoalForm} 
                       setGoalInFocus={setGoalInFocus} 
                       deleteGoal={deleteGoal}
+                      setUpdateGoalFlag={setUpdateGoalFlag}
                     />
                   );
                 })
@@ -307,6 +323,7 @@ const Journal: React.FC = () => {
               journalId={journalId} 
               goalInFocus={goalInFocus}
               goalCount={goals.length}
+              update={updateGoalFlag}
             />
           }
 

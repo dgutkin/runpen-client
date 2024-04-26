@@ -14,15 +14,12 @@ interface GoalFormProps {
   journalId: string;
   goalInFocus: goal;
   goalCount: number;
-}
-
-interface Update {
-  update: boolean;
+  update: boolean
 }
 
 const GoalForm = (
   { addGoal, updateGoal, setShowGoalForm, 
-    journalId, goalInFocus, goalCount }: GoalFormProps
+    journalId, goalInFocus, goalCount, update }: GoalFormProps
 ) => {
 
     const [goalText, setGoalText] = useState("");
@@ -36,7 +33,7 @@ const GoalForm = (
       }
     }, []);
   
-    function submitGoal({update}: Update) {
+    function submitGoal() {
       
       setErrorMessage("");
   
@@ -98,9 +95,9 @@ const GoalForm = (
               <button 
                 className="bg-dark-green text-white px-4 py-2 rounded-md hover:bg-yinmn-blue" 
                 type="button"
-                onClick={() => {Object.keys(goalInFocus).length ? submitGoal({update: true}) : submitGoal({update: false})}}
+                onClick={submitGoal}
               >
-                {Object.keys(goalInFocus).length ? "Update" : "Add Goal"}
+                {update ? "Update" : "Add Goal"}
               </button>
             </div>
           </form>

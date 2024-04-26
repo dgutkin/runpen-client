@@ -10,17 +10,18 @@ interface GoalCardProps {
     setShowGoalForm: (_: boolean) => void;
     setGoalInFocus: (_: goal) => void;
     deleteGoal: (goalId: string) => void;
+    setUpdateGoalFlag: (_: boolean) => void;
 }
 
 const GoalCard = (
-    { data, setShowGoalForm, setGoalInFocus, deleteGoal }: GoalCardProps
+    { data, setShowGoalForm, setGoalInFocus, deleteGoal, setUpdateGoalFlag }: GoalCardProps
 ) => {
 
     return (
         <div className="mb-4 mx-2 bg-[#fdfdfd] rounded-md shadow border flex flex-row hover:bg-gray-200 relative group">
             <button 
                 className="h-full w-full p-4 transition-opacity duration-300 ease-in-out opacity-100 group-hover:opacity-100" 
-                onClick={() => {setShowGoalForm(true); setGoalInFocus(data)}}
+                onClick={() => {setShowGoalForm(true); setGoalInFocus(data); setUpdateGoalFlag(true)}}
             >
                 <p className="text-start text-wrap">
                     {data.goalText}
