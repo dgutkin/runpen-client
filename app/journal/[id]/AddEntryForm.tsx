@@ -70,7 +70,7 @@ const AddEntryForm = (
                 Date
               </label>
               <p className="font-semibold px-1">
-                {newEntryDate.toLocaleString('en-us', {month: 'short', day: 'numeric', year: 'numeric'})}
+                {new Date(newEntryDate).toLocaleString('en-US', {day: "numeric", month: "short", year: "numeric"})}
               </p>
             </div>
 
