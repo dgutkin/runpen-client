@@ -9,7 +9,7 @@ import type { entry } from '@/app/types/common-types';
 interface CalendarProps {
     entries: Array<entry>;
     setShowAddEntry: (_: boolean) => void;
-    setNewEntryDate: (_: Date) => void;
+    setNewEntryDate: (_: string) => void;
     openEntry: (entryId: string) => void;
 }
 
@@ -45,7 +45,7 @@ const Calendar = (
     const [days, setDays] = useState<Array<number>>([]);
     const [daysWithEntries, setDaysWithEntries] = useState({});
 
-    const firstCardOfMonth = useRef();
+    const firstCardOfMonth = useRef<HTMLDivElement>();
 
     useEffect(() => {
         setDays(calcDays(month));
@@ -63,7 +63,7 @@ const Calendar = (
     function setFirstCardOfMonthOffset() {
         if (firstCardOfMonth.current) {
             let firstDayOfMonth = new Date(year, month-1).getDay();
-            firstCardOfMonth.current.style.gridColumnStart = firstDayOfMonth;
+            firstCardOfMonth.current.style.gridColumnStart = firstDayOfMonth.toString();
         }
     }
 
@@ -83,6 +83,7 @@ const Calendar = (
         }, {});
         
         setDaysWithEntries(entriesInMonthDays);
+        
     }
 
     function calcDays(month: number) {
@@ -115,7 +116,8 @@ const Calendar = (
         if (daysWithEntries[day]) {
             openEntry(daysWithEntries[day].entryId)
         } else {
-            setNewEntryDate(new Date(year, month-1, day));
+            const newDate = new Date(year, month-1, day);
+            setNewEntryDate(newDate.toString());
             setShowAddEntry(true);
         }
     }
@@ -154,7 +156,9 @@ const Calendar = (
                                     onClick={() => selectEntry(day)}
                                 >
                                     <p className="text-sm text-start font-semibold mb-2">{day}</p>
-                                    <p className="text-xs text-start text-wrap break-words hidden md:inline-flex">{daysWithEntries[day].entryLabel.slice(0,CALENDAR_ENTRY_CHAR_MAX)}{daysWithEntries[day].entryLabel.slice(CALENDAR_ENTRY_CHAR_MAX).length? "..." : ""}</p>
+                                    <p className="text-xs text-start text-wrap break-words hidden md:inline-flex">
+                                        {(daysWithEntries[day] as entry).entryLabel.slice(0,CALENDAR_ENTRY_CHAR_MAX)}{(daysWithEntries[day] as entry).entryLabel.slice(CALENDAR_ENTRY_CHAR_MAX).length? "..." : ""}
+                                    </p>
                                 </button>
                                 :
                                 <button
@@ -175,7 +179,8 @@ const Calendar = (
                                     onClick={() => selectEntry(day)}
                                 >
                                     <p className="text-sm text-start font-semibold mb-2">{day}</p>
-                                    <p className="text-xs text-start text-wrap break-words hidden md:inline-flex">{daysWithEntries[day].entryLabel.slice(0,CALENDAR_ENTRY_CHAR_MAX)}{daysWithEntries[day].entryLabel.slice(CALENDAR_ENTRY_CHAR_MAX).length? "..." : ""}</p>
+                                    <p className="text-xs text-start text-wrap break-words hidden md:inline-flex">
+                                        {daysWithEntries[day].entryLabel.slice(0,CALENDAR_ENTRY_CHAR_MAX)}{daysWithEntries[day].entryLabel.slice(CALENDAR_ENTRY_CHAR_MAX).length? "..." : ""}</p>
                                 </button>
                                 :
                                 <button
