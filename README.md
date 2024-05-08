@@ -1,6 +1,7 @@
 # runPen
 
-A digital training journal on the web for recreational or race use. [runpen.ca](www.runpen.ca)
+A digital training journal on the web for recreational use.<br>
+[runpen.ca](www.runpen.ca)
 
 ![runPen Landing Page](public/runPen-landing-page.png)
 
@@ -15,29 +16,15 @@ A digital training journal on the web for recreational or race use. [runpen.ca](
 ## Installation
 The project is hosted for actual use at www.runpen.ca. 
 
-To develop locally, see the following steps.
+To develop locally, build the client Docker image from the included Dockerfile.
+````
+docker build -t runpen-client .
+docker run -p 3000:3000 runpen-client
+````
 
-1. Fork and clone the client and server repos
-
-    `git clone https://github.com/dgutkin/runpen-client.git`
-
-    `git clone https://github.com/dgutkin/runpen-server.git`
-
-2. Install Node
-
-    https://nodejs.org/en/download
-
-3. Install all requisite node packages for the client and server
-
-    `npm install`
-
-4. Install MongoDB Community Edition
-
-    https://www.mongodb.com/docs/manual/administration/install-community/
-5. Create the data schema based on runpen-server/models/models.js
-6. Sign into Firebase with a Google account and setup Authentication
-* Replace the client config at runpen-client/firebase/firebase-config.js
-* Replace the server config (service account) at runpen-server/config/firebase-config.js
+Note that to have the full stack application running, the server and database implementations are required. A docker compose has not yet been written for this.
+* The server is https://github.com/dgutkin/runpen-server
+* The database is MongoDB (https://www.mongodb.com/docs/manual/administration/install-community/)
 
 ## License
 
