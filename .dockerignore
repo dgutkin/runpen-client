@@ -1,0 +1,13 @@
+# Environment variables
+.env
+
+# Node module binaries
+node_modules
+
+# Next.js binaries and config
+.next
+next-env.d.ts
+
+# Git
+.git
+.gitignore
