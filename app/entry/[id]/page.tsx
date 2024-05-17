@@ -9,11 +9,11 @@ import { faX } from '@fortawesome/free-solid-svg-icons';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 
 import { useAuth } from '@/app/context/auth-provider';
+
 import Loader from '@/app/components/Loading';
 import DeleteConfirm from '@/app/components/DeleteConfirm';
 import ErrorPage from '@/app/components/ErrorPage';
 
-import { getBgImageFromDB } from '@/app/api/user-api';
 import { getJournalFromDB } from '@/app/api/journal-api';
 import { deleteEntryFromDB, getEntryFromDB, updateEntryToDB } from '@/app/api/entry-api';
 import { addTagToDB, updateTagToDB, deleteTagFromDB, getTagsFromDB } from '@/app/api/tag-api';
@@ -51,8 +51,6 @@ const Entry = () => {
     const [noNotes, setNoNotes] = useState(false);
     const [noteUpdate, setNoteUpdate] = useState(false);
 
-    const [bgImage, setBgImage] = useState("");
-
     const [loading, setLoading] = useState(false);
     const [errorPage, setErrorPage] = useState(false);
 
@@ -63,7 +61,6 @@ const Entry = () => {
             getEntryData();
             getNoteList();
             getTagList();
-            getBgImage();
         }
     }, []);
 
@@ -228,16 +225,6 @@ const Entry = () => {
             });
     }
 
-    function getBgImage() {
-        getBgImageFromDB(currentUser)
-            .then((result) => {
-                setBgImage(result);
-            })
-            .catch((error) => {
-                setErrorPage(true);
-            })
-    }
-
     function handleNewNote() {
         setNoteData({
             noteTitle: "",
@@ -262,14 +249,7 @@ const Entry = () => {
     } else {
 
         return (
-            <div 
-                className="px-6 xl:px-36 py-16 overflow-y-auto h-full" 
-                style={{
-                    backgroundImage: `url(${bgImage})`, 
-                    backgroundRepeat: "no-repeat", 
-                    backgroundSize: "cover"
-                }}
-            >
+            <>
                 <div className="border shadow-md rounded-md my-6 bg-[#fdfdfd]">
                 <div className="flex flex-row justify-between">
                     <div className="w-1/2">
@@ -384,7 +364,7 @@ const Entry = () => {
                 {loading &&
                     <Loader/>
                 }
-            </div>
+            </>
         );
 
     }

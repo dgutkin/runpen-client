@@ -7,7 +7,7 @@ import { useAuth } from '@/app/context/auth-provider';
 import Loader from '@/app/components/Loading';
 import ErrorPage from '@/app/components/ErrorPage';
 
-import { getUserNameFromDB, getBgImageFromDB } from '@/app/api/user-api';
+import { getUserNameFromDB } from '@/app/api/user-api';
 import { getJournalsFromDB, addJournalToDB } from '@/app/api/journal-api';
 
 import type { journal } from '@/app/types/common-types';
@@ -19,7 +19,6 @@ const User = () => {
   
   const [userName, setUserName] = useState("");
   const [journals, setJournals] = useState([]);
-  const [bgImage, setBgImage] = useState("");
   const [showAddJournal, setShowAddJournal] = useState(false);
   const [noJournals, setNoJournals] = useState(false);
 
@@ -33,7 +32,6 @@ const User = () => {
     if (currentUser) {
       getUserName();
       getJournalList();
-      getBgImage();
     }
   }, []);
 
@@ -69,16 +67,6 @@ const User = () => {
       });
   }
 
-  function getBgImage() {
-    getBgImageFromDB(currentUser)
-      .then((result) => {
-        setBgImage(result);
-      })
-      .catch((error) => {
-        setErrorPage(true);
-      })
-  }
-
   function addJournal(journalName: string) {
     setShowAddJournal(false);
     addJournalToDB(currentUser, journalName)
@@ -106,15 +94,7 @@ const User = () => {
   } else {
 
     return (
-      <div 
-        className="flex flex-col px-6 lg:px-36 py-16 overflow-y-auto h-full" 
-        style={{
-              "backgroundImage": `url(${bgImage})`,
-              "backgroundRepeat": "no-repeat",
-              "backgroundOrigin": "border-box",
-              "backgroundPosition": "center",
-              "backgroundSize": "cover"
-            }}>
+        <>
           <div>
 
             <div className="my-8">
@@ -160,7 +140,7 @@ const User = () => {
             <Loader/>
           }
 
-      </div>
+      </>
     );
 
   }

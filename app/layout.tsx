@@ -6,6 +6,7 @@ import './styles/globals.css';
 import Nav from '@/app/components/NavBar';
 import Footer from '@/app/components/FooterBar';
 import AuthProvider from '@/app/context/auth-provider';
+import BgImageProvider from '@/app/context/bg-image-provider';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,9 +26,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={inter.className} style={{"height": "100%"}}>
           <AuthProvider>
-            <Nav/>
-            {children}
-            <Footer/>
+            <BgImageProvider>
+              <Nav/>
+              {children}
+              <Footer/>
+            </BgImageProvider>
           </AuthProvider>
       </body>
     </html>
