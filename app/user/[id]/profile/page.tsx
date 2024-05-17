@@ -4,12 +4,14 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { useAuth } from '@/app/context/auth-provider';
+import { useBgImage } from '@/app/context/bg-image-provider';
+
 import ErrorPage from '@/app/components/ErrorPage';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
-import { getBgImageFromDB, updateBgImageToDB } from '@/app/api/user-api';
+import { updateBgImageToDB } from '@/app/api/user-api';
 
 const Profile = () => {
     
@@ -24,6 +26,7 @@ const Profile = () => {
     ];
 
     const currentUser = useAuth();
+    const { bgImageUrl, setBgImageUrl } = useBgImage();
     const router = useRouter();
 
     const [bgImage, setBgImage] = useState("");
@@ -32,23 +35,14 @@ const Profile = () => {
 
     useEffect(() => {
         if (currentUser) {
-            getBgImage();
+            setBgImage(bgImageUrl);
         }
     }, []);
 
-    function getBgImage() {
-        getBgImageFromDB(currentUser)
-            .then((result) => {
-                setBgImage(result);
-            })
-            .catch((error) => {
-                setErrorPage(true);
-            }); 
-    }
-
     function handleBgImageSelect(imageUrl: string) {
         updateBgImageToDB(currentUser, imageUrl);
-        getBgImage();
+        setBgImageUrl(imageUrl);
+        setBgImage(imageUrl);
     }
 
     if (!currentUser) {
@@ -62,20 +56,10 @@ const Profile = () => {
     } else {
 
         return (
-            <div 
-                className="flex flex-col px-6 lg:px-36 py-16 h-full overflow-y-auto bg-[#fdfdfd]"
-                style={{
-                    "backgroundImage": `url(${bgImage})`,
-                    "backgroundRepeat": "no-repeat",
-                    "backgroundOrigin": "border-box",
-                    "backgroundPosition": "center",
-                    "backgroundSize": "cover"
-                }}
-            >
+            <>
                 <h2 className="text-2xl text-gray-900 font-semibold my-8">Profile</h2>
 
                 <h3 className="text-2xl text-gray-700 font-semibold my-2">Backgrounds</h3>
-
 
                 <div className="flex flex-row flex-wrap gap-4 mx-2 my-4">
                     {USER_BACKGROUNDS.map((item) => {
@@ -111,7 +95,7 @@ const Profile = () => {
                     }
                 </div>
                 
-            </div>
+            </>
         );
     }
 }

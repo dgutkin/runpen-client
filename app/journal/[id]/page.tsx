@@ -7,12 +7,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 
 import { useAuth } from '@/app/context/auth-provider';
+
 import Loader from '@/app/components/Loading';
 import DeleteConfirm from '@/app/components/DeleteConfirm';
 import Toggle from '@/app/components/Toggle';
 import ErrorPage from '@/app/components/ErrorPage';
 
-import { getBgImageFromDB } from '@/app/api/user-api';
 import { getJournalFromDB, deleteJournalFromDB, updateJournalToDB } from '@/app/api/journal-api';
 import { getGoalsFromDB, addGoalToDB, deleteGoalFromDB, updateGoalToDB } from '@/app/api/goal-api';
 import { addEntryToDB, getEntriesFromDB } from '@/app/api/entry-api';
@@ -48,12 +48,11 @@ const Journal = () => {
 
   const [tags, setTags] = useState([]);
 
-  const [bgImage, setBgImage] = useState("");
-
   const pathname = usePathname();
   const router = useRouter();
 
   const journalId = pathname.split("/")[2];
+  
   const currentUser = useAuth();
 
   useEffect(() => {
@@ -63,7 +62,6 @@ const Journal = () => {
       getGoalList();
       getEntryList();
       getTagList();
-      getBgImage();
     }
 
   }, [])
@@ -180,16 +178,6 @@ const Journal = () => {
       });
   }
 
-  function getBgImage() {
-    getBgImageFromDB(currentUser)
-      .then((result) => {
-        setBgImage(result);
-      })
-      .catch((error) => {
-        setErrorPage(true);
-      })
-  }
-
   function handleAddGoal() {
     setUpdateGoalFlag(false);
     const emptyGoal = {
@@ -213,11 +201,7 @@ const Journal = () => {
   } else {
 
     return (
-
-        <div 
-          className="flex flex-col px-6 xl:px-36 py-16 h-full overflow-y-auto" 
-          style={{backgroundImage: `url(${bgImage})`, backgroundRepeat: "no-repeat", backgroundSize: "cover"}}
-        >
+        <>
 
           <div className="flex flex-row justify-between my-10">
             <h2 className="text-2xl text-gray-900 font-semibold w-[80%] text-wrap break-words">
@@ -339,8 +323,8 @@ const Journal = () => {
           {loading &&
             <Loader/>
           }
-          
-      </div>
+        
+      </>
 
     );
   
